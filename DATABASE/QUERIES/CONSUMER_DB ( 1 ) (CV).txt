@@ -1,0 +1,70 @@
+-- View for Consumer
+CREATE VIEW consumer_v AS
+SELECT 
+    consumer_id,
+    first_name,
+    last_name,
+    email,
+    mobile_number,
+    state,
+    city,
+    pincode,
+    consumer_type
+FROM consumer;
+
+-- View for Recycling Categories
+CREATE VIEW recycling_categories_v AS
+SELECT 
+    rp_category_id,
+    rp_category_name,
+    category_description
+FROM RecyclingCategories;
+
+-- View for Recycling Subcategories
+CREATE VIEW recycling_subcategories_v AS
+SELECT 
+    subcategory_id,
+    rp_category_id,
+    subcategory_name,
+    price_per_kg,
+    category_description
+FROM RecyclingSubcategories;
+
+-- View for Consumer Selections
+CREATE VIEW consumer_selections_v AS
+SELECT 
+    selection_id,
+    consumer_id,
+    rp_category_id
+FROM ConsumerSelections;
+
+-- View for Consumer Orders
+CREATE VIEW consumer_orders_v AS
+SELECT 
+    order_id,
+    consumer_id,
+    order_date,
+    order_time,
+    order_status
+FROM ConsumerOrders;
+
+-- View for Order Items
+CREATE VIEW order_items_v AS
+SELECT 
+    item_id,
+    order_id,
+    subcategory_id,
+    quantity_kg
+FROM OrderItems;
+
+-- View for Delivery Address
+CREATE VIEW delivery_address_v AS
+SELECT 
+    order_id,
+    consumer_name,
+    state,
+    city,
+    pincode,
+    street_name,
+    landmark
+FROM DeliveryAddress;

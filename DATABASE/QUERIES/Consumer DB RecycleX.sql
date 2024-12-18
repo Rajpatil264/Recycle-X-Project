@@ -1,0 +1,194 @@
+-- Consumer Table
+CREATE TABLE consumer (
+    consumer_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    mobile_number VARCHAR(15) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    state VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    pincode VARCHAR(20) NOT NULL UNIQUE,
+    consumer_type ENUM('Individual', 'Organization', 'Government') NOT NULL DEFAULT 'Individual',
+
+    -- Maintaining logs (Timestamps and user modification tracking)
+    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
+    last_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
+    last_modified_by VARCHAR(255) DEFAULT (CURRENT_USER) INVISIBLE,
+
+    -- Hidden columns for future use 
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE
+);
+
+-- Create separate indexes after Consumer creation
+CREATE INDEX idx_consumer_first_name ON consumer (first_name);
+
+-- RecyclingCategories Table
+CREATE TABLE RecyclingCategories (
+    rp_category_id INT PRIMARY KEY AUTO_INCREMENT,
+    rp_category_name VARCHAR(255) NOT NULL UNIQUE,
+    category_description TEXT NOT NULL,
+
+    -- Maintaining the logs of operations
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
+    last_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
+    last_modified_by VARCHAR(255) NOT NULL DEFAULT (CURRENT_USER) INVISIBLE,
+
+    -- Extra columns for future use
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE
+);
+
+-- RecyclingSubcategories
+CREATE TABLE RecyclingSubcategories (
+    subcategory_id INT AUTO_INCREMENT PRIMARY KEY,
+    rp_category_id INT NOT NULL,
+    subcategory_name VARCHAR(255) NOT NULL UNIQUE,
+    price_per_kg FLOAT NOT NULL CHECK (price_per_kg > 0),
+    category_description TEXT NOT NULL,
+
+    -- Maintaining the logs of Operations
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
+    last_modified_by VARCHAR(255) NOT NULL DEFAULT (CURRENT_USER) INVISIBLE,
+
+    -- Foreign key
+    FOREIGN KEY (rp_category_id) REFERENCES RecyclingCategories(rp_category_id)
+);
+
+-- ConsumerSelection Table (many to many relationship with consumer and recycling categories)
+CREATE TABLE ConsumerSelections (
+    selection_id INT AUTO_INCREMENT PRIMARY KEY,
+    consumer_id INT NOT NULL,
+    rp_category_id INT NOT NULL,
+  
+    -- Foreign key constraints
+    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id),
+    FOREIGN KEY (rp_category_id) REFERENCES RecyclingCategories(rp_category_id)
+);
+
+-- ConsumerOrder table
+CREATE TABLE ConsumerOrders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    consumer_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    order_time TIME NOT NULL,
+    order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+
+    -- Maintaining the logs of Operations
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
+
+    -- Foreign key
+    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id)
+);
+
+-- Order Item table
+CREATE TABLE OrderItems (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    subcategory_id INT NOT NULL,
+
+    -- Quantity must be greater than 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
+
+    -- Foreign keys
+    FOREIGN KEY (order_id) REFERENCES ConsumerOrders(order_id),
+    FOREIGN KEY (subcategory_id) REFERENCES RecyclingSubcategories(subcategory_id)
+);
+
+-- DeliveryAddress
+CREATE TABLE DeliveryAddress (
+    order_id INT PRIMARY KEY,
+    consumer_name VARCHAR(255) NOT NULL,
+    state VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    pincode VARCHAR(10) NOT NULL,
+    street_name VARCHAR(255),
+    landmark VARCHAR(255),
+
+    -- Maintaining the logs of operations
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
+
+    -- Foreign key
+    FOREIGN KEY (order_id) REFERENCES ConsumerOrders(order_id)
+);
+
+-- View for Consumer
+CREATE VIEW consumer_v AS
+SELECT 
+    consumer_id,
+    first_name,
+    last_name,
+    email,
+    mobile_number,
+    state,
+    city,
+    pincode,
+    consumer_type
+FROM consumer;
+
+-- View for Recycling Categories
+CREATE VIEW recycling_categories_v AS
+SELECT 
+    rp_category_id,
+    rp_category_name,
+    category_description
+FROM RecyclingCategories;
+
+-- View for Recycling Subcategories
+CREATE VIEW recycling_subcategories_v AS
+SELECT 
+    subcategory_id,
+    rp_category_id,
+    subcategory_name,
+    price_per_kg,
+    category_description
+FROM RecyclingSubcategories;
+
+-- View for Consumer Selections
+CREATE VIEW consumer_selections_v AS
+SELECT 
+    selection_id,
+    consumer_id,
+    rp_category_id
+FROM ConsumerSelections;
+
+-- View for Consumer Orders
+CREATE VIEW consumer_orders_v AS
+SELECT 
+    order_id,
+    consumer_id,
+    order_date,
+    order_time,
+    order_status
+FROM ConsumerOrders;
+
+-- View for Order Items
+CREATE VIEW order_items_v AS
+SELECT 
+    item_id,
+    order_id,
+    subcategory_id,
+    quantity_kg
+FROM OrderItems;
+
+-- View for Delivery Address
+CREATE VIEW delivery_address_v AS
+SELECT 
+    order_id,
+    consumer_name,
+    state,
+    city,
+    pincode,
+    street_name,
+    landmark
+FROM DeliveryAddress;
