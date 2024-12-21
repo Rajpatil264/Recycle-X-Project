@@ -108,7 +108,7 @@ CREATE TABLE SupplierOrders (
 );
 
 -- Order Item table
-CREATE TABLE OrderItems (
+CREATE TABLE SupplierOrderItems (
     item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     subcategory_id INT NOT NULL,
@@ -200,13 +200,13 @@ SELECT
 FROM SupplierOrders;
 
 -- View for OrderItems Table
-CREATE VIEW OrderItems_v AS
+CREATE VIEW Supplier_OrderItems_v AS
 SELECT 
     item_id,
     order_id,
     subcategory_id,
     quantity_kg
-FROM OrderItems;
+FROM SupplierOrderItems;
 
 -- View for PickupAddress Table
 CREATE VIEW PickupAddress_v AS

@@ -108,7 +108,7 @@ CREATE TABLE SupplierOrders (
 );
 
 -- Order Item table
-CREATE TABLE OrderItems (
+CREATE TABLE SupplierOrderItems (
     item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     subcategory_id INT NOT NULL,

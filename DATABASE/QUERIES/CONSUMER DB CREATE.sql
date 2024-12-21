@@ -91,7 +91,7 @@ CREATE TABLE ConsumerOrders (
 );
 
 -- Order Item table
-CREATE TABLE OrderItems (
+CREATE TABLE ConsumerOrderItems (
     item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     subcategory_id INT NOT NULL,
@@ -173,13 +173,13 @@ SELECT
 FROM ConsumerOrders;
 
 -- View for Order Items
-CREATE VIEW order_items_v AS
+CREATE VIEW consumer_orderitems_v AS
 SELECT 
     item_id,
     order_id,
     subcategory_id,
     quantity_kg
-FROM OrderItems;
+FROM ConsumerOrderItems;
 
 -- View for Delivery Address
 CREATE VIEW delivery_address_v AS
