@@ -1,5 +1,5 @@
 -- Supplier Table
-CREATE TABLE Supplier (
+CREATE TABLE supplier (
     supplier_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
@@ -7,6 +7,7 @@ CREATE TABLE Supplier (
     password VARCHAR(255) NOT NULL,
     state VARCHAR(50) NOT NULL,
     city VARCHAR(50) NOT NULL,
+    imageName VARCHAR(50) DEFAULT 'default.jpg',
     pincode CHAR(6) NOT NULL,
     supplier_type ENUM('Individual', 'Organization', 'Government') NOT NULL DEFAULT 'Individual',
     
@@ -24,10 +25,10 @@ CREATE TABLE Supplier (
 );
 
 -- Indexes on the Supplier Table
-CREATE INDEX idx_supplier_first_name ON Supplier (first_name);
+CREATE INDEX idx_supplier_first_name ON supplier (first_name);
 
 -- ServiceZones table (Common for both Supplier & Consumer)
-CREATE TABLE ServiceZones (
+CREATE TABLE serviceZones (
     pincode VARCHAR(10) PRIMARY KEY,
     state VARCHAR(100) NOT NULL UNIQUE,
     city VARCHAR(100) NOT NULL,
@@ -37,9 +38,10 @@ CREATE TABLE ServiceZones (
 
 
 -- Trash Categories Table
-CREATE TABLE TrashCategories (
+CREATE TABLE trashCategories (
     category_id INT PRIMARY KEY,
     category_name VARCHAR(255) NOT NULL UNIQUE,
+    category_image VARCHAR(50) NOT NULL,
     category_description TEXT NOT NULL,
 
     -- Maintaining the logs of Operations
@@ -56,11 +58,12 @@ CREATE TABLE TrashCategories (
 );
 
 -- Trash Sub-Categories Table
-CREATE TABLE TrashSubCategories (
+CREATE TABLE trashSubCategories (
     subcategory_id INT PRIMARY KEY,
     category_id INT NOT NULL,
     subcategory_name VARCHAR(255) NOT NULL UNIQUE,
     price_per_kg FLOAT NOT NULL,
+    subcategory_image VARCHAR(50) NOT NULL,
     category_description TEXT NOT NULL,
 
     -- Maintaining the logs of Operations    
@@ -76,23 +79,23 @@ CREATE TABLE TrashSubCategories (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key 
-    FOREIGN KEY (category_id) REFERENCES TrashCategories(category_id)
+    FOREIGN KEY (category_id) REFERENCES trashCategories(category_id)
 );
 
 
 -- (Many to Many Relationship table) Supplier & Categories
-CREATE TABLE SupplierSelections (
+CREATE TABLE supplierSelections (
     selection_id INT AUTO_INCREMENT PRIMARY KEY,
     supplier_id INT NOT NULL,
     category_id INT NOT NULL,
   
     -- Foreign key 
-    FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id),
-    FOREIGN KEY (category_id) REFERENCES TrashCategories(category_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id),
+    FOREIGN KEY (category_id) REFERENCES trashCategories(category_id)
 );
 
 -- Supplier Order table
-CREATE TABLE SupplierOrders (
+CREATE TABLE supplierOrders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     supplier_id INT NOT NULL,
     order_date DATE NOT NULL,
@@ -104,11 +107,11 @@ CREATE TABLE SupplierOrders (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
 
     -- Foreign key 
-    FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
 );
 
--- Order Item table
-CREATE TABLE SupplierOrderItems (
+-- Supplier Order Item table
+CREATE TABLE supplierOrderItems (
     item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     subcategory_id INT NOT NULL,
@@ -117,12 +120,12 @@ CREATE TABLE SupplierOrderItems (
     quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
    
     -- Foreign key 
-    FOREIGN KEY (order_id) REFERENCES SupplierOrders(order_id),
-    FOREIGN KEY (subcategory_id) REFERENCES TrashSubCategories(subcategory_id)
+    FOREIGN KEY (order_id) REFERENCES supplierOrders(order_id),
+    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
 );
 
 -- Pickup Address for each order
-CREATE TABLE PickupAddress (
+CREATE TABLE pickupAddress (
     order_id INT PRIMARY KEY,
     supplier_name VARCHAR(255) NOT NULL,
     state VARCHAR(100) NOT NULL,
@@ -136,11 +139,11 @@ CREATE TABLE PickupAddress (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
 
     -- Foreign key 
-    FOREIGN KEY (order_id) REFERENCES SupplierOrders(order_id)
+    FOREIGN KEY (order_id) REFERENCES supplierOrders(order_id)
 );
 
 -- View for Supplier Table
-CREATE VIEW Supplier_v AS
+CREATE VIEW supplier_v AS
 SELECT 
     supplier_id,
     first_name,
@@ -150,66 +153,69 @@ SELECT
     state,
     city,
     pincode,
+    imageName,
     supplier_type
-FROM Supplier;
+FROM supplier;
 
 -- View for ServiceZones Table
-CREATE VIEW ServiceZones_v AS
+CREATE VIEW serviceZones_v AS
 SELECT 
     pincode,
     state,
     city,
     district,
     service_type
-FROM ServiceZones;
+FROM serviceZones;
 
 -- View for TrashCategories Table
-CREATE VIEW TrashCategories_v AS
+CREATE VIEW trashCategories_v AS
 SELECT 
     category_id,
     category_name,
+    category_image,
     category_description
-FROM TrashCategories;
+FROM trashCategories;
 
 -- View for TrashSubCategories Table
-CREATE VIEW TrashSubCategories_v AS
+CREATE VIEW trashSubCategories_v AS
 SELECT 
     subcategory_id,
     category_id,
     subcategory_name,
     price_per_kg,
+    subcategory_image,
     category_description
-FROM TrashSubCategories;
+FROM trashSubCategories;
 
 -- View for SupplierSelections Table
-CREATE VIEW SupplierSelections_v AS
+CREATE VIEW supplierSelections_v AS
 SELECT 
     selection_id,
     supplier_id,
     category_id
-FROM SupplierSelections;
+FROM supplierSelections;
 
 -- View for SupplierOrders Table
-CREATE VIEW SupplierOrders_v AS
+CREATE VIEW supplierOrders_v AS
 SELECT 
     order_id,
     supplier_id,
     order_date,
     order_time,
     order_status
-FROM SupplierOrders;
+FROM supplierOrders;
 
--- View for OrderItems Table
-CREATE VIEW Supplier_OrderItems_v AS
+-- View for Supplier OrderItems Table
+CREATE VIEW supplierOrderItems_v AS
 SELECT 
     item_id,
     order_id,
     subcategory_id,
     quantity_kg
-FROM SupplierOrderItems;
+FROM supplierOrderItems;
 
 -- View for PickupAddress Table
-CREATE VIEW PickupAddress_v AS
+CREATE VIEW pickupAddress_v AS
 SELECT 
     order_id,
     supplier_name,
@@ -218,5 +224,5 @@ SELECT
     pincode,
     street_name,
     landmark
-FROM PickupAddress;
+FROM pickupAddress;
  

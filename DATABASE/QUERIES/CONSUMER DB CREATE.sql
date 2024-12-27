@@ -8,6 +8,7 @@ CREATE TABLE consumer (
     password VARCHAR(255) NOT NULL,
     state VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
+    imageName VARCHAR(50) DEFAULT 'default.jpg',
     pincode VARCHAR(20) NOT NULL UNIQUE,
     consumer_type ENUM('Individual', 'Organization', 'Government') NOT NULL DEFAULT 'Individual',
 
@@ -28,9 +29,10 @@ CREATE TABLE consumer (
 CREATE INDEX idx_consumer_first_name ON consumer (first_name);
 
 -- RecyclingCategories Table
-CREATE TABLE RecyclingCategories (
+CREATE TABLE recyclingCategories (
     rp_category_id INT PRIMARY KEY AUTO_INCREMENT,
     rp_category_name VARCHAR(255) NOT NULL UNIQUE,
+    rp_category_image VARCHAR(50) NOT NULL,
     category_description TEXT NOT NULL,
 
     -- Maintaining the logs of operations
@@ -47,10 +49,11 @@ CREATE TABLE RecyclingCategories (
 );
 
 -- RecyclingSubcategories
-CREATE TABLE RecyclingSubcategories (
+CREATE TABLE recyclingSubcategories (
     subcategory_id INT AUTO_INCREMENT PRIMARY KEY,
     rp_category_id INT NOT NULL,
     subcategory_name VARCHAR(255) NOT NULL UNIQUE,
+    subcategory_image VARCHAR(50) NOT NULL,
     price_per_kg FLOAT NOT NULL CHECK (price_per_kg > 0),
     category_description TEXT NOT NULL,
 
@@ -60,22 +63,22 @@ CREATE TABLE RecyclingSubcategories (
     last_modified_by VARCHAR(255) NOT NULL DEFAULT (CURRENT_USER) INVISIBLE,
 
     -- Foreign key
-    FOREIGN KEY (rp_category_id) REFERENCES RecyclingCategories(rp_category_id)
+    FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id)
 );
 
 -- ConsumerSelection Table (many to many relationship with consumer and recycling categories)
-CREATE TABLE ConsumerSelections (
+CREATE TABLE consumerSelections (
     selection_id INT AUTO_INCREMENT PRIMARY KEY,
     consumer_id INT NOT NULL,
     rp_category_id INT NOT NULL,
   
     -- Foreign key constraints
     FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id),
-    FOREIGN KEY (rp_category_id) REFERENCES RecyclingCategories(rp_category_id)
+    FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id)
 );
 
 -- ConsumerOrder table
-CREATE TABLE ConsumerOrders (
+CREATE TABLE consumerOrders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     consumer_id INT NOT NULL,
     order_date DATE NOT NULL,
@@ -90,8 +93,8 @@ CREATE TABLE ConsumerOrders (
     FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id)
 );
 
--- Order Item table
-CREATE TABLE ConsumerOrderItems (
+-- Consumer Order Item table
+CREATE TABLE consumerOrderItems (
     item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     subcategory_id INT NOT NULL,
@@ -100,12 +103,12 @@ CREATE TABLE ConsumerOrderItems (
     quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
 
     -- Foreign keys
-    FOREIGN KEY (order_id) REFERENCES ConsumerOrders(order_id),
-    FOREIGN KEY (subcategory_id) REFERENCES RecyclingSubcategories(subcategory_id)
+    FOREIGN KEY (order_id) REFERENCES consumerOrders(order_id),
+    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
 );
 
 -- DeliveryAddress
-CREATE TABLE DeliveryAddress (
+CREATE TABLE deliveryAddress (
     order_id INT PRIMARY KEY,
     consumer_name VARCHAR(255) NOT NULL,
     state VARCHAR(100) NOT NULL,
@@ -119,7 +122,7 @@ CREATE TABLE DeliveryAddress (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
 
     -- Foreign key
-    FOREIGN KEY (order_id) REFERENCES ConsumerOrders(order_id)
+    FOREIGN KEY (order_id) REFERENCES consumerOrders(order_id)
 );
 
 -- View for Consumer
@@ -133,56 +136,59 @@ SELECT
     state,
     city,
     pincode,
+    imageName,
     consumer_type
 FROM consumer;
 
 -- View for Recycling Categories
-CREATE VIEW recycling_categories_v AS
+CREATE VIEW recyclingCategories_v AS
 SELECT 
     rp_category_id,
     rp_category_name,
+    rp_category_image,
     category_description
-FROM RecyclingCategories;
+FROM recyclingCategories;
 
 -- View for Recycling Subcategories
-CREATE VIEW recycling_subcategories_v AS
+CREATE VIEW recyclingSubcategories_v AS
 SELECT 
     subcategory_id,
     rp_category_id,
     subcategory_name,
     price_per_kg,
+    subcategory_image,
     category_description
-FROM RecyclingSubcategories;
+FROM recyclingSubcategories;
 
 -- View for Consumer Selections
-CREATE VIEW consumer_selections_v AS
+CREATE VIEW consumerSelections_v AS
 SELECT 
     selection_id,
     consumer_id,
     rp_category_id
-FROM ConsumerSelections;
+FROM consumerSelections;
 
 -- View for Consumer Orders
-CREATE VIEW consumer_orders_v AS
+CREATE VIEW consumerOrders_v AS
 SELECT 
     order_id,
     consumer_id,
     order_date,
     order_time,
     order_status
-FROM ConsumerOrders;
+FROM consumerOrders;
 
--- View for Order Items
-CREATE VIEW consumer_orderitems_v AS
+-- View for Consumer Order Items
+CREATE VIEW consumerOrderitems_v AS
 SELECT 
     item_id,
     order_id,
     subcategory_id,
     quantity_kg
-FROM ConsumerOrderItems;
+FROM consumerOrderItems;
 
 -- View for Delivery Address
-CREATE VIEW delivery_address_v AS
+CREATE VIEW deliveryAddress_v AS
 SELECT 
     order_id,
     consumer_name,
@@ -191,4 +197,4 @@ SELECT
     pincode,
     street_name,
     landmark
-FROM DeliveryAddress;
+FROM deliveryAddress;
