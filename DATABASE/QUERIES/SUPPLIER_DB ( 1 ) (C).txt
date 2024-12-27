@@ -30,7 +30,7 @@ CREATE INDEX idx_supplier_first_name ON supplier (first_name);
 -- ServiceZones table (Common for both Supplier & Consumer)
 CREATE TABLE serviceZones (
     pincode VARCHAR(10) PRIMARY KEY,
-    state VARCHAR(100) NOT NULL UNIQUE,
+    state VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
     district VARCHAR(100) NOT NULL,
     service_type ENUM('Delivery', 'Pickup', 'Both') NOT NULL
