@@ -3,6 +3,6 @@ const router = express.Router();
 const { getAllServiceZones } = require("../controllers/commonController");
 
 // Request to Controller
-router.get("/", getAllServiceZones);
+router.get("/getServiceZones", getAllServiceZones);
 
 module.exports = router;

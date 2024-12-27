@@ -9,15 +9,16 @@ app.use(appendFileLogs);
 app.use(express.json());
 
 // cors
-app.use((request, response, next)=>{
+app.use((request, response, next) => {
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.setHeader("Access-Control-Allow-Headers", "*");
   response.setHeader("Access-Control-Allow-Methods", "*");
-  next(); })
+  next();
+});
 
 // Routing
 app.use("/consumer", consumerRoutes);
-app.use("/getServiceZones", commonRoutes);
+app.use("/common", commonRoutes);
 
 app.listen(5000, () => {
   console.log("Server started on PORT 5000");
