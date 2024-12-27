@@ -1,0 +1,12 @@
+const express = require("express");
+const {
+  registerConsumer,
+  loginConsumer,
+} = require("../controllers/consumerController");
+const router = express.Router();
+
+// Request to Controller
+router.post("/signUp", registerConsumer);
+router.post("/signIn", loginConsumer);
+
+module.exports = router;

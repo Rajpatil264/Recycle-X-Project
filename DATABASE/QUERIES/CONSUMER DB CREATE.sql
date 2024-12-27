@@ -4,12 +4,12 @@ CREATE TABLE consumer (
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    mobile_number VARCHAR(15) NOT NULL UNIQUE,
+    mobile_number VARCHAR(15) NOT NULL,
     password VARCHAR(255) NOT NULL,
     state VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     imageName VARCHAR(50) DEFAULT 'default.jpg',
-    pincode VARCHAR(20) NOT NULL UNIQUE,
+    pincode VARCHAR(20) NOT NULL,
     consumer_type ENUM('Individual', 'Organization', 'Government') NOT NULL DEFAULT 'Individual',
 
     -- Maintaining logs (Timestamps and user modification tracking)
@@ -54,7 +54,7 @@ CREATE TABLE recyclingSubcategories (
     rp_category_id INT NOT NULL,
     subcategory_name VARCHAR(255) NOT NULL UNIQUE,
     subcategory_image VARCHAR(50) NOT NULL,
-    price_per_kg FLOAT NOT NULL CHECK (price_per_kg > 0),
+    price_per_kg FLOAT NOT NULL CHECK (price_per_kg >=1),
     category_description TEXT NOT NULL,
 
     -- Maintaining the logs of Operations

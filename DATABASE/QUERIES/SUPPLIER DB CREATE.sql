@@ -3,7 +3,7 @@ CREATE TABLE supplier (
     supplier_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    mobile_number VARCHAR(15) NOT NULL UNIQUE,
+    mobile_number VARCHAR(15) NOT NULL,
     password VARCHAR(255) NOT NULL,
     state VARCHAR(50) NOT NULL,
     city VARCHAR(50) NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE supplierOrderItems (
     subcategory_id INT NOT NULL,
 
     -- Quantity must be greater than 1Kg
-    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg >=1),
    
     -- Foreign key 
     FOREIGN KEY (order_id) REFERENCES supplierOrders(order_id),
