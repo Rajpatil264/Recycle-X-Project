@@ -107,6 +107,18 @@ CREATE TABLE supplierOrderItems (
     FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
 );
 
+-- Supplier Order Cart table
+CREATE TABLE supplierOrderCart (
+    cart_id INT AUTO_INCREMENT PRIMARY KEY,
+    subcategory_id INT NOT NULL,
+
+    -- Quantity must be greater than 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
+   
+    -- Foreign key 
+    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
+);
+
 -- Supplier Order table
 CREATE TABLE supplierOrders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -198,25 +210,31 @@ SELECT
     category_id
 FROM supplierSelections;
 
+-- View for Supplier OrderItems Table
+CREATE VIEW supplierOrderItems_v AS
+SELECT 
+    item_id,
+    subcategory_id,
+    quantity_kg
+FROM supplierOrderItems;
+
+CREATE VIEW supplierOrderCart_v AS
+SELECT 
+    item_id,
+    subcategory_id,
+    quantity_kg
+FROM supplierOrderCart;
+
 -- View for SupplierOrders Table
 CREATE VIEW supplierOrders_v AS
 SELECT 
     order_id,
-     item_id,
+    item_id,
     supplier_id,
     order_date,
     order_time,
     order_status
 FROM supplierOrders;
-
--- View for Supplier OrderItems Table
-CREATE VIEW supplierOrderItems_v AS
-SELECT 
-    item_id,
-    order_id,
-    subcategory_id,
-    quantity_kg
-FROM supplierOrderItems;
 
 -- View for PickupAddress Table
 CREATE VIEW pickupAddress_v AS
