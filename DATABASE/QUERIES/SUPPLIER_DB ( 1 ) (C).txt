@@ -94,9 +94,23 @@ CREATE TABLE supplierSelections (
     FOREIGN KEY (category_id) REFERENCES trashCategories(category_id)
 );
 
+
+-- Supplier Order Item table
+CREATE TABLE supplierOrderItems (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    subcategory_id INT NOT NULL,
+
+    -- Quantity must be greater than 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg >=1),
+   
+    -- Foreign key 
+    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
+);
+
 -- Supplier Order table
 CREATE TABLE supplierOrders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_id INT NOT NULL,
     supplier_id INT NOT NULL,
     order_date DATE NOT NULL,
     order_time TIME NOT NULL,
@@ -107,22 +121,11 @@ CREATE TABLE supplierOrders (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
 
     -- Foreign key 
-    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id),
+    FOREIGN KEY (item_id) REFERENCES supplierOrderItems(item_id)
 );
 
--- Supplier Order Item table
-CREATE TABLE supplierOrderItems (
-    item_id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
-    subcategory_id INT NOT NULL,
 
-    -- Quantity must be greater than 1Kg
-    quantity_kg FLOAT NOT NULL CHECK(quantity_kg >=1),
-   
-    -- Foreign key 
-    FOREIGN KEY (order_id) REFERENCES supplierOrders(order_id),
-    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
-);
 
 -- Pickup Address for each order
 CREATE TABLE pickupAddress (
@@ -199,6 +202,7 @@ FROM supplierSelections;
 CREATE VIEW supplierOrders_v AS
 SELECT 
     order_id,
+     item_id,
     supplier_id,
     order_date,
     order_time,
