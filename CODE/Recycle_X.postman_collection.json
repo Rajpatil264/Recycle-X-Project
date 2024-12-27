@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "d40710ac-c8d7-4b3d-8f4c-80942e745a69",
+		"name": "Recycle_X",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40302480"
+	},
+	"item": [
+		{
+			"name": "Comman",
+			"item": [
+				{
+					"name": "getAllServiceZones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/getServiceZones",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getServiceZones"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consumer",
+			"item": [
+				{
+					"name": "registerConsumer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Rajesh\",\r\n  \"lastName\": \"Kumar\",\r\n  \"email\": \"rajeh.kumar@example.com\",\r\n  \"mobileNumber\": \"98765f2010\",\r\n  \"password\": \"SecurePass@123\",\r\n  \"state\": \"Maharashtra\",\r\n  \"city\": \"Mumbai\",\r\n  \"pincode\": \"400071\",\r\n  \"consumerType\":\"Individual\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/signUp",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"signUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginConsumer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"raj@example.com\",\r\n  \"password\":\"pass\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/signIn",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"signIn"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
