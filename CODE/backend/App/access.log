@@ -1,0 +1,12 @@
+{"method":"GET","url":"/getServiceZones","status":"200","responseTime":"39.922"}
+{"method":"GET","url":"/getServiceZones","status":"200","responseTime":"44.491"}
+{"method":"GET","url":"/getServiceZones","status":"404","responseTime":"2.274"}
+{"method":"GET","url":"/","status":"404","responseTime":"1.330"}
+{"method":"GET","url":"/","status":"404","responseTime":"0.749"}
+{"method":"GET","url":"/","status":"404","responseTime":"2.440"}
+{"method":"GET","url":"/","status":"404","responseTime":"1.661"}
+{"method":"GET","url":"/","status":"404","responseTime":"3.067"}
+{"method":"GET","url":"/","status":"404","responseTime":"1.880"}
+{"method":"GET","url":"/","status":"404","responseTime":"1.580"}
+{"method":"GET","url":"/","status":"404","responseTime":"2.432"}
+{"method":"GET","url":"/getServiceZones","status":"200","responseTime":"90.383"}

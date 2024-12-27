@@ -133,6 +133,7 @@ SELECT
     last_name,
     email,
     mobile_number,
+    password,
     state,
     city,
     pincode,

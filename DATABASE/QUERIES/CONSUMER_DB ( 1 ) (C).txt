@@ -134,6 +134,7 @@ SELECT
     email,
     mobile_number,
     state,
+    password,
     city,
     pincode,
     imageName,
