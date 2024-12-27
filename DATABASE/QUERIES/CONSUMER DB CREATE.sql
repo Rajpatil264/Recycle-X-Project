@@ -195,7 +195,7 @@ SELECT
     cart_id,
     subcategory_id,
     quantity_kg
-FROM consumerOrderItems;
+FROM consumerOrderCart;
 
 -- View for Consumer Orders
 CREATE VIEW consumerOrders_v AS

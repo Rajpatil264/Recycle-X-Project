@@ -220,7 +220,7 @@ FROM supplierOrderItems;
 
 CREATE VIEW supplierOrderCart_v AS
 SELECT 
-    item_id,
+    cart_id,
     subcategory_id,
     quantity_kg
 FROM supplierOrderCart;
