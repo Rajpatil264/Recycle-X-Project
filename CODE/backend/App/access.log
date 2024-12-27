@@ -36,3 +36,11 @@
 {"method":"GET","url":"/favicon.ico","status":"404","responseTime":"0.331"}
 {"method":"POST","url":"/common/findServiceByPincode","status":"200","responseTime":"2.554"}
 {"method":"PUT","url":"/consumer/update/1","status":"200","responseTime":"75.949"}
+{"method":"GET","url":"/common/getAllTrashCategories","status":"200","responseTime":"69.147"}
+{"method":"GET","url":"/common/getAllTrashCategories","status":"200","responseTime":"1.807"}
+{"method":"GET","url":"/common/getAllTrashCategories","status":"200","responseTime":"1.046"}
+{"method":"GET","url":"/common/getAllRecyclingCategories","status":"200","responseTime":"48.994"}
+{"method":"GET","url":"/common/getAllRecyclingSubCategories","status":"200","responseTime":"8.376"}
+{"method":"GET","url":"/common/getAllTrashSubCategories","status":"200","responseTime":"2.975"}
+{"method":"GET","url":"/common/getAllTrashCategories","status":"200","responseTime":"1.886"}
+{"method":"GET","url":"/common/getAllTrashSubCategories","status":"200","responseTime":"1.559"}

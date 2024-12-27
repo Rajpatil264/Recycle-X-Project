@@ -1,5 +1,5 @@
 const db = require("../DBUtils/connection");
-const { common } = require("../DBUtils/constants");
+const { common, consumer, supplier } = require("../DBUtils/constants");
 const reply = require("../models/ApiStructure");
 
 // Common Contoller
@@ -62,4 +62,107 @@ const findServiceByPincode = (request, response) => {
   });
 };
 
-module.exports = { getAllServiceZones, findServiceByPincode };
+const getAllTrashCategories = (request, response) => {
+  const statement = `SELECT * FROM ${supplier.TRASH_CATEGORIES}`;
+  db.execute(statement, (error, result) => {
+    if (error) {
+      response
+        .status(500)
+        .json(
+          reply.onError(
+            500,
+            error,
+            "The requested table or view does not exist in the database."
+          )
+        );
+    } else {
+      response
+        .status(200)
+        .json(
+          reply.onSuccess(200, result, "Trash Categories Fetched Successfully.")
+        );
+    }
+  });
+};
+
+const getAllTrashSubCategories = (request, response) => {
+  const statement = `SELECT * FROM ${supplier.TRASH_SUBCATEGORIES}`;
+  db.execute(statement, (error, result) => {
+    if (error) {
+      response
+        .status(500)
+        .json(
+          reply.onError(
+            500,
+            error,
+            "The requested table or view does not exist in the database."
+          )
+        );
+    } else {
+      response
+        .status(200)
+        .json(
+          reply.onSuccess(
+            200,
+            result,
+            "Trash Sub-Categories Fetched Successfully."
+          )
+        );
+    }
+  });
+};
+
+const getAllRecyclingCategories = (request, response) => {
+  const statement = `SELECT * FROM ${consumer.RECYCLING_CATEGORIES}`;
+  db.execute(statement, (error, result) => {
+    if (error) {
+      response
+        .status(500)
+        .json(
+          reply.onError(
+            500,
+            error,
+            "The requested table or view does not exist in the database."
+          )
+        );
+    } else {
+      response
+        .status(200)
+        .json(
+          reply.onSuccess(200, result, "Trash Categories Fetched Successfully.")
+        );
+    }
+  });
+};
+
+const getAllRecyclingSubCategories = (request, response) => {
+  const statement = `SELECT * FROM ${consumer.RECYCLING_SUBCATEGORIES}`;
+  db.execute(statement, (error, result) => {
+    if (error) {
+      response
+        .status(500)
+        .json(
+          reply.onError(
+            500,
+            error,
+            "The requested table or view does not exist in the database."
+          )
+        );
+    } else {
+      response
+        .status(200)
+        .json(
+          reply.onSuccess(200, result, "Trash Categories Fetched Successfully.")
+        );
+    }
+  });
+};
+
+module.exports = {
+  getAllServiceZones,
+  findServiceByPincode,
+  getAllTrashCategories,
+  getAllTrashSubCategories,
+  getAllRecyclingCategories,
+  getAllRecyclingSubCategories,
+};
