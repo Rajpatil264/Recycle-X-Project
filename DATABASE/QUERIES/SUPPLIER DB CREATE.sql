@@ -12,6 +12,7 @@ CREATE TABLE supplier (
     supplier_type ENUM('Individual', 'Organization', 'Government') NOT NULL DEFAULT 'Individual',
     
     -- Maintaining the logs of Operations
+    supplier_status ENUM('Active','InActive') NOT NULL DEFAULT 'Active',
     registered_at TIMESTAMP  DEFAULT CURRENT_TIMESTAMP  INVISIBLE,
     last_modified_at TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
     last_modified_by VARCHAR(255)  DEFAULT (CURRENT_USER) INVISIBLE,
@@ -169,7 +170,8 @@ SELECT
     city,
     pincode,
     imageName,
-    supplier_type
+    supplier_type,
+    supplier_status
 FROM supplier;
 
 -- View for ServiceZones Table

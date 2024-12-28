@@ -13,6 +13,7 @@ CREATE TABLE consumer (
     consumer_type ENUM('Individual', 'Organization', 'Government') NOT NULL DEFAULT 'Individual',
 
     -- Maintaining logs (Timestamps and user modification tracking)
+    consumer_status ENUM('Active','InActive') NOT NULL DEFAULT 'Active',
     registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
     last_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
     last_modified_by VARCHAR(255) DEFAULT (CURRENT_USER) INVISIBLE,
@@ -150,7 +151,8 @@ SELECT
     city,
     pincode,
     imageName,
-    consumer_type
+    consumer_type,
+    consumer_status
 FROM consumer;
 
 -- View for Recycling Categories
