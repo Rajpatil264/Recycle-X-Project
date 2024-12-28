@@ -44,3 +44,5 @@
 {"method":"GET","url":"/common/getAllTrashSubCategories","status":"200","responseTime":"2.975"}
 {"method":"GET","url":"/common/getAllTrashCategories","status":"200","responseTime":"1.886"}
 {"method":"GET","url":"/common/getAllTrashSubCategories","status":"200","responseTime":"1.559"}
+{"method":"POST","url":"/consumer/signUp","status":"201","responseTime":"115.560"}
+{"method":"POST","url":"/consumer/signUp","status":"201","responseTime":"87.867"}

@@ -10,5 +10,6 @@ const router = express.Router();
 router.post("/signUp", registerConsumer);
 router.post("/signIn", loginConsumer);
 router.put("/update/:id", updateConsumer);
+router.put("/addcart/:id", updateConsumer);
 
 module.exports = router;

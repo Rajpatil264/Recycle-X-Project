@@ -78,37 +78,12 @@ CREATE TABLE consumerSelections (
     FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id)
 );
 
--- Consumer Order Item table
-CREATE TABLE consumerOrderItems (
-    item_id INT AUTO_INCREMENT PRIMARY KEY,
-    subcategory_id INT NOT NULL,
-
-    -- Quantity must be greater than 1Kg
-    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
-
-    -- Foreign keys
-    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
-);
-
--- Consumer Order Cart table
-CREATE TABLE consumerOrderCart ( 
-    cart_id INT AUTO_INCREMENT PRIMARY KEY,
-    subcategory_id INT NOT NULL,
-
-    -- Quantity must be greater than 1Kg
-    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
-
-    -- Foreign keys
-    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
-);
-
 -- ConsumerOrder table
 CREATE TABLE consumerOrders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
-    item_id INT NOT NULL,
     consumer_id INT NOT NULL,
-    order_date DATE NOT NULL,
-    order_time TIME NOT NULL,
+    order_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+    order_time TIME NOT NULL DEFAULT (CURRENT_TIME),
     order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
 
     -- Maintaining the logs of Operations
@@ -116,9 +91,33 @@ CREATE TABLE consumerOrders (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
 
     -- Foreign key
-    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id),
-    FOREIGN KEY (item_id) REFERENCES consumerOrderItems(item_id)
+    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id)
 );
+
+-- Consumer Order Item table
+CREATE TABLE consumerOrderItems (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    subcategory_id INT NOT NULL,
+    -- Quantity must be greater than 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
+
+    -- Foreign keys
+    FOREIGN KEY (order_id) REFERENCES consumerOrders(order_id),
+    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
+);
+
+-- Consumer Order Cart table
+CREATE TABLE consumerOrderCart ( 
+    cart_id INT AUTO_INCREMENT PRIMARY KEY,
+    subcategory_id INT NOT NULL,
+    -- Quantity must be greater than 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
+    -- Foreign keys
+    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
+);
+
+
 
 -- DeliveryAddress
 CREATE TABLE deliveryAddress (
@@ -187,6 +186,7 @@ FROM consumerSelections;
 CREATE VIEW consumerOrderitems_v AS
 SELECT 
     item_id,
+    order_id,
     subcategory_id,
     quantity_kg
 FROM consumerOrderItems;
@@ -203,7 +203,6 @@ FROM consumerOrderCart;
 CREATE VIEW consumerOrders_v AS
 SELECT 
     order_id,
-    item_id,
     consumer_id,
     order_date,
     order_time,
