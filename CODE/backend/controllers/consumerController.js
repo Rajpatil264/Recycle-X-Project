@@ -152,4 +152,47 @@ const addToCart = (request, response) => {
   });
 };
 
-module.exports = { registerConsumer, loginConsumer, updateConsumer, addToCart };
+const removeFromCart = (request, response) => {
+  const cartId = request.params.id;
+  const statement = `DELETE FROM ${consumer.CONSUMER_CART} WHERE cart_id = ${cartId}`;
+  db.execute(statement, (error, result) => {
+    if (error) {
+      response
+        .status(400)
+        .json(
+          reply.onError(
+            400,
+            error,
+            "There was an error in the request fields are missing."
+          )
+        );
+    } else {
+      console.log(result.affectedRows);
+      if (result.affectedRows == 1) {
+        response
+          .status(201)
+          .json(
+            reply.onSuccess(
+              201,
+              result,
+              "Order item removed from cart successfully."
+            )
+          );
+      } else {
+        response
+          .status(400)
+          .json(
+            reply.onError(400, result, "The cart might be empty.(Bad Request)")
+          );
+      }
+    }
+  });
+};
+
+module.exports = {
+  registerConsumer,
+  loginConsumer,
+  updateConsumer,
+  addToCart,
+  removeFromCart,
+};

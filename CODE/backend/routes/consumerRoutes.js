@@ -4,6 +4,7 @@ const {
   loginConsumer,
   updateConsumer,
   addToCart,
+  removeFromCart,
 } = require("../controllers/consumerController");
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.post("/signUp", registerConsumer);
 router.post("/signIn", loginConsumer);
 router.put("/update/:id", updateConsumer);
 router.post("/addtocart/:id", addToCart);
+router.delete("/removefromcart/:id", removeFromCart);
 
 module.exports = router;
