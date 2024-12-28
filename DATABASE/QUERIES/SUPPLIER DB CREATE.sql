@@ -34,7 +34,14 @@ CREATE TABLE serviceZones (
     state VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
     district VARCHAR(100) NOT NULL,
-    service_type ENUM('Delivery', 'Pickup', 'Both') NOT NULL
+    service_type ENUM('Delivery', 'Pickup', 'Both') NOT NULL,
+
+    -- Extra column for future use
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE
 );
 
 
@@ -89,60 +96,24 @@ CREATE TABLE supplierSelections (
     selection_id INT AUTO_INCREMENT PRIMARY KEY,
     supplier_id INT NOT NULL,
     category_id INT NOT NULL,
-  
+
+    -- Extra column for future use
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
     -- Foreign key 
     FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id),
     FOREIGN KEY (category_id) REFERENCES trashCategories(category_id)
 );
 
--- Supplier Order table
-CREATE TABLE supplierOrders (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    supplier_id INT NOT NULL,
-    order_date DATE NOT NULL DEFAULT (CURRENT_DATE),  
-    order_time TIME NOT NULL DEFAULT (CURRENT_TIME), 
-    order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
-
-    -- Maintaining the logs of Operations
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
-
-    -- Foreign key
-    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
-);
-
-
-
-
--- Supplier Order Item table
-CREATE TABLE supplierOrderItems (
-    item_id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
-    subcategory_id INT NOT NULL,
-
-    -- Quantity must be greater than 1Kg
-    quantity_kg FLOAT NOT NULL CHECK(quantity_kg >=1),
-   
-    -- Foreign key 
-    FOREIGN KEY (order_id) REFERENCES supplierOrders(order_id),
-    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
-);
-
--- Supplier Order Cart table
-CREATE TABLE supplierOrderCart (
-    cart_id INT AUTO_INCREMENT PRIMARY KEY,
-    subcategory_id INT NOT NULL,
-
-    -- Quantity must be greater than 1Kg
-    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
-   
-    -- Foreign key 
-    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
-);
 
 -- Pickup Address for each order
 CREATE TABLE pickupAddress (
-    order_id INT PRIMARY KEY,
+    pickup_id INT PRIMARY KEY AUTO_INCREMENT,
+    supplier_id INT NOT NULL,
     supplier_name VARCHAR(255) NOT NULL,
     state VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
@@ -154,9 +125,84 @@ CREATE TABLE pickupAddress (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
 
+    -- Extra column for future use
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
     -- Foreign key 
-    FOREIGN KEY (order_id) REFERENCES supplierOrders(order_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
 );
+
+-- Supplier Order table
+CREATE TABLE supplierOrders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    supplier_id INT NOT NULL,
+    order_date DATE NOT NULL DEFAULT (CURRENT_DATE),  
+    order_time TIME NOT NULL DEFAULT (CURRENT_TIME), 
+    pickup_id INT NOT NULL,
+    order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+    -- Maintaining the logs of Operations
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
+
+    -- Extra column for future use
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
+    -- Foreign key
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id),
+    FOREIGN KEY (pickup_id) REFERENCES pickupAddress(pickup_id)
+);
+
+
+-- Supplier Order Item table
+CREATE TABLE supplierOrderItems (
+    item_id INT NOT NULL,
+    order_id INT NOT NULL,
+    subcategory_id INT NOT NULL,
+    -- Quantity must be greater than 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg >=1),
+
+    -- Extra column for future use
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
+       -- Composite primary key
+    PRIMARY KEY (item_id, order_id),
+
+    -- Foreign key 
+    FOREIGN KEY (order_id) REFERENCES supplierOrders(order_id),
+    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
+);
+
+-- Supplier Order Cart table
+CREATE TABLE supplierOrderCart (
+    cart_id INT AUTO_INCREMENT PRIMARY KEY,
+    subcategory_id INT NOT NULL,
+    -- Quantity must be greater than 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
+
+    -- Extra column for future use
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
+    -- Foreign key 
+    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
+);
+
+
 
 -- View for Supplier Table
 CREATE VIEW supplier_v AS
@@ -235,13 +281,15 @@ SELECT
     supplier_id,
     order_date,
     order_time,
+    pickup_id,
     order_status
 FROM supplierOrders;
 
 -- View for PickupAddress Table
 CREATE VIEW pickupAddress_v AS
 SELECT 
-    order_id,
+    pickup_id,
+    supplier_id,
     supplier_name,
     state,
     city,

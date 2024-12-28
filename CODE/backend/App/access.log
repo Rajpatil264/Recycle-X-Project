@@ -64,3 +64,15 @@
 {"method":"DELETE","url":"/consumer/removefromcart/4","status":"201","responseTime":"8.719"}
 {"method":"DELETE","url":"/consumer/removefromcart/4","status":"400","responseTime":"51.406"}
 {"method":"DELETE","url":"/consumer/removefromcart/4","status":"400","responseTime":"45.869"}
+{"method":"POST","url":"/consumer/signUp","status":"201","responseTime":"121.576"}
+{"method":"POST","url":"/consumer/signIn","status":"200","responseTime":"52.280"}
+{"method":"POST","url":"/consumer/signIn","status":"200","responseTime":"48.805"}
+{"method":"PUT","url":"/consumer/update/1","status":"200","responseTime":"12.490"}
+{"method":"POST","url":"/consumer/addtocart/1","status":"201","responseTime":"7.443"}
+{"method":"DELETE","url":"/consumer/removefromcart/5","status":"201","responseTime":"9.881"}
+{"method":"DELETE","url":"/consumer/removefromcart/65","status":"400","responseTime":"4.398"}
+{"method":"POST","url":"/common/findServiceByPincode","status":"200","responseTime":"8.009"}
+{"method":"GET","url":"/common/getServiceZones","status":"200","responseTime":"3.635"}
+{"method":"GET","url":"/common/getAllTrashCategories","status":"200","responseTime":"6.231"}
+{"method":"GET","url":"/common/getAllTrashSubCategories","status":"200","responseTime":"6.088"}
+{"method":"GET","url":"/common/getAllRecyclingCategories","status":"200","responseTime":"6.188"}

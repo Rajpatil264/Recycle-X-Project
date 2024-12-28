@@ -63,6 +63,13 @@ CREATE TABLE recyclingSubcategories (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
     last_modified_by VARCHAR(255) NOT NULL DEFAULT (CURRENT_USER) INVISIBLE,
 
+        -- Hidden columns for future use 
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
     -- Foreign key
     FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id)
 );
@@ -78,50 +85,10 @@ CREATE TABLE consumerSelections (
     FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id)
 );
 
--- ConsumerOrder table
-CREATE TABLE consumerOrders (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    consumer_id INT NOT NULL,
-    order_date DATE NOT NULL DEFAULT (CURRENT_DATE),
-    order_time TIME NOT NULL DEFAULT (CURRENT_TIME),
-    order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
-
-    -- Maintaining the logs of Operations
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
-
-    -- Foreign key
-    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id)
-);
-
--- Consumer Order Item table
-CREATE TABLE consumerOrderItems (
-    item_id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
-    subcategory_id INT NOT NULL,
-    -- Quantity must be greater than 1Kg
-    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
-
-    -- Foreign keys
-    FOREIGN KEY (order_id) REFERENCES consumerOrders(order_id),
-    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
-);
-
--- Consumer Order Cart table
-CREATE TABLE consumerOrderCart ( 
-    cart_id INT AUTO_INCREMENT PRIMARY KEY,
-    subcategory_id INT NOT NULL,
-    -- Quantity must be greater than 1Kg
-    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
-    -- Foreign keys
-    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
-);
-
-
-
 -- DeliveryAddress
 CREATE TABLE deliveryAddress (
-    order_id INT PRIMARY KEY,
+    delivery_id INT PRIMARY KEY AUTO_INCREMENT,
+    consumer_id INT NOT NULL,
     consumer_name VARCHAR(255) NOT NULL,
     state VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
@@ -133,8 +100,81 @@ CREATE TABLE deliveryAddress (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
 
+            -- Hidden columns for future use 
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
     -- Foreign key
-    FOREIGN KEY (order_id) REFERENCES consumerOrders(order_id)
+    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id)
+);
+
+-- ConsumerOrder table
+CREATE TABLE consumerOrders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    consumer_id INT NOT NULL,
+    order_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+    order_time TIME NOT NULL DEFAULT (CURRENT_TIME),
+    delivery_id INT NOT NULL,
+    order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+
+    -- Maintaining the logs of Operations
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP INVISIBLE,
+
+            -- Hidden columns for future use 
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
+    -- Foreign key
+    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id),
+    FOREIGN KEY (delivery_id) REFERENCES deliveryAddress(delivery_id)
+);
+
+-- Consumer Order Item table
+CREATE TABLE consumerOrderItems (
+    item_id INT NOT NULL,
+    order_id INT NOT NULL,
+    subcategory_id INT NOT NULL,
+    -- Quantity must be greater than equal to 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg >= 1),
+
+    -- Hidden columns for future use
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+
+    -- Composite primary key
+    PRIMARY KEY (item_id, order_id),
+
+    -- Foreign keys
+    FOREIGN KEY (order_id) REFERENCES consumerOrders(order_id),
+    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
+);
+
+
+-- Consumer Order Cart table
+CREATE TABLE consumerOrderCart ( 
+    cart_id INT PRIMARY KEY AUTO_INCREMENT,
+    subcategory_id INT NOT NULL,
+    -- Quantity must be greater than 1Kg
+    quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
+
+    -- Hidden columns for future use 
+    extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col2 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col3 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
+    -- Foreign keys
+    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
 );
 
 -- View for Consumer
@@ -206,13 +246,15 @@ SELECT
     consumer_id,
     order_date,
     order_time,
+    delivery_id,
     order_status
 FROM consumerOrders;
 
 -- View for Delivery Address
 CREATE VIEW deliveryAddress_v AS
 SELECT 
-    order_id,
+    delivery_id,
+    consumer_id,
     consumer_name,
     state,
     city,
