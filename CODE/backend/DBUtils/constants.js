@@ -13,6 +13,7 @@ const supplier = {
   SUPPLIER_SELECTIONS: "supplierSelections_v",
   SUPPLIER_ORDERS: "supplierOrders_v",
   SUPPLIER_ORDER_ITEMS: "supplierOrderItems_v",
+  SUPPLIER_CART :"supplierOrderCart_v",
   PICKUP_ADDRESS: "pickupAddress_v",
 };
 
@@ -24,6 +25,7 @@ const consumer = {
   CONSUMER_SELECTIONS: "consumerSelections_v",
   CONSUMER_ORDERS: "consumerOrders_v",
   CONSUMER_ORDER_ITEMS: "consumerOrderitems_v",
+  CONSUMER_CART: "consumerOrderCart_v",
   DELIVERY_ADDRESS: "deliveryAddress_v",
 };
 

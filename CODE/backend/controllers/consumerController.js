@@ -126,4 +126,30 @@ const updateConsumer = (request, response) => {
   });
 };
 
-module.exports = { registerConsumer, loginConsumer, updateConsumer };
+const addToCart = (request, response) => {
+  const subCategoryId = request.params.id;
+  const { quantity } = request.body;
+  const values = [subCategoryId, quantity];
+  const statement = `INSERT INTO ${consumer.CONSUMER_CART} (subcategory_id, quantity_kg) VALUES (?, ?)`;
+  db.execute(statement, values, (error, result) => {
+    if (error) {
+      response
+        .status(400)
+        .json(
+          reply.onError(
+            400,
+            error,
+            "There was an error in the request fields are missing."
+          )
+        );
+    } else {
+      response
+        .status(201)
+        .json(
+          reply.onSuccess(201, result, "Order item added to cart successfully.")
+        );
+    }
+  });
+};
+
+module.exports = { registerConsumer, loginConsumer, updateConsumer, addToCart };

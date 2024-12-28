@@ -46,3 +46,5 @@
 {"method":"GET","url":"/common/getAllTrashSubCategories","status":"200","responseTime":"1.559"}
 {"method":"POST","url":"/consumer/signUp","status":"201","responseTime":"115.560"}
 {"method":"POST","url":"/consumer/signUp","status":"201","responseTime":"87.867"}
+{"method":"POST","url":"/consumer/addcart/1","status":"400","responseTime":"136.398"}
+{"method":"POST","url":"/consumer/addcart/1","status":"201","responseTime":"122.808"}

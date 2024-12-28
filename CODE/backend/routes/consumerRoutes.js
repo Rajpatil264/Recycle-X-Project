@@ -3,6 +3,7 @@ const {
   registerConsumer,
   loginConsumer,
   updateConsumer,
+  addToCart,
 } = require("../controllers/consumerController");
 const router = express.Router();
 
@@ -10,6 +11,6 @@ const router = express.Router();
 router.post("/signUp", registerConsumer);
 router.post("/signIn", loginConsumer);
 router.put("/update/:id", updateConsumer);
-router.put("/addcart/:id", updateConsumer);
+router.post("/addtocart/:id", addToCart);
 
 module.exports = router;
