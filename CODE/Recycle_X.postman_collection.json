@@ -15,12 +15,112 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/getServiceZones",
+							"raw": "{{url}}/common/getServiceZones",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"common",
 								"getServiceZones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTrashCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/common/getAllTrashCategories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"common",
+								"getAllTrashCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTrashSubCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/common/getAllTrashSubCategories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"common",
+								"getAllTrashSubCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllRecyclingCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/common/getAllRecyclingCategories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"common",
+								"getAllRecyclingCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllRecyclingSubCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/common/getAllRecyclingSubCategories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"common",
+								"getAllRecyclingSubCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findServiceByPincode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pincode\":400001\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/common/findServiceByPincode",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"common",
+								"findServiceByPincode"
 							]
 						}
 					},
@@ -32,13 +132,40 @@
 			"name": "Consumer",
 			"item": [
 				{
+					"name": "loginConsumer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"amit.sharma@example.com\",\r\n  \"password\":\"StrongPass@456\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "registerConsumer",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"firstName\": \"Rajesh\",\r\n  \"lastName\": \"Kumar\",\r\n  \"email\": \"rajeh.kumar@example.com\",\r\n  \"mobileNumber\": \"98765f2010\",\r\n  \"password\": \"SecurePass@123\",\r\n  \"state\": \"Maharashtra\",\r\n  \"city\": \"Mumbai\",\r\n  \"pincode\": \"400071\",\r\n  \"consumerType\":\"Individual\"\r\n}\r\n",
+							"raw": "{\r\n  \"firstName\": \"Amit\",\r\n  \"lastName\": \"Sharma\",\r\n  \"email\": \"amit.sharma@example.com\",\r\n  \"mobileNumber\": \"9876543210\",\r\n  \"password\": \"StrongPass@456\",\r\n  \"state\": \"Karnataka\",\r\n  \"city\": \"Bangalore\",\r\n  \"pincode\": \"560001\",\r\n  \"consumerType\": \"Individual\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,13 +186,13 @@
 					"response": []
 				},
 				{
-					"name": "loginConsumer",
+					"name": "updateConsumer",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"raj@example.com\",\r\n  \"password\":\"pass\"\r\n}\r\n",
+							"raw": "{\r\n  \"firstName\": \"Rajvardhan\",\r\n  \"lastName\": \"Patil\",\r\n  \"email\": \"raj@example.com\",\r\n  \"mobileNumber\": \"9075857927\",\r\n  \"password\": \"pass\",\r\n  \"state\": \"Maharashtra\",\r\n  \"city\": \"Kolhapur\",\r\n  \"pincode\": \"416114\",\r\n  \"consumerType\":\"Individual\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -73,13 +200,738 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/signIn",
+							"raw": "{{url}}/consumer/update/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"consumer",
-								"signIn"
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showCart",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/showcart",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"showcart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addToCart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/addcart/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"addcart",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeFromCart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/removecart/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"removecart",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllDeliveryAddress",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/delivery",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"delivery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addDeliveryAddress",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"consumerId\":\"1\",\r\n    \"consumerName\":\"sam\",\r\n    \"state\":\"asam\",\r\n    \"city\":\"guhahati\",\r\n   \"pincode\":\"500001\",\r\n    \"streetName\":\"barshi\",\r\n    \"landmark\":\"solapur\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/delivery",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"delivery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateDeliveryAddress",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"consumerId\":\"1\",\r\n    \"consumerName\":\"Raj\",\r\n    \"state\":\"Maharashtra\",\r\n    \"city\":\"guhahati\",\r\n   \"pincode\":\"500001\",\r\n    \"streetName\":\"barshi\",\r\n    \"landmark\":\"solapur\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/delivery/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"delivery",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDeliveryAddress",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/consumer/delivery/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"delivery",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "placeOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"consumerId\":1,\r\n    \"deliveryId\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/placeorder",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"placeorder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllOrdersByConsumer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/consumer/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOrderItemDetails",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderId\":2,\r\n    \"itemId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/orderdetail",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"orderdetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadProfileImg",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/raj20/Downloads/man.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/consumer/uploadimg/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"uploadimg",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Supplier",
+			"item": [
+				{
+					"name": "loginSupplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mobileNumber\": \"8859023471\",\r\n  \"password\":\"rakesh@456\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registerSupplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Rakesh\",\r\n  \"lastName\": \"Gupta\",\r\n  \"mobileNumber\": \"8859023471\",\r\n  \"password\": \"rakesh@456\",\r\n  \"state\": \"Uttar Pradesh\",\r\n  \"city\": \"Kanpur\",\r\n  \"pincode\": \"208001\",\r\n  \"supplierType\": \"Individual\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSupplier",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n \"firstName\": \"Rajvardhan\",\r\n \"lastName\": \"Patil\", \r\n \"mobileNumber\": \"7758067095\", \r\n \"password\": \"pass\", \r\n \"state\": \"Maharashtra\",\r\n \"city\": \"Satara\", \r\n \"pincode\": \"415116\",\r\n \"supplierType\": \"Individual\"    \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/update/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showCart",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJSYWtlc2giLCJsYXN0TmFtZSI6Ikd1cHRhIiwibW9iaWxlTnVtYmVyIjoiODg1OTAyMzQ3MSIsImlhdCI6MTczNTU3MzI4NX0.BSW3rep1n2BP1oEocrdP-_DH6Q-7WY4zzLAaeJiuH3g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/showcart",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"showcart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addToCart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJSYWtlc2giLCJsYXN0TmFtZSI6Ikd1cHRhIiwibW9iaWxlTnVtYmVyIjoiODg1OTAyMzQ3MSIsImlhdCI6MTczNTU3MzI4NX0.BSW3rep1n2BP1oEocrdP-_DH6Q-7WY4zzLAaeJiuH3g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/addcart/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"addcart",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeFromCart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/removecart/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"removecart",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPickUpAddress",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/pickup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"pickup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addPickUpAddress",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"supplierId\":1,\r\n    \"supplierName\":\"Dhanu\",\r\n    \"state\":\"Maharastra\",\r\n    \"city\":\"Satara\",\r\n    \"pincode\":53423,\r\n    \"street_name\":\"ShivajiChowk\",\r\n    \"landmark\":\"Near Shivaji Park\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/pickup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"pickup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePickUpAddress",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"supplierId\":1,\r\n    \"supplierName\":\"Dhanashri\",\r\n    \"state\":\"Maharastra\",\r\n    \"city\":\"Satara\",\r\n    \"pincode\":53459,\r\n    \"street_name\":\"ShivajiChowk\",\r\n    \"landmark\":\"Near Shivaji Park1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/pickup/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"pickup",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePickUpAddress",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/supplier/pickup/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"pickup",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showCart Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/consumer/showcart",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"consumer",
+								"showcart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "placeOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"supplierId\":1,\r\n    \"pickupId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/placeorder",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"placeorder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllOrdersBySupplier",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/orders/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOrderItemDetails",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderId\":1,\r\n    \"itemId\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/supplier/orderdetail",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"orderdetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadProfileImg",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/raj20/Downloads/man.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/supplier/uploadimg/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplier",
+								"uploadimg",
+								"1"
 							]
 						}
 					},

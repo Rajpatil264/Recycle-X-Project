@@ -68,7 +68,7 @@ CREATE TABLE trashCategories (
 -- Trash Sub-Categories Table
 CREATE TABLE trashSubCategories (
     subcategory_id INT PRIMARY KEY,
-    category_id INT NOT NULL,
+    category_id INT,
     subcategory_name VARCHAR(255) NOT NULL UNIQUE,
     price_per_kg FLOAT NOT NULL,
     subcategory_image VARCHAR(50) NOT NULL,
@@ -87,15 +87,15 @@ CREATE TABLE trashSubCategories (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key 
-    FOREIGN KEY (category_id) REFERENCES trashCategories(category_id)
+    FOREIGN KEY (category_id) REFERENCES trashCategories(category_id) ON DELETE SET NULL
 );
 
 
 -- (Many to Many Relationship table) Supplier & Categories
 CREATE TABLE supplierSelections (
     selection_id INT AUTO_INCREMENT PRIMARY KEY,
-    supplier_id INT NOT NULL,
-    category_id INT NOT NULL,
+    supplier_id INT ,
+    category_id INT ,
 
     -- Extra column for future use
     extra_col1 VARCHAR(255) DEFAULT NULL INVISIBLE,
@@ -105,15 +105,15 @@ CREATE TABLE supplierSelections (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key 
-    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id),
-    FOREIGN KEY (category_id) REFERENCES trashCategories(category_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id) ON DELETE SET NULL,
+    FOREIGN KEY (category_id) REFERENCES trashCategories(category_id) ON DELETE SET NULL
 );
 
 
 -- Pickup Address for each order
 CREATE TABLE pickupAddress (
-    pickup_id INT PRIMARY KEY,
-    supplier_id INT NOT NULL,
+    pickup_id INT PRIMARY KEY AUTO_INCREMENT,
+    supplier_id INT,
     supplier_name VARCHAR(255) NOT NULL,
     state VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
@@ -133,16 +133,16 @@ CREATE TABLE pickupAddress (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key 
-    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id) ON DELETE SET NULL
 );
 
 -- Supplier Order table
 CREATE TABLE supplierOrders (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    supplier_id INT NOT NULL,
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    supplier_id INT,
     order_date DATE NOT NULL DEFAULT (CURRENT_DATE),  
     order_time TIME NOT NULL DEFAULT (CURRENT_TIME), 
-    pickup_id INT NOT NULL,
+    pickup_id INT,
     order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
     -- Maintaining the logs of Operations
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP INVISIBLE,
@@ -156,8 +156,8 @@ CREATE TABLE supplierOrders (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key
-    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id),
-    FOREIGN KEY (pickup_id) REFERENCES pickupAddress(pickup_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id) ON DELETE SET NULL,
+    FOREIGN KEY (pickup_id) REFERENCES pickupAddress(pickup_id) ON DELETE SET NULL
 );
 
 
@@ -165,7 +165,7 @@ CREATE TABLE supplierOrders (
 CREATE TABLE supplierOrderItems (
     item_id INT NOT NULL,
     order_id INT NOT NULL,
-    subcategory_id INT NOT NULL,
+    subcategory_id INT,
     -- Quantity must be greater than 1Kg
     quantity_kg FLOAT NOT NULL CHECK(quantity_kg >=1),
 
@@ -176,15 +176,18 @@ CREATE TABLE supplierOrderItems (
     extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
+       -- Composite primary key
+    PRIMARY KEY (item_id, order_id),
+
     -- Foreign key 
     FOREIGN KEY (order_id) REFERENCES supplierOrders(order_id),
-    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
+    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id) ON DELETE SET NULL
 );
 
 -- Supplier Order Cart table
-CREATE TABLE supplierOrderCart (
-    cart_id INT AUTO_INCREMENT PRIMARY KEY,
-    subcategory_id INT NOT NULL,
+CREATE TABLE supplierCart (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    subcategory_id INT,
     -- Quantity must be greater than 1Kg
     quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
 
@@ -196,7 +199,7 @@ CREATE TABLE supplierOrderCart (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key 
-    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id)
+    FOREIGN KEY (subcategory_id) REFERENCES trashSubCategories(subcategory_id) ON DELETE SET NULL
 );
 
 
@@ -264,12 +267,12 @@ SELECT
     quantity_kg
 FROM supplierOrderItems;
 
-CREATE VIEW supplierOrderCart_v AS
+CREATE VIEW supplierCart_v AS
 SELECT 
-    cart_id,
+    item_id,
     subcategory_id,
     quantity_kg
-FROM supplierOrderCart;
+FROM supplierCart;
 
 -- View for SupplierOrders Table
 CREATE VIEW supplierOrders_v AS

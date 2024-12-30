@@ -52,7 +52,7 @@ CREATE TABLE recyclingCategories (
 -- RecyclingSubcategories
 CREATE TABLE recyclingSubcategories (
     subcategory_id INT AUTO_INCREMENT PRIMARY KEY,
-    rp_category_id INT NOT NULL,
+    rp_category_id INT,
     subcategory_name VARCHAR(255) NOT NULL UNIQUE,
     subcategory_image VARCHAR(50) NOT NULL,
     price_per_kg FLOAT NOT NULL CHECK (price_per_kg >=1),
@@ -71,24 +71,24 @@ CREATE TABLE recyclingSubcategories (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key
-    FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id)
+    FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id) ON DELETE SET NULL
 );
 
 -- ConsumerSelection Table (many to many relationship with consumer and recycling categories)
 CREATE TABLE consumerSelections (
     selection_id INT AUTO_INCREMENT PRIMARY KEY,
-    consumer_id INT NOT NULL,
-    rp_category_id INT NOT NULL,
+    consumer_id INT,
+    rp_category_id INT,
   
     -- Foreign key constraints
-    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id),
-    FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id)
+    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id) ON DELETE SET NULL,
+    FOREIGN KEY (rp_category_id) REFERENCES recyclingCategories(rp_category_id) ON DELETE SET NULL
 );
 
 -- DeliveryAddress
 CREATE TABLE deliveryAddress (
     delivery_id INT PRIMARY KEY AUTO_INCREMENT,
-    consumer_id INT NOT NULL,
+    consumer_id INT,
     consumer_name VARCHAR(255) NOT NULL,
     state VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
@@ -108,16 +108,16 @@ CREATE TABLE deliveryAddress (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key
-    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id)
+    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id) ON DELETE SET NULL
 );
 
 -- ConsumerOrder table
 CREATE TABLE consumerOrders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
-    consumer_id INT NOT NULL,
+    consumer_id INT ,
     order_date DATE NOT NULL DEFAULT (CURRENT_DATE),
     order_time TIME NOT NULL DEFAULT (CURRENT_TIME),
-    delivery_id INT NOT NULL,
+    delivery_id INT,
     order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
 
     -- Maintaining the logs of Operations
@@ -132,15 +132,15 @@ CREATE TABLE consumerOrders (
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
 
     -- Foreign key
-    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id),
-    FOREIGN KEY (delivery_id) REFERENCES deliveryAddress(delivery_id)
+    FOREIGN KEY (consumer_id) REFERENCES consumer(consumer_id) ON DELETE SET NULL,
+    FOREIGN KEY (delivery_id) REFERENCES deliveryAddress(delivery_id) ON DELETE SET NULL
 );
 
 -- Consumer Order Item table
 CREATE TABLE consumerOrderItems (
     item_id INT NOT NULL,
     order_id INT NOT NULL,
-    subcategory_id INT NOT NULL,
+    subcategory_id INT,
     -- Quantity must be greater than equal to 1Kg
     quantity_kg FLOAT NOT NULL CHECK(quantity_kg >= 1),
 
@@ -156,14 +156,14 @@ CREATE TABLE consumerOrderItems (
 
     -- Foreign keys
     FOREIGN KEY (order_id) REFERENCES consumerOrders(order_id),
-    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
+    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id) ON DELETE SET NULL
 );
 
 
 -- Consumer Order Cart table
-CREATE TABLE consumerOrderCart ( 
-    cart_id INT PRIMARY KEY AUTO_INCREMENT,
-    subcategory_id INT NOT NULL,
+CREATE TABLE consumerCart ( 
+    item_id INT PRIMARY KEY AUTO_INCREMENT,
+    subcategory_id INT,
     -- Quantity must be greater than 1Kg
     quantity_kg FLOAT NOT NULL CHECK(quantity_kg > 1),
 
@@ -174,7 +174,7 @@ CREATE TABLE consumerOrderCart (
     extra_col4 VARCHAR(255) DEFAULT NULL INVISIBLE,
     extra_col5 VARCHAR(255) DEFAULT NULL INVISIBLE,
     -- Foreign keys
-    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id)
+    FOREIGN KEY (subcategory_id) REFERENCES recyclingSubcategories(subcategory_id) ON DELETE SET NULL
 );
 
 -- View for Consumer
@@ -232,12 +232,12 @@ SELECT
 FROM consumerOrderItems;
 
 -- View for Consumer Order Items
-CREATE VIEW consumerOrderCart_v AS
+CREATE VIEW consumerCart_v AS
 SELECT 
-    cart_id,
+    item_id,
     subcategory_id,
     quantity_kg
-FROM consumerOrderCart;
+FROM consumerCart;
 
 -- View for Consumer Orders
 CREATE VIEW consumerOrders_v AS

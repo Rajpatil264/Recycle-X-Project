@@ -1,6 +1,6 @@
 const db = require("../DBUtils/connection");
 const { common, consumer, supplier } = require("../DBUtils/constants");
-const reply = require("../models/ApiStructure");
+const reply = require("../models/responseStructure");
 
 // Common Contoller
 const getAllServiceZones = (request, response) => {
