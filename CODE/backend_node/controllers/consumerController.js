@@ -29,13 +29,27 @@ const registerConsumer = (request, response) => {
           reply.onError(
             400,
             error,
-            "There was an error in the request fields are missing."
+            "Invalid request. Required fields are missing or incorrect."
           )
         );
     } else {
-      response
-        .status(201)
-        .json(reply.onSuccess(201, result, "Consumer inserted successfully."));
+      if (result.affectedRows === 0) {
+        response
+          .status(500)
+          .json(
+            reply.onError(
+              500,
+              null,
+              "Failed to register the consumer. Please try again."
+            )
+          );
+      } else {
+        response
+          .status(201)
+          .json(
+            reply.onSuccess(201, result, "Consumer registered successfully.")
+          );
+      }
     }
   });
 };
@@ -43,16 +57,16 @@ const registerConsumer = (request, response) => {
 const loginConsumer = (request, response) => {
   const encryptPass = String(crypto.SHA256(request.body.password));
   const values = [request.body.email, encryptPass];
-  const statement = `SELECT first_name, last_name, email FROM ${consumer.CONSUMER} WHERE email = ? AND password =?`;
+  const statement = `SELECT first_name, last_name, email, consumer_status FROM ${consumer.CONSUMER} WHERE email = ? AND password =?`;
   db.execute(statement, values, (error, result) => {
     if (error) {
       response
-        .status(404)
+        .status(500)
         .json(
           reply.onError(
-            404,
+            500,
             error,
-            "No records found for that credentials. Please try again."
+            "An error occurred while processing your request. Please try again later."
           )
         );
     } else {
@@ -62,6 +76,7 @@ const loginConsumer = (request, response) => {
           firstName: user["first_name"],
           lastName: user["last_name"],
           email: user["email"],
+          status: user["consumer_status"],
         };
         const token = jwt.sign(payload, config.SECRET_KEY);
 
@@ -71,7 +86,7 @@ const loginConsumer = (request, response) => {
             reply.onLoginSuccess(
               200,
               token,
-              "Logged-In successfully. Welcome to the application."
+              "Logged in successfully. Welcome to the application."
             )
           );
       } else {
@@ -80,8 +95,8 @@ const loginConsumer = (request, response) => {
           .json(
             reply.onError(
               404,
-              error,
-              "No records found for that credentials. Please try again."
+              null,
+              "No records found for the provided credentials. Please check and try again."
             )
           );
       }
@@ -115,17 +130,27 @@ const updateConsumer = (request, response) => {
     city = ?, 
     pincode = ?, 
     consumer_type = ? 
-    WHERE  consumer_id = ?`;
+    WHERE consumer_id = ?`;
 
   db.execute(statement, values, (error, result) => {
     if (error) {
+      response
+        .status(400)
+        .json(
+          reply.onError(
+            400,
+            error,
+            "Failed to update consumer details. Please check the data and try again."
+          )
+        );
+    } else if (result.affectedRows === 0) {
       response
         .status(404)
         .json(
           reply.onError(
             404,
-            error,
-            "Consumer not found or invalid update data provided."
+            null,
+            "Consumer not found with the provided ID. Please verify the consumer ID."
           )
         );
     } else {
@@ -141,6 +166,7 @@ const addToCart = (request, response) => {
   const { quantity } = request.body;
   const values = [subCategoryId, quantity];
   const statement = `INSERT INTO ${consumer.CONSUMER_CART} (subcategory_id, quantity_kg) VALUES (?, ?)`;
+
   db.execute(statement, values, (error, result) => {
     if (error) {
       response
@@ -149,14 +175,14 @@ const addToCart = (request, response) => {
           reply.onError(
             400,
             error,
-            "There was an error in the request fields are missing."
+            "There was an error in the request. Please ensure all required fields are provided correctly."
           )
         );
     } else {
       response
         .status(201)
         .json(
-          reply.onSuccess(201, result, "Order item added to cart successfully.")
+          reply.onSuccess(201, result, "Order item has been successfully added to the cart.")
         );
     }
   });
@@ -165,6 +191,7 @@ const addToCart = (request, response) => {
 const removeFromCart = (request, response) => {
   const cartId = request.params.id;
   const statement = `DELETE FROM ${consumer.CONSUMER_CART} WHERE item_id = ${cartId}`;
+
   db.execute(statement, (error, result) => {
     if (error) {
       response
@@ -173,26 +200,30 @@ const removeFromCart = (request, response) => {
           reply.onError(
             400,
             error,
-            "There was an error in the request fields are missing."
+            "There was an error with the request. Please verify the input and try again."
           )
         );
     } else {
       console.log(result.affectedRows);
       if (result.affectedRows == 1) {
         response
-          .status(201)
+          .status(200)
           .json(
             reply.onSuccess(
-              201,
+              200,
               result,
-              "Order item removed from cart successfully."
+              "Order item has been successfully removed from the cart."
             )
           );
       } else {
         response
-          .status(400)
+          .status(404)
           .json(
-            reply.onError(400, result, "The cart might be empty.(Bad Request)")
+            reply.onError(
+              404,
+              result,
+              "The item was not found in the cart or the cart is already empty."
+            )
           );
       }
     }
@@ -210,7 +241,7 @@ const showCart = (request, response) => {
           reply.onError(
             400,
             error,
-            "There was an error fetching the cart items."
+            "There was an error fetching the cart items. Please try again later."
           )
         );
     } else {
@@ -221,7 +252,9 @@ const showCart = (request, response) => {
             reply.onSuccess(200, results, "Cart items fetched successfully.")
           );
       } else {
-        response.status(404).json(reply.onError(404, null, "Cart is empty."));
+        response
+          .status(404)
+          .json(reply.onError(404, null, "Your cart is currently empty."));
       }
     }
   });
@@ -238,8 +271,9 @@ const addDeliveryAddress = (request, response) => {
     request.body.landmark,
   ];
 
-  const statement = `INSERT INTO ${consumer.DELIVERY_ADDRESS} (consumer_id, consumer_name, state, city, pincode, street_name,landmark) VALUES
+  const statement = `INSERT INTO ${consumer.DELIVERY_ADDRESS} (consumer_id, consumer_name, state, city, pincode, street_name, landmark) VALUES
   (?,?,?,?,?,?,?)`;
+
   db.execute(statement, values, (error, result) => {
     if (error) {
       response
@@ -248,16 +282,19 @@ const addDeliveryAddress = (request, response) => {
           reply.onError(
             400,
             error,
-            "There was an error in the request fields are missing."
+            "There was an issue with the request. Please ensure all required fields are provided correctly."
           )
         );
     } else {
       response
         .status(201)
-        .json(reply.onSuccess(201, result, "Address inserted successfully."));
+        .json(
+          reply.onSuccess(201, result, "Delivery address has been successfully added.")
+        );
     }
   });
 };
+
 
 const updateDeliveryAddress = (request, response) => {
   const deliveryId = request.params.id;
@@ -285,23 +322,32 @@ const updateDeliveryAddress = (request, response) => {
   db.execute(statement, values, (error, result) => {
     if (error) {
       response
-        .status(404)
+        .status(400)
         .json(
           reply.onError(
-            404,
+            400,
             error,
-            "address not found or invalid update data provided."
+            "Failed to update address. Please ensure the delivery ID is correct and all required fields are provided."
           )
         );
     } else {
-      response
-        .status(200)
-        .json(
-          reply.onSuccess(200, result, "Delivery address updated successfully.")
-        );
+      if (result.affectedRows === 0) {
+        response
+          .status(404)
+          .json(
+            reply.onError(404, null, "Address not found or no changes were made.")
+          );
+      } else {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(200, result, "Delivery address updated successfully.")
+          );
+      }
     }
   });
 };
+
 
 const getDeliveryAddress = (request, response) => {
   const statement = `SELECT * FROM ${consumer.DELIVERY_ADDRESS}`;
@@ -309,15 +355,28 @@ const getDeliveryAddress = (request, response) => {
   db.execute(statement, (error, result) => {
     if (error) {
       response
-        .status(404)
-        .json(reply.onError(404, error, "Addresses not found."));
+        .status(500)
+        .json(
+          reply.onError(
+            500,
+            error,
+            "There was an issue retrieving the delivery addresses. Please try again later."
+          )
+        );
     } else {
-      response
-        .status(200)
-        .json(reply.onSuccess(200, result, "All delivery address shown here."));
+      if (result.length > 0) {
+        response
+          .status(200)
+          .json(reply.onSuccess(200, result, "All delivery addresses fetched successfully."));
+      } else {
+        response
+          .status(404)
+          .json(reply.onError(404, null, "No delivery addresses found."));
+      }
     }
   });
 };
+
 
 const deleteDeliveryAddress = (request, response) => {
   const deliveryId = request.params.id;
@@ -327,17 +386,28 @@ const deleteDeliveryAddress = (request, response) => {
   db.execute(statement, (error, result) => {
     if (error) {
       response
-        .status(404)
-        .json(reply.onError(404, error, "Addresses not found."));
-    } else {
-      response
-        .status(200)
+        .status(500)
         .json(
-          reply.onSuccess(200, result, "Delivery address deleted successfully.")
+          reply.onError(
+            500,
+            error,
+            "There was an issue deleting the delivery address. Please try again later."
+          )
         );
+    } else {
+      if (result.affectedRows > 0) {
+        response
+          .status(200)
+          .json(reply.onSuccess(200, result, "Delivery address deleted successfully."));
+      } else {
+        response
+          .status(404)
+          .json(reply.onError(404, null, "No delivery address found with the provided ID."));
+      }
     }
   });
 };
+
 
 const placeOrder = (request, response) => {
   const consumer_id = request.body.consumerId;
@@ -348,15 +418,34 @@ const placeOrder = (request, response) => {
   db.execute(statement, [consumer_id, delivery_id], (error, result) => {
     if (error) {
       response
-        .status(400)
-        .json(reply.onError(400, error, "Something went wrong"));
+        .status(500)
+        .json(
+          reply.onError(
+            500,
+            error,
+            "There was an error processing your order. Please try again later."
+          )
+        );
     } else {
-      response
-        .status(200)
-        .json(reply.onSuccess(200, result, "Order placed successfully"));
+      if (result.affectedRows > 0) {
+        response
+          .status(200)
+          .json(reply.onSuccess(200, result, "Order placed successfully. We are processing your order."));
+      } else {
+        response
+          .status(400)
+          .json(
+            reply.onError(
+              400,
+              null,
+              "Unable to place the order. Please ensure your cart is not empty and try again."
+            )
+          );
+      }
     }
   });
 };
+
 
 const getAllOrders = (request, response) => {
   const consumerId = request.params.id;
@@ -381,19 +470,42 @@ ORDER BY
     co.order_date DESC, 
     co.order_id DESC;  
 `;
+
   db.execute(statement, (error, result) => {
     if (error) {
-      response.status(404).json(reply.onError(404, error, "No orders found"));
-    } else {
       response
-        .status(200)
-        .json(reply.onSuccess(200, result, "Orders retrieved successfully"));
+        .status(500)
+        .json(
+          reply.onError(
+            500,
+            error,
+            "There was an issue retrieving the orders. Please try again later."
+          )
+        );
+    } else {
+      if (result.length > 0) {
+        response
+          .status(200)
+          .json(reply.onSuccess(200, result, "Orders retrieved successfully."));
+      } else {
+        response
+          .status(404)
+          .json(
+            reply.onError(
+              404,
+              null,
+              "No orders found for this consumer. Please check back later."
+            )
+          );
+      }
     }
   });
 };
 
+
 const getOrderItemDetails = (request, response) => {
   const { orderId, itemId } = request.body;
+
   const statement = `
   SELECT 
     co.order_id,
@@ -413,53 +525,61 @@ const getOrderItemDetails = (request, response) => {
     da.pincode,
     da.street_name,
     da.landmark
-FROM 
+  FROM 
     ${consumer.CONSUMER_ORDERS} co
-LEFT JOIN 
+  LEFT JOIN 
     ${consumer.CONSUMER_ORDER_ITEMS} coi ON co.order_id = coi.order_id
-LEFT JOIN 
+  LEFT JOIN 
     ${consumer.RECYCLING_SUBCATEGORIES} rs ON coi.subcategory_id = rs.subcategory_id
-LEFT JOIN 
+  LEFT JOIN 
     ${consumer.DELIVERY_ADDRESS} da ON co.delivery_id = da.delivery_id
-WHERE 
-    co.order_id = ${orderId} AND coi.item_id = ${itemId};
+  WHERE 
+    co.order_id = ? AND coi.item_id = ?;
 `;
-  db.execute(statement, (error, result) => {
+
+  db.execute(statement, [orderId, itemId], (error, result) => {
     if (error) {
-      response.status(404).json(reply.onError(404, error, "No orders found"));
-    } else {
       response
-        .status(200)
-        .json(
-          reply.onSuccess(200, result, "Order Details retrieved successfully")
-        );
+        .status(500)
+        .json(reply.onError(500, error, "Error retrieving order item details. Please try again later."));
+    } else {
+      if (result.length > 0) {
+        response
+          .status(200)
+          .json(reply.onSuccess(200, result, "Order details retrieved successfully."));
+      } else {
+        response
+          .status(404)
+          .json(reply.onError(404, null, "No order item found with the provided details."));
+      }
     }
   });
 };
+
 
 const uploadProfileImg = (request, response) => {
   if (!request.file) {
     return response
       .status(400)
-      .json(reply.onError(400, null, "No file provided."));
+      .json(reply.onError(400, null, "No file provided. Please upload a file."));
   }
 
   const imagePath = `Uploads/Consumer_Images/${request.file.filename}`;
   const consumerId = request.params.id;
 
-  // Update the database with the image path
   const statement = `UPDATE ${consumer.CONSUMER} SET imageName = ? WHERE consumer_id = ?`;
+
   db.execute(statement, [imagePath, consumerId], (error, result) => {
     if (error) {
       return response
         .status(500)
-        .json(reply.onError(500, error, "Failed to upload profile image."));
+        .json(reply.onError(500, error, "Failed to upload profile image. Please try again."));
     }
 
     if (result.affectedRows === 0) {
       return response
         .status(404)
-        .json(reply.onError(404, null, "consumer not found. Update failed."));
+        .json(reply.onError(404, null, "Consumer not found. Profile image update failed."));
     }
 
     response
@@ -473,6 +593,7 @@ const uploadProfileImg = (request, response) => {
       );
   });
 };
+
 
 module.exports = {
   registerConsumer,

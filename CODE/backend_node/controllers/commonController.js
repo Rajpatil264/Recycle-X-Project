@@ -13,15 +13,31 @@ const getAllServiceZones = (request, response) => {
           reply.onError(
             500,
             error,
-            "The requested table or view does not exist in the database."
+            "An error occurred while accessing the database. The requested table or view might not exist."
           )
         );
     } else {
-      response
-        .status(200)
-        .json(
-          reply.onSuccess(200, result, "Service Zones Fetched Successfully.")
-        );
+      if (result.length == 0) {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "No service zones are available at this time."
+            )
+          );
+      } else {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "Service zones retrieved successfully."
+            )
+          );
+      }
     }
   });
 };
@@ -37,7 +53,7 @@ const findServiceByPincode = (request, response) => {
           reply.onError(
             500,
             error,
-            "The requested table or view does not exist in the database."
+            "An error occurred while accessing the database. The requested table or view might not exist."
           )
         );
     } else {
@@ -48,14 +64,18 @@ const findServiceByPincode = (request, response) => {
             reply.onSuccess(
               200,
               result,
-              "Sorry , no service zone found for this pincode."
+              "No service zones found for the provided pincode."
             )
           );
       } else {
         response
           .status(200)
           .json(
-            reply.onSuccess(200, result, "Service Zones Fetched Successfully.")
+            reply.onSuccess(
+              200,
+              result,
+              "Service zones retrieved successfully for the provided pincode."
+            )
           );
       }
     }
@@ -72,15 +92,31 @@ const getAllTrashCategories = (request, response) => {
           reply.onError(
             500,
             error,
-            "The requested table or view does not exist in the database."
+            "An error occurred while accessing the database. The requested table or view might not exist."
           )
         );
     } else {
-      response
-        .status(200)
-        .json(
-          reply.onSuccess(200, result, "Trash Categories Fetched Successfully.")
-        );
+      if (result.length == 0) {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "No trash categories are available at this time."
+            )
+          );
+      } else {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "Trash categories retrieved successfully."
+            )
+          );
+      }
     }
   });
 };
@@ -95,19 +131,31 @@ const getAllTrashSubCategories = (request, response) => {
           reply.onError(
             500,
             error,
-            "The requested table or view does not exist in the database."
+            "An error occurred while accessing the database. The requested table or view might not exist."
           )
         );
     } else {
-      response
-        .status(200)
-        .json(
-          reply.onSuccess(
-            200,
-            result,
-            "Trash Sub-Categories Fetched Successfully."
-          )
-        );
+      if (result.length === 0) {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "No trash subcategories are available at this time."
+            )
+          );
+      } else {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "Trash subcategories retrieved successfully."
+            )
+          );
+      }
     }
   });
 };
@@ -122,18 +170,35 @@ const getAllRecyclingCategories = (request, response) => {
           reply.onError(
             500,
             error,
-            "The requested table or view does not exist in the database."
+            "An error occurred while accessing the database. The requested table or view might not exist."
           )
         );
     } else {
-      response
-        .status(200)
-        .json(
-          reply.onSuccess(200, result, "Trash Categories Fetched Successfully.")
-        );
+      if (result.length === 0) {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "No recycling categories are available at this time."
+            )
+          );
+      } else {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "Recycling categories retrieved successfully."
+            )
+          );
+      }
     }
   });
 };
+
 
 const getAllRecyclingSubCategories = (request, response) => {
   const statement = `SELECT * FROM ${consumer.RECYCLING_SUBCATEGORIES}`;
@@ -145,18 +210,35 @@ const getAllRecyclingSubCategories = (request, response) => {
           reply.onError(
             500,
             error,
-            "The requested table or view does not exist in the database."
+            "An error occurred while accessing the database. The requested table or view might not exist."
           )
         );
     } else {
-      response
-        .status(200)
-        .json(
-          reply.onSuccess(200, result, "Trash Categories Fetched Successfully.")
-        );
+      if (result.length === 0) {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "No recycled subcategories are available at this time."
+            )
+          );
+      } else {
+        response
+          .status(200)
+          .json(
+            reply.onSuccess(
+              200,
+              result,
+              "Recycled subcategories retrieved successfully."
+            )
+          );
+      }
     }
   });
 };
+
 
 module.exports = {
   getAllServiceZones,

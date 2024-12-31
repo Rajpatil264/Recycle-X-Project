@@ -33,7 +33,7 @@ app.use((request, response, next) => {
         request.headers.authorization,
         config.SECRET_KEY
       );
-      if (payload != null) {
+      if (payload != null && payload.status == "Active") {
         next();
       }
     } else {
