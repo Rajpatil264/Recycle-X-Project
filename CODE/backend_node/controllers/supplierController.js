@@ -49,7 +49,9 @@ const registerSupplier = (request, response) => {
 const loginSupplier = (request, response) => {
   const encryptPass = String(crypto.SHA256(request.body.password));
   const values = [request.body.mobileNumber, encryptPass];
-  const statement = `SELECT first_name, last_name, mobile_number,supplier_status FROM ${supplier.SUPPLIER} WHERE mobile_number = ? AND password = ?`;
+  const statement = `SELECT first_name, last_name, mobile_number, supplier_status 
+                     FROM ${supplier.SUPPLIER} 
+                     WHERE mobile_number = ? AND password = ? AND supplier_status = 'Active'`;
 
   db.execute(statement, values, (error, result) => {
     if (error) {
@@ -81,17 +83,18 @@ const loginSupplier = (request, response) => {
         );
     } else {
       return response
-        .status(404)
+        .status(401)
         .json(
           reply.onError(
-            404,
+            401,
             null,
-            "No records found for the provided credentials. Please check and try again."
+            "Invalid credentials or your account is inactive. Please contact support if needed."
           )
         );
     }
   });
 };
+
 
 const updateSupplier = (request, response) => {
   const supplierId = request.params.id;

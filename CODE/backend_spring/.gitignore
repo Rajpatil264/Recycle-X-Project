@@ -57,7 +57,7 @@ local/
 *.key
 
 # Docker
-docker-compose.override.yml
+docker-compose.override.yml  
 .env
 
 # Node.js / npm (if used)

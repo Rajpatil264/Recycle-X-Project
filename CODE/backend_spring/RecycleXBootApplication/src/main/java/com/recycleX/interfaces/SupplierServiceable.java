@@ -1,5 +1,10 @@
 package com.recycleX.interfaces;
 
-public interface SupplierServiceable {
+import java.util.List;
 
+import com.recycleX.entities.Supplier;
+
+public interface SupplierServiceable {
+	public List<Supplier> fetchAllSuppliers();
+	public Supplier fetchSupplierById(int id);
 }

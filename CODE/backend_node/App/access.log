@@ -1,13 +1,3 @@
-{"method":"POST","url":"/consumer/signin","status":"200","responseTime":"158.087"}
-{"method":"GET","url":"/consumer/showcart","status":"403","responseTime":"6.567"}
-{"method":"GET","url":"/consumer/showcart","status":"404","responseTime":"127.428"}
-{"method":"GET","url":"/consumer/showcart","status":"404","responseTime":"145.244"}
-{"method":"POST","url":"/consumer/addcart/1","status":"403","responseTime":"20.004"}
-{"method":"POST","url":"/consumer/signUp","status":"403","responseTime":"27.223"}
-{"method":"POST","url":"/consumer/signup","status":"400","responseTime":"146.447"}
-{"method":"POST","url":"/consumer/signup","status":"500","responseTime":"26.580"}
-{"method":"POST","url":"/consumer/signin","status":"200","responseTime":"15.989"}
-{"method":"GET","url":"/","status":"403","responseTime":"1.353"}
-{"method":"GET","url":"/favicon.ico","status":"403","responseTime":"0.540"}
-{"method":"GET","url":"/admin/consumers","status":"403","responseTime":"0.487"}
-{"method":"GET","url":"/favicon.ico","status":"403","responseTime":"0.705"}
+{"method":"GET","url":"/supplier/showcart","status":"403","responseTime":"5.878"}
+{"method":"POST","url":"/supplier/signin","status":"200","responseTime":"189.846"}
+{"method":"GET","url":"/supplier/showcart","status":"200","responseTime":"113.131"}

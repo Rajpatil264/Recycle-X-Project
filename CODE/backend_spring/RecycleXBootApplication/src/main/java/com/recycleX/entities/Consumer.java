@@ -1,55 +1,25 @@
-package com.recycleX.entites;
+package com.recycleX.entities;
 
 import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Consumer {
 
-    @JsonProperty
-    ("consumer_id")
-    private int consumerId;
-
-    @JsonProperty("first_name")
+    private Integer consumerId;
     private String firstName;
-
-    @JsonProperty("last_name")
     private String lastName;
-
-    @JsonProperty
     private String email;
-
-    @JsonProperty("mobile_number")
     private String mobileNumber;
-
-    @JsonProperty
     private String password;
-
-    @JsonProperty
     private String state;
-
-    @JsonProperty
     private String city;
-
-    @JsonProperty("image_name")
     private String imageName;
-
-    @JsonProperty
     private String pincode;
-
-    @JsonProperty("consumer_type")
     private String consumerType;
-
-    @JsonProperty("consumer_status")
     private String consumerStatus;
-
-    @JsonProperty("registered_at")
     private Timestamp registeredAt;
-
-    @JsonProperty("last_modified_at")
     private Timestamp lastModifiedAt;
 
-	public Consumer(int consumerId, String firstName, String lastName, String email, String mobileNumber,
+	public Consumer(Integer consumerId, String firstName, String lastName, String email, String mobileNumber,
 			String password, String state, String city, String imageName, String pincode, String consumerType,
 			String consumerStatus, Timestamp registeredAt, Timestamp lastModifiedAt) {
 		this.consumerId = consumerId;
@@ -68,7 +38,7 @@ public class Consumer {
 		this.lastModifiedAt = lastModifiedAt;
 	}
 
-	public int getConsumerId() {
+	public Integer getConsumerId() {
 		return consumerId;
 	}
 
@@ -124,7 +94,7 @@ public class Consumer {
 		return lastModifiedAt;
 	}
 
-	public void setConsumerId(int consumerId) {
+	public void setConsumerId(Integer consumerId) {
 		this.consumerId = consumerId;
 	}
 

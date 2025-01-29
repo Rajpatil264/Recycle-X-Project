@@ -1,6 +1,6 @@
 package com.recycleX.mapper;
 
-import com.recycleX.entites.Consumer;
+import com.recycleX.entities.Consumer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

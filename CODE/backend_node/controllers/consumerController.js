@@ -57,7 +57,10 @@ const registerConsumer = (request, response) => {
 const loginConsumer = (request, response) => {
   const encryptPass = String(crypto.SHA256(request.body.password));
   const values = [request.body.email, encryptPass];
-  const statement = `SELECT first_name, last_name, email, consumer_status FROM ${consumer.CONSUMER} WHERE email = ? AND password =?`;
+  const statement = `SELECT first_name, last_name, email, consumer_status 
+                     FROM ${consumer.CONSUMER} 
+                     WHERE email = ? AND password = ? AND consumer_status = 'Active'`;
+
   db.execute(statement, values, (error, result) => {
     if (error) {
       response
@@ -91,18 +94,19 @@ const loginConsumer = (request, response) => {
           );
       } else {
         response
-          .status(404)
+          .status(401)
           .json(
             reply.onError(
-              404,
+              401,
               null,
-              "No records found for the provided credentials. Please check and try again."
+              "Invalid credentials or your account is inactive. Please contact support if needed."
             )
           );
       }
     }
   });
 };
+
 
 const updateConsumer = (request, response) => {
   const consumerId = request.params.id;

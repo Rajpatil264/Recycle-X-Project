@@ -1,50 +1,24 @@
-package com.recycleX.entites;
+package com.recycleX.entities;
 
 import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Supplier {
-    @JsonProperty("supplier_id")
-    private int supplierId;
 
-    @JsonProperty("first_name")
-    private String firstName;
+	private Integer supplierId;
+	private String firstName;
+	private String lastName;
+	private String mobileNumber;
+	private String password;
+	private String state;
+	private String city;
+	private String imageName;
+	private String pincode;
+	private String supplierType;
+	private String supplierStatus;
+	private Timestamp registeredAt;
+	private Timestamp lastModifiedAt;
 
-    @JsonProperty("last_name")
-    private String lastName;
-
-    @JsonProperty("mobile_number")
-    private String mobileNumber;
-
-    @JsonProperty
-    private String password;
-
-    @JsonProperty
-    private String state;
-
-    @JsonProperty
-    private String city;
-
-    @JsonProperty("image_name")
-    private String imageName;
-
-    @JsonProperty
-    private String pincode;
-
-    @JsonProperty("supplier_type")
-    private String supplierType;
-
-    @JsonProperty("supplier_status")
-    private String supplierStatus;
-
-    @JsonProperty("registered_at")
-    private Timestamp registeredAt;
-
-    @JsonProperty("last_modified_at")
-    private Timestamp lastModifiedAt;
-
-	public Supplier(int supplierId, String firstName, String lastName, String mobileNumber, String password,
+	public Supplier(Integer supplierId, String firstName, String lastName, String mobileNumber, String password,
 			String state, String city, String imageName, String pincode, String supplierType, String supplierStatus,
 			Timestamp registeredAt, Timestamp lastModifiedAt) {
 		this.supplierId = supplierId;
@@ -62,7 +36,7 @@ public class Supplier {
 		this.lastModifiedAt = lastModifiedAt;
 	}
 
-	public int getSupplierId() {
+	public Integer getSupplierId() {
 		return supplierId;
 	}
 
@@ -114,7 +88,7 @@ public class Supplier {
 		return lastModifiedAt;
 	}
 
-	public void setSupplierId(int supplierId) {
+	public void setSupplierId(Integer supplierId) {
 		this.supplierId = supplierId;
 	}
 
@@ -174,6 +148,5 @@ public class Supplier {
 				+ ", supplierStatus=" + supplierStatus + ", registeredAt=" + registeredAt + ", lastModifiedAt="
 				+ lastModifiedAt + "]";
 	}
-    
-	
+
 }
