@@ -15,9 +15,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/common/getServiceZones",
+							"raw": "{{urlnode}}/common/getServiceZones",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"common",
@@ -33,9 +33,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/common/getAllTrashCategories",
+							"raw": "{{urlnode}}/common/getAllTrashCategories",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"common",
@@ -51,9 +51,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/common/getAllTrashSubCategories",
+							"raw": "{{urlnode}}/common/getAllTrashSubCategories",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"common",
@@ -69,9 +69,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/common/getAllRecyclingCategories",
+							"raw": "{{urlnode}}/common/getAllRecyclingCategories",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"common",
@@ -87,9 +87,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/common/getAllRecyclingSubCategories",
+							"raw": "{{urlnode}}/common/getAllRecyclingSubCategories",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"common",
@@ -114,9 +114,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/common/findServiceByPincode",
+							"raw": "{{urlnode}}/common/findServiceByPincode",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"common",
@@ -146,9 +146,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/signin",
+							"raw": "{{urlnode}}/consumer/signin",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -165,7 +165,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"firstName\": \"Amit\",\r\n  \"lastName\": \"Sharma\",\r\n  \"email\": \"amit.sharma@example.com\",\r\n  \"mobileNumber\": \"9876543210\",\r\n  \"password\": \"StrongPass@456\",\r\n  \"state\": \"Karnataka\",\r\n  \"city\": \"Bangalore\",\r\n  \"pincode\": \"560001\",\r\n  \"consumerType\": \"Individual\"\r\n}\r\n",
+							"raw": "{\r\n  \"firstName\": \"Amit\",\r\n  \"lastName\": \"Sharma\",\r\n  \"email\": \"amit.shvxcarma@example.com\",\r\n  \"mobileNumber\": \"9476543210\",\r\n  \"password\": \"StrongPass@456\",\r\n  \"state\": \"Karnataka\",\r\n  \"city\": \"Bangalore\",\r\n  \"pincode\": \"560001\",\r\n  \"consumerType\": \"Individual\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -173,13 +173,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/signUp",
+							"raw": "{{urlnode}}/consumer/signup",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
-								"signUp"
+								"signup"
 							]
 						}
 					},
@@ -200,9 +200,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/update/1",
+							"raw": "{{urlnode}}/consumer/update/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -220,7 +220,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJBbWl0IiwibGFzdE5hbWUiOiJTaGFybWEiLCJlbWFpbCI6ImFtaXQuc2hhcm1hQGV4YW1wbGUuY29tIiwic3RhdHVzIjoiQWN0aXZlIiwiaWF0IjoxNzM1NjQzOTU1fQ.4SQyB00H7ignCAe5JLGOCUewHQWFqZTQvTu8EMLCLE0",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -231,9 +237,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/showcart",
+							"raw": "{{urlnode}}/consumer/showcart",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -258,9 +264,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/addcart/1",
+							"raw": "{{urlnode}}/consumer/addcart/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -286,9 +292,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/removecart/3",
+							"raw": "{{urlnode}}/consumer/removecart/3",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -317,9 +323,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/delivery",
+							"raw": "{{urlnode}}/consumer/delivery",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -344,9 +350,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/delivery",
+							"raw": "{{urlnode}}/consumer/delivery",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -371,9 +377,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/delivery/1",
+							"raw": "{{urlnode}}/consumer/delivery/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -390,9 +396,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/consumer/delivery/1",
+							"raw": "{{urlnode}}/consumer/delivery/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -418,9 +424,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/placeorder",
+							"raw": "{{urlnode}}/consumer/placeorder",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -436,13 +442,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/consumer/orders",
+							"raw": "{{urlnode}}/consumer/orders/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
-								"orders"
+								"orders",
+								"1"
 							]
 						}
 					},
@@ -463,9 +470,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/consumer/orderdetail",
+							"raw": "{{urlnode}}/consumer/orderdetail",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -491,9 +498,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/consumer/uploadimg/1",
+							"raw": "{{urlnode}}/consumer/uploadimg/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"consumer",
@@ -524,9 +531,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/signin",
+							"raw": "{{urlnode}}/supplier/signin",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -551,9 +558,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/signup",
+							"raw": "{{urlnode}}/supplier/signup",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -578,9 +585,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/update/1",
+							"raw": "{{urlnode}}/supplier/update/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -601,7 +608,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJSYWtlc2giLCJsYXN0TmFtZSI6Ikd1cHRhIiwibW9iaWxlTnVtYmVyIjoiODg1OTAyMzQ3MSIsImlhdCI6MTczNTU3MzI4NX0.BSW3rep1n2BP1oEocrdP-_DH6Q-7WY4zzLAaeJiuH3g",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJSYWtlc2giLCJsYXN0TmFtZSI6Ikd1cHRhIiwibW9iaWxlTnVtYmVyIjoiODg1OTAyMzQ3MSIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTczNzg3NDE1Nn0.OLPkqvpCLNaiTKW1eZKvsAL1uYkQH4WOB-iEZm6zTrA",
 								"type": "text"
 							}
 						],
@@ -615,9 +622,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/showcart",
+							"raw": "{{urlnode}}/supplier/showcart",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -648,9 +655,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/addcart/1",
+							"raw": "{{urlnode}}/supplier/addcart/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -676,9 +683,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/removecart/2",
+							"raw": "{{urlnode}}/supplier/removecart/2",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -707,9 +714,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/pickup",
+							"raw": "{{urlnode}}/supplier/pickup",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -734,9 +741,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/pickup",
+							"raw": "{{urlnode}}/supplier/pickup",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -761,9 +768,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/pickup/1",
+							"raw": "{{urlnode}}/supplier/pickup/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -780,44 +787,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/supplier/pickup/2",
+							"raw": "{{urlnode}}/supplier/pickup/2",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
 								"pickup",
 								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "showCart Copy",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/consumer/showcart",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"consumer",
-								"showcart"
 							]
 						}
 					},
@@ -868,9 +845,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/orders/1",
+							"raw": "{{urlnode}}/supplier/orders/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -896,9 +873,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/supplier/orderdetail",
+							"raw": "{{urlnode}}/supplier/orderdetail",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -924,9 +901,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/supplier/uploadimg/1",
+							"raw": "{{urlnode}}/supplier/uploadimg/1",
 							"host": [
-								"{{url}}"
+								"{{urlnode}}"
 							],
 							"path": [
 								"supplier",
@@ -938,6 +915,212 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Supplier",
+					"item": [
+						{
+							"name": "getAllSuppliers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllSupplierById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Consumer",
+					"item": [
+						{
+							"name": "getAllConsumers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllConsumerById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "adminLogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"raj@gmail.com\",\r\n    \"password\": \"pass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urladmin}}/admin/signin",
+					"host": [
+						"{{urladmin}}"
+					],
+					"path": [
+						"admin",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "adminRegister",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Rajvardhan\",\r\n    \"lastName\": \"Patil\",\r\n    \"email\": \"raj@example.com\",\r\n    \"password\": \"pass\",\r\n    \"isActive\": 1\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urladmin}}/admin/signup",
+					"host": [
+						"{{urladmin}}"
+					],
+					"path": [
+						"admin",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "adminUpdate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Dhansshri\",\r\n    \"lastName\": \"Patil\",\r\n    \"email\": \"Dhanu@example.com\",\r\n    \"password\": \"pass\",\r\n    \"isActive\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urladmin}}/admin/1",
+					"host": [
+						"{{urladmin}}"
+					],
+					"path": [
+						"admin",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllAdmins",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urladmin}}/admin/",
+					"host": [
+						"{{urladmin}}"
+					],
+					"path": [
+						"admin",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteAdminById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{urladmin}}/admin/1",
+					"host": [
+						"{{urladmin}}"
+					],
+					"path": [
+						"admin",
+						"1"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -964,8 +1147,13 @@
 	],
 	"variable": [
 		{
-			"key": "url",
+			"key": "urlnode",
 			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "urladmin",
+			"value": "http://localhost:8080",
 			"type": "string"
 		}
 	]
