@@ -109,19 +109,18 @@ public class SupplierAdminController {
 
 	@PostMapping(value = "/addTrashSubcategory", produces = "application/json")
 	public ResponseStructure addTrashSubcategory(@RequestParam("categoryId") int categoryId,
-	                                             @RequestParam("subcategoryName") String subcategoryName,
-	                                             @RequestParam("pricePerKg") float pricePerKg,
-	                                             @RequestParam("subcategoryImage") MultipartFile subcategoryImage) {
-	    try {
-	        TrashSubCategory trashSubCategory = new TrashSubCategory(0, categoryId, subcategoryName, pricePerKg, subcategoryImage);
-	        int status = serviceable.addTrashSubCategory(trashSubCategory);
-	        return ResponseStructure.onSuccess(200, status, "Trash Subcategory added successfully.");
-	    } catch (Exception e) {
-	        return ResponseStructure.onError(500, null, "Error occurred while uploading the image.");
-	    }
+			@RequestParam("subcategoryName") String subcategoryName, @RequestParam("pricePerKg") float pricePerKg,
+			@RequestParam("subcategoryImage") MultipartFile subcategoryImage) {
+		try {
+			TrashSubCategory trashSubCategory = new TrashSubCategory(0, categoryId, subcategoryName, pricePerKg,
+					subcategoryImage);
+			int status = serviceable.addTrashSubCategory(trashSubCategory);
+			return ResponseStructure.onSuccess(200, status, "Trash Subcategory added successfully.");
+		} catch (Exception e) {
+			return ResponseStructure.onError(500, null, "Error occurred while uploading the image.");
+		}
 	}
 
-	
 	@GetMapping("/monthlyTrash/{supplierId}")
 	public ResponseStructure getMonthlyTrash(@PathVariable int supplierId) {
 		List<SupplierTrashSummary> data = serviceable.getMonthlyTrashSummary(supplierId);
@@ -163,4 +162,5 @@ public class SupplierAdminController {
 			return ResponseStructure.onError(404, null, "No data found for yearly trash summary.");
 		}
 	}
+
 }

@@ -9,7 +9,7 @@ public class TrashCategory {
     private MultipartFile categoryImage;
     
 	public TrashCategory(int categoryId, String categoryName, String categoryDescription, MultipartFile categoryImage) {
-		super();
+		
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
 		this.categoryDescription = categoryDescription;

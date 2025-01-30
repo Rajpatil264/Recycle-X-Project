@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.recycleX.entities.Consumer;
+import com.recycleX.entities.RecyclingCategory;
+import com.recycleX.entities.RecyclingSubCategory;
 import com.recycleX.interfaces.ConsumerDaoable;
 import com.recycleX.interfaces.ConsumerServiceable;
 import com.recycleX.models.consumer.ConsumerOrder;
 import com.recycleX.models.consumer.ConsumerOrderItem;
+import com.recycleX.models.consumer.ConsumerRecyclingSummary;
 
 @Service
 public class ConsumerServiceImpl implements ConsumerServiceable {
@@ -50,6 +53,36 @@ public class ConsumerServiceImpl implements ConsumerServiceable {
 	@Override
 	public int updatePriceBySubcategoryId(int subcategoryId, double price) {
 		return daoable.modifyPriceBySubcategoryId(subcategoryId,price);
+	}
+
+	@Override
+	public int addRecyclingCategory(RecyclingCategory recyclingCategory) {
+		return daoable.saveRecyclingCategory(recyclingCategory);
+	}
+
+	@Override
+	public int addRecyclingSubCategory(RecyclingSubCategory recyclingSubcategory) {
+		return daoable.saveRecyclingSubCategory(recyclingSubcategory);
+	}
+
+	@Override
+	public List<ConsumerRecyclingSummary> getMonthlyRecyclingSummary(int consumerId) {
+		return daoable.findMonthlyRecyclingSummary(consumerId);
+	}
+
+	@Override
+	public List<ConsumerRecyclingSummary> getYearlyRecyclingSummary(int consumerId) {
+		return daoable.findYearlyRecyclingSummary(consumerId);
+	}
+
+	@Override
+	public List<ConsumerRecyclingSummary> getYearlyRecyclingSummaryForAll() {
+		return daoable.findYearlyRecyclingSummaryForAll();
+	}
+
+	@Override
+	public List<ConsumerRecyclingSummary> getMonthlyRecyclingSummaryForAll() {
+		return daoable.findMonthlyRecyclingSummaryForAll();
 	}
 
 }
