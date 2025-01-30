@@ -103,24 +103,28 @@ public class SupplierDaoImpl implements SupplierDaoable {
 
 	@Override
 	public List<SupplierTrashSummary> findMonthlyTrashSummaryForAll() {
-		String sql = "SELECT ts.category_id, ts.category_name, SUM(soi.quantity_kg) AS total_quantity_kg, 'monthly' AS period "
-				+ "FROM supplierorderitems_v soi "
-				+ "JOIN trashsubcategories ts ON soi.subcategory_id = ts.subcategory_id "
-				+ "JOIN supplierorders_v so ON soi.order_id = so.order_id "
-				+ "WHERE so.order_status = 'completed' AND YEAR(so.order_date) = YEAR(CURDATE()) "
-				+ "AND MONTH(so.order_date) = MONTH(CURDATE()) " + "GROUP BY ts.category_id, ts.category_name";
+		String sql = "SELECT tc.category_id, tc.category_name, SUM(soi.quantity_kg) AS total_quantity_kg, 'monthly' AS period " +
+                "FROM supplierorderitems_v soi " +
+                "JOIN trashsubcategories_v ts ON soi.subcategory_id = ts.subcategory_id " +
+                "JOIN trashcategories_v tc ON ts.category_id = tc.category_id " +  // Corrected Join
+                "JOIN supplierorders_v so ON soi.order_id = so.order_id " +
+                "WHERE so.order_status = 'completed' " +
+                "AND YEAR(so.order_date) = YEAR(CURDATE()) " +
+                "AND MONTH(so.order_date) = MONTH(CURDATE()) " +
+                "GROUP BY tc.category_id, tc.category_name";
 
 		return jdbcTemplate.query(sql, summaryRowMapper);
 	}
 
 	@Override
 	public List<SupplierTrashSummary> findYearlyTrashSummaryForAll() {
-		String sql = "SELECT ts.category_id, ts.category_name, SUM(soi.quantity_kg) AS total_quantity_kg, 'yearly' AS period "
-				+ "FROM supplierorderitems_v soi "
-				+ "JOIN trashsubcategories ts ON soi.subcategory_id = ts.subcategory_id "
-				+ "JOIN supplierorders_v so ON soi.order_id = so.order_id "
-				+ "WHERE so.order_status = 'completed' AND YEAR(so.order_date) = YEAR(CURDATE()) "
-				+ "GROUP BY ts.category_id, ts.category_name";
+		String sql = "SELECT tc.category_id, tc.category_name, SUM(soi.quantity_kg) AS total_quantity_kg, 'yearly' AS period "
+	            + "FROM supplierorderitems_v soi "
+	            + "JOIN trashsubcategories_v ts ON soi.subcategory_id = ts.subcategory_id "
+	            + "JOIN trashcategories_v tc ON ts.category_id = tc.category_id "
+	            + "JOIN supplierorders_v so ON soi.order_id = so.order_id "
+	            + "WHERE so.order_status = 'completed' AND YEAR(so.order_date) = YEAR(CURDATE()) "
+	            + "GROUP BY tc.category_id, tc.category_name";
 
 		return jdbcTemplate.query(sql, summaryRowMapper);
 	}
