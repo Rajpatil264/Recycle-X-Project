@@ -2,8 +2,6 @@ package com.recycleX.entities;
 
 import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Admin {
 	
 	private Integer adminId;

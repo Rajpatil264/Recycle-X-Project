@@ -47,7 +47,7 @@ CREATE TABLE serviceZones (
 
 -- Trash Categories Table
 CREATE TABLE trashCategories (
-    category_id INT PRIMARY KEY,
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(255) NOT NULL UNIQUE,
     category_image VARCHAR(50) NOT NULL,
     category_description TEXT NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE trashCategories (
 
 -- Trash Sub-Categories Table
 CREATE TABLE trashSubCategories (
-    subcategory_id INT PRIMARY KEY,
+    subcategory_id INT PRIMARY KEY AUTO_INCREMENT,
     category_id INT,
     subcategory_name VARCHAR(255) NOT NULL UNIQUE,
     price_per_kg FLOAT NOT NULL,

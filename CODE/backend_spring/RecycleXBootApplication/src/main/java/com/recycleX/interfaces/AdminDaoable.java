@@ -3,6 +3,7 @@ package com.recycleX.interfaces;
 import java.util.List;
 
 import com.recycleX.entities.Admin;
+import com.recycleX.entities.ServiceZone;
 
 public interface AdminDaoable {
 	public Admin findAdminByEmail(String email);
@@ -14,4 +15,12 @@ public interface AdminDaoable {
 	public List<Admin> findAllAdmins();
 	
 	public int delete(int adminId);
+
+	public int saveServiceZone(ServiceZone zone);
+
+	public int removeServiceZone(int pincode);
+
+	public int modifyService(int pincode, ServiceZone zone);
+
+	public List<ServiceZone> findAllServiceZone();
 }

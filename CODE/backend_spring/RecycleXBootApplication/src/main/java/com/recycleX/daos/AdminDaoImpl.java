@@ -6,9 +6,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.recycleX.entities.Admin;
+import com.recycleX.entities.ServiceZone;
 import com.recycleX.interfaces.AdminDaoable;
 import java.util.*;
 import com.recycleX.mapper.AdminRowMapper;
+import com.recycleX.mapper.ServiceZoneRowMapper;
 
 @Repository
 public class AdminDaoImpl implements AdminDaoable {
@@ -18,6 +20,9 @@ public class AdminDaoImpl implements AdminDaoable {
 
 	@Autowired
 	private AdminRowMapper mapper;
+	
+	@Autowired
+	private ServiceZoneRowMapper zoneMapper;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -53,14 +58,39 @@ public class AdminDaoImpl implements AdminDaoable {
 
 	@Override
 	public List<Admin> findAllAdmins() {
-	    String sql = "SELECT admin_id, first_name, last_name, email, password, is_active, created_at, updated_at FROM admin WHERE is_active = 1";
-	    return jdbcTemplate.query(sql, mapper);
+		String sql = "SELECT admin_id, first_name, last_name, email, password, is_active, created_at, updated_at FROM admin WHERE is_active = 1";
+		return jdbcTemplate.query(sql, mapper);
 	}
 
 	@Override
 	public int delete(int adminId) {
-		String sql="UPDATE admin SET is_active = 0 WHERE admin_id = ?";
-		return jdbcTemplate.update(sql,adminId);
+		String sql = "UPDATE admin SET is_active = 0 WHERE admin_id = ?";
+		return jdbcTemplate.update(sql, adminId);
 	}
 
+	@Override
+	public int saveServiceZone(ServiceZone zone) {
+		String sql = "INSERT INTO servicezones_v (pincode, state, city, district, service_type) VALUES (?, ?, ?, ?, ?)";
+		return jdbcTemplate.update(sql, zone.getPincode(), zone.getState(), zone.getCity(), zone.getDistrict(),
+				zone.getServiceType());
+	}
+
+	@Override
+	public int removeServiceZone(int pincode) {
+		String sql = "DELETE FROM servicezones_v WHERE pincode = ?";
+		return jdbcTemplate.update(sql, pincode);
+	}
+
+	@Override
+	public int modifyService(int pincode, ServiceZone zone) {
+		String sql = "UPDATE servicezones_v SET state = ?, city = ?, district = ?, service_type = ? WHERE pincode = ?";
+		return jdbcTemplate.update(sql, zone.getState(), zone.getCity(), zone.getDistrict(), zone.getServiceType(),
+				pincode);
+	}
+
+	@Override
+	public List<ServiceZone> findAllServiceZone() {
+		String sql = "SELECT pincode, state, city, district, service_type FROM servicezones_v";
+		return jdbcTemplate.query(sql, zoneMapper);
+	}
 }

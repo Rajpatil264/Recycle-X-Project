@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.recycleX.entities.Admin;
+import com.recycleX.entities.ServiceZone;
 import com.recycleX.interfaces.AdminDaoable;
 import com.recycleX.interfaces.AdminServiceable;
 
@@ -47,6 +48,26 @@ public class AdminServiceImpl implements AdminServiceable {
 	@Override
 	public int deleteAdmin(int adminId) {
 		return daoable.delete(adminId);
+	}
+
+	@Override
+	public int addService(ServiceZone zone) {
+		return daoable.saveServiceZone(zone);
+	}
+
+	@Override
+	public int deleteService(int pincode) {
+		return daoable.removeServiceZone(pincode);
+	}
+
+	@Override
+	public int updateService(int pincode, ServiceZone zone) {
+		return daoable.modifyService(pincode, zone);
+	}
+
+	@Override
+	public List<ServiceZone> fetchAllServiceZone() {
+		return daoable.findAllServiceZone();
 	}
 }
 

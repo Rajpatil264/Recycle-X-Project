@@ -1,4 +1,4 @@
-package com.recycleX.mapper;
+package com.recycleX.mapper.supplier;
 
 import com.recycleX.entities.Supplier;
 

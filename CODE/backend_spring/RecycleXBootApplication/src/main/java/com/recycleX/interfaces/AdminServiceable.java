@@ -3,6 +3,7 @@ package com.recycleX.interfaces;
 import java.util.List;
 
 import com.recycleX.entities.Admin;
+import com.recycleX.entities.ServiceZone;
 
 public interface AdminServiceable {
 	public Admin verifyAdmin(String email, String rawPasswd);
@@ -14,4 +15,12 @@ public interface AdminServiceable {
 	public List<Admin> fetchAllAdmins();
 	
 	public int deleteAdmin(int adminId);
+
+	public int addService(ServiceZone zone);
+
+	public int deleteService(int pincode);
+
+	public int updateService(int pincode, ServiceZone zone);
+
+	public List<ServiceZone> fetchAllServiceZone();
 }
