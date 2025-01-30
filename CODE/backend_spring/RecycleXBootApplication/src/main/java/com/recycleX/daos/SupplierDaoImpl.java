@@ -145,7 +145,7 @@ public class SupplierDaoImpl implements SupplierDaoable {
 	public int saveTrashCategory(TrashCategory trashCategory) {
 		try {
 			String imageName = FileUploadUtils.saveImage(trashCategory.getCategoryImage(),
-					"src/main/resources/supplierImages/categories/");
+					"supplierImages/categories/");
 			// SQL to insert trash category data into the database
 			String sql = "INSERT INTO trashcategories_v (category_name, category_description, category_image) "
 					+ "VALUES (?, ?, ?)";
@@ -163,7 +163,7 @@ public class SupplierDaoImpl implements SupplierDaoable {
 	public int saveTrashSubCategory(TrashSubCategory trashSubcategory) {
 		try {
 			String imageName = FileUploadUtils.saveImage(trashSubcategory.getSubcategoryImage(),
-					"src/main/resources/supplierImages/subcategories/");
+					"supplierImages/subcategories/");
 			String sql = "INSERT INTO trashsubcategories_v (category_id, subcategory_name, price_per_kg, subcategory_image) "
 					+ "VALUES (?, ?, ?, ?)";
 			return jdbcTemplate.update(sql, trashSubcategory.getCategoryId(), trashSubcategory.getSubcategoryName(),
