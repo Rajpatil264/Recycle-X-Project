@@ -5,12 +5,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.recycleX.entities.Admin;
-import com.recycleX.entities.ServiceZone;
+import com.recycleX.entities.*;
 import com.recycleX.interfaces.AdminDaoable;
 import java.util.*;
-import com.recycleX.mapper.AdminRowMapper;
-import com.recycleX.mapper.ServiceZoneRowMapper;
+import com.recycleX.mapper.*;
 
 @Repository
 public class AdminDaoImpl implements AdminDaoable {

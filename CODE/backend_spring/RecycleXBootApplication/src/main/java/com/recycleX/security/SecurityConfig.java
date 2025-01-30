@@ -9,21 +9,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable() // Disable CSRF for testing purposes
-            .authorizeRequests()
-                .anyRequest().permitAll() // Allow all requests
-            .and()
-            .formLogin().disable(); // Disable the default login page
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-        return http.build();
-    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf().disable() // Disable CSRF for testing purposes
+				.authorizeRequests().anyRequest().permitAll() // Allow all requests
+				.and().formLogin().disable(); // Disable the default login page
+
+		return http.build();
+	}
 }
-

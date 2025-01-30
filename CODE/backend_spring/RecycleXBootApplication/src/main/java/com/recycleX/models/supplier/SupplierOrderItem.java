@@ -1,12 +1,12 @@
 package com.recycleX.models.supplier;
 
 public class SupplierOrderItem {
-    private Integer subcategoryId;
-    private String subcategoryName;
-    private Integer quantity;
-    private Double totalPrice;
-    private String imageName;
-    
+	private Integer subcategoryId;
+	private String subcategoryName;
+	private Integer quantity;
+	private Double totalPrice;
+	private String imageName;
+
 	public SupplierOrderItem(Integer subcategoryId, String subcategoryName, Integer quantity, Double totalPrice,
 			String imageName) {
 		this.subcategoryId = subcategoryId;
@@ -61,5 +61,5 @@ public class SupplierOrderItem {
 		return "SupplierOrderItem [subcategoryId=" + subcategoryId + ", subcategoryName=" + subcategoryName
 				+ ", quantity=" + quantity + ", totalPrice=" + totalPrice + ", imageName=" + imageName + "]";
 	}
-    
+
 }

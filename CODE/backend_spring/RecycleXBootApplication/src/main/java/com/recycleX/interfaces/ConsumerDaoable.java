@@ -2,12 +2,8 @@ package com.recycleX.interfaces;
 
 import java.util.List;
 
-import com.recycleX.entities.Consumer;
-import com.recycleX.entities.RecyclingCategory;
-import com.recycleX.entities.RecyclingSubCategory;
-import com.recycleX.models.consumer.ConsumerOrder;
-import com.recycleX.models.consumer.ConsumerOrderItem;
-import com.recycleX.models.consumer.ConsumerRecyclingSummary;
+import com.recycleX.entities.*;
+import com.recycleX.models.consumer.*;
 
 public interface ConsumerDaoable {
 	public List<Consumer> findAllConsumers();

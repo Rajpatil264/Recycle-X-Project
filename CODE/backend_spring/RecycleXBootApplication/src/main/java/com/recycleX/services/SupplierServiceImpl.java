@@ -5,21 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.recycleX.entities.Supplier;
-import com.recycleX.entities.TrashCategory;
-import com.recycleX.entities.TrashSubCategory;
-import com.recycleX.interfaces.SupplierDaoable;
-import com.recycleX.interfaces.SupplierServiceable;
-import com.recycleX.models.supplier.SupplierOrder;
-import com.recycleX.models.supplier.SupplierOrderItem;
-import com.recycleX.models.supplier.SupplierTrashSummary;
+import com.recycleX.entities.*;
+import com.recycleX.interfaces.*;
+import com.recycleX.models.supplier.*;
 
 @Service
 public class SupplierServiceImpl implements SupplierServiceable {
 
 	@Autowired
 	private SupplierDaoable daoable;
-	
+
 	@Override
 	public List<Supplier> fetchAllSuppliers() {
 		return daoable.findAllSuppliers();
@@ -67,12 +62,12 @@ public class SupplierServiceImpl implements SupplierServiceable {
 
 	@Override
 	public int updateOrderStatus(int orderId, String status) {
-		return daoable.modifyOrderStatus(orderId,status);
+		return daoable.modifyOrderStatus(orderId, status);
 	}
 
 	@Override
 	public int updatePriceBySubcategoryId(int subcategoryId, double newPrice) {
-		return daoable.modifyPriceBySubcategoryId(subcategoryId,newPrice);
+		return daoable.modifyPriceBySubcategoryId(subcategoryId, newPrice);
 	}
 
 	@Override

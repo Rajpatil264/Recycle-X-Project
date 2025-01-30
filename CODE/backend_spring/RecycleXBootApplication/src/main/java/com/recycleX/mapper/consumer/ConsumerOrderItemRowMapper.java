@@ -9,13 +9,9 @@ import java.sql.SQLException;
 
 @Component
 public class ConsumerOrderItemRowMapper implements RowMapper<ConsumerOrderItem> {
-    @Override
-    public ConsumerOrderItem mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new ConsumerOrderItem(
-                rs.getInt("subcategory_id"),
-                rs.getString("subcategory_name"),
-                rs.getInt("quantity_kg"),
-                rs.getString("image_name")
-        );
-    }
+	@Override
+	public ConsumerOrderItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return new ConsumerOrderItem(rs.getInt("subcategory_id"), rs.getString("subcategory_name"),
+				rs.getInt("quantity_kg"), rs.getString("image_name"));
+	}
 }

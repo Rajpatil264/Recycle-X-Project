@@ -1,13 +1,13 @@
 package com.recycleX.models.supplier;
 
 public class SupplierOrder {
-    private Integer orderId;
-    private String orderDate;
-    private String orderTime;
-    private Integer pickupId;
-    private String orderStatus;
-    private String address;
-    
+	private Integer orderId;
+	private String orderDate;
+	private String orderTime;
+	private Integer pickupId;
+	private String orderStatus;
+	private String address;
+
 	public SupplierOrder(Integer orderId, String orderDate, String orderTime, Integer pickupId, String orderStatus,
 			String address) {
 		this.orderId = orderId;
@@ -71,5 +71,5 @@ public class SupplierOrder {
 		return "SupplierOrder [orderId=" + orderId + ", orderDate=" + orderDate + ", orderTime=" + orderTime
 				+ ", pickupId=" + pickupId + ", orderStatus=" + orderStatus + ", address=" + address + "]";
 	}
-    
+
 }

@@ -2,8 +2,7 @@ package com.recycleX.interfaces;
 
 import java.util.List;
 
-import com.recycleX.entities.Admin;
-import com.recycleX.entities.ServiceZone;
+import com.recycleX.entities.*;
 
 public interface AdminDaoable {
 	public Admin findAdminByEmail(String email);

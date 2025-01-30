@@ -7,17 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.recycleX.entities.Consumer;
-import com.recycleX.entities.RecyclingCategory;
-import com.recycleX.entities.RecyclingSubCategory;
+import com.recycleX.entities.*;
 import com.recycleX.interfaces.ConsumerDaoable;
-import com.recycleX.mapper.consumer.ConsumerOrderItemRowMapper;
-import com.recycleX.mapper.consumer.ConsumerOrderRowMapper;
-import com.recycleX.mapper.consumer.ConsumerRecyclingSummaryRowMapper;
-import com.recycleX.mapper.consumer.ConsumerRowMapper;
-import com.recycleX.models.consumer.ConsumerOrder;
-import com.recycleX.models.consumer.ConsumerOrderItem;
-import com.recycleX.models.consumer.ConsumerRecyclingSummary;
+import com.recycleX.mapper.consumer.*;
+import com.recycleX.models.consumer.*;
 import com.recycleX.services.FileUploadUtils;
 
 @Repository
@@ -86,7 +79,7 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
 	public int saveRecyclingCategory(RecyclingCategory recyclingCategory) {
 		try {
 			String imageName = FileUploadUtils.saveImage(recyclingCategory.getCategoryImage(),
-					"src/main/resources/consumerImages/categories/");
+					"/src/main/resources/consumerImages/categories/");
 			
 			String sql = "INSERT INTO recyclingcategories_v (rp_category_name, category_description, rp_category_image) VALUES (?, ?, ?)";
 
@@ -104,7 +97,7 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
         try {
             String imageName = FileUploadUtils.saveImage(
                     recyclingSubcategory.getSubcategoryImage(), 
-                    "src/main/resources/consumerImages/subcategories/"
+                    "/src/main/resources/consumerImages/subcategories/"
             );
 
             String sql = "INSERT INTO recyclingsubcategories_v (rp_category_id, subcategory_name, price_per_kg, subcategory_image) VALUES (?, ?, ?, ?)";

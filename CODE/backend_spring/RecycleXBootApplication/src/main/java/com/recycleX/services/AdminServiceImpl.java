@@ -6,38 +6,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.recycleX.entities.Admin;
-import com.recycleX.entities.ServiceZone;
-import com.recycleX.interfaces.AdminDaoable;
-import com.recycleX.interfaces.AdminServiceable;
+import com.recycleX.entities.*;
+import com.recycleX.interfaces.*;
 
 @Service
 public class AdminServiceImpl implements AdminServiceable {
 
 	@Autowired
 	private AdminDaoable daoable;
-	
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder; 
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public Admin verifyAdmin(String email, String rawPasswd) {
 		Admin admin = daoable.findAdminByEmail(email);
 		if (admin != null && passwordEncoder.matches(rawPasswd, admin.getPassword())) {
-	        return admin;
-        } else {
-            throw new RuntimeException("Invalid email or password");
-        }
+			return admin;
+		} else {
+			throw new RuntimeException("Invalid email or password");
+		}
 	}
 
 	@Override
-	public int saveAdmin (Admin admin) {
+	public int saveAdmin(Admin admin) {
 		return daoable.save(admin);
 	}
 
 	@Override
 	public int updateAdmin(int adminId, Admin admin) {
-		return daoable.update(adminId,admin);
+		return daoable.update(adminId, admin);
 	}
 
 	@Override
@@ -70,4 +68,3 @@ public class AdminServiceImpl implements AdminServiceable {
 		return daoable.findAllServiceZone();
 	}
 }
-
