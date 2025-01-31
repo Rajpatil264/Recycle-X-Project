@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d40710ac-c8d7-4b3d-8f4c-80942e745a69",
+		"_postman_id": "62da2a44-a78c-411a-848f-2b6c1e5750f2",
 		"name": "Recycle_X",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "40302480"
+		"_exporter_id": "40302114"
 	},
 	"item": [
 		{
@@ -961,7 +961,7 @@
 							"response": []
 						},
 						{
-							"name": "getAllSupplierById",
+							"name": "getSupplierById",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -974,6 +974,259 @@
 										"admin",
 										"supplier",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSupplierOrdersById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/orders/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"orders",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSupplierOrderItemsById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/orderItems/3",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"orderItems",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateSupplierOrderStatus",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/updateOrderStatus/1?status=completed",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"updateOrderStatus",
+										"1"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "completed"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updatePrice",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/updatePrice/2?price=200.20",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"updatePrice",
+										"2"
+									],
+									"query": [
+										{
+											"key": "price",
+											"value": "200.20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addTrashCategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "categoryName",
+											"value": "plasticScrap",
+											"type": "text"
+										},
+										{
+											"key": "categoryDescription",
+											"value": "plastic bottles garbage",
+											"type": "text"
+										},
+										{
+											"key": "categoryImage",
+											"type": "file",
+											"src": "/E:/Recycle-X-Project/Recycle-X-Project/IMAGES/GARBAGE IMAGES/Plastic_Scrap_X1.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/addTrashCategory",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"addTrashCategory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addTrashSubcategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "categoryId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "subcategoryName",
+											"value": "softPlastic",
+											"type": "text"
+										},
+										{
+											"key": "pricePerKg",
+											"value": "50.50",
+											"type": "text"
+										},
+										{
+											"key": "subcategoryImage",
+											"type": "file",
+											"src": "/E:/Recycle-X-Project/Recycle-X-Project/IMAGES/GARBAGE IMAGES/Plastic_Scrap_X1.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/addTrashSubcategory",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"addTrashSubcategory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getMonthlyTrashById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/monthlyTrash/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"monthlyTrash",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getYearlyTrashById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/yearlyTrash/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"yearlyTrash",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getMonthlyTrashForAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/monthlyTrashAll",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"monthlyTrashAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getYearlyTrashForAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/supplier/yearlyTrashAll",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"supplier",
+										"yearlyTrashAll"
 									]
 								}
 							},
@@ -1036,6 +1289,254 @@
 										"admin",
 										"consumer",
 										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getConsumerAllOrders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/orders/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"orders",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getConsumerOrderItems",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/orderItems/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"orderItems",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateConsumerOrderStatusById",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/updateOrderStatus/1?status=completed",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"updateOrderStatus",
+										"1"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "completed"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updatePriceById",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/updatePrice/1?price=20.20",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"updatePrice",
+										"1"
+									],
+									"query": [
+										{
+											"key": "price",
+											"value": "20.20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addRecyclingCategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "categoryName",
+											"value": "plastic",
+											"type": "text"
+										},
+										{
+											"key": "categoryDescription",
+											"value": "recycled pieces of plastic",
+											"type": "text"
+										},
+										{
+											"key": "categoryImage",
+											"type": "file",
+											"src": "/E:/Recycle-X-Project/Recycle-X-Project/IMAGES/GARBAGE IMAGES/Plastic_Scrap_X1.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/addRecyclingCategory",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"addRecyclingCategory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addRecyclingSubCategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "categoryId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "pricePerKg",
+											"value": "20.20",
+											"type": "text"
+										},
+										{
+											"key": "subcategoryImage",
+											"type": "file",
+											"src": "/E:/Recycle-X-Project/Recycle-X-Project/IMAGES/GARBAGE IMAGES/Plastic_Scrap_X1.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/addRecyclingSubcategory",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"addRecyclingSubcategory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getMonthlyRecycling",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/monthlyRecycling/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"monthlyRecycling",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getYearlyRecycling",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/yearlyRecycling/1",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"yearlyRecycling",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getMonthlyRecyclingForAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/monthlyRecyclingAll",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"monthlyRecyclingAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getYearlyRecyclingForAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urladmin}}/admin/consumer/yearlyRecyclingAll",
+									"host": [
+										"{{urladmin}}"
+									],
+									"path": [
+										"admin",
+										"consumer",
+										"yearlyRecyclingAll"
 									]
 								}
 							},
