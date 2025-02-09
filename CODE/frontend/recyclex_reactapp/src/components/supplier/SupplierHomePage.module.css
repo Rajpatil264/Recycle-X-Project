@@ -1,0 +1,29 @@
+.supplier-home-page {
+    display: flex;
+    flex-direction: column;
+    /* Make the page content flow vertically */
+    min-height: 100vh;
+    /* Ensure the page takes up full viewport height */
+}
+
+.main-content {
+    flex: 1;
+    /* Allow the main content to expand and fill available space */
+    padding: 2rem;
+    /* Add some padding around the content */
+    background-color: #f9f9f9;
+    /* Example background color for the main content */
+}
+
+.main-content h1 {
+    margin-bottom: 1rem;
+}
+
+.main-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.main-content li {
+    margin-bottom: 0.5rem;
+}

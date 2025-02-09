@@ -34,7 +34,7 @@ const upload = multer({ storage: storage });
 // Request to Controller
 router.post("/signup", registerConsumer);
 router.post("/signin", loginConsumer);
-router.get("/email", getConsumerByEmail);
+router.post("/email", getConsumerByEmail);
 router.put("/update/:id", updateConsumer);
 router.post("/addcart/:id", addToCart);
 router.delete("/removecart/:id", removeFromCart);

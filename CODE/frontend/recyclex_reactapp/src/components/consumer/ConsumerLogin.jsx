@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './SupplierLogin.module.css';
-import wavingCharacter from '../../assets/gifs/SupplierLoginPage.gif';
+import styles from './ConsumerLogin.module.css'; // Import your CSS module
+import wavingCharacter from '../../assets/gifs/ConsumerLoginPage.gif'; // Import consumer GIF
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMobileAlt, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
-const SupplierLogin = () => {
+const ConsumerLogin = () => {
     const navigate = useNavigate();
-    const [mobileNumber, setMobileNumber] = useState('');
+    const [email, setEmail] = useState(''); // Use email for consumer
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -20,41 +20,35 @@ const SupplierLogin = () => {
 
         if (Object.keys(validationErrors).length === 0) {
             try {
-                const signInResponse = await axios.post('http://localhost:5000/supplier/signin', {
-                    mobileNumber,
+                const signInResponse = await axios.post('http://localhost:5000/consumer/signin', {
+                    email,
                     password,
                 });
 
-                debugger;
                 if (signInResponse.data.status === 'success') {
                     const token = signInResponse.data.token;
                     sessionStorage.setItem('token', token);
+                    debugger;
                     try {
-                        const storedToken = sessionStorage.getItem('token');
-                        console.log("Sending Token:", storedToken);
-
-                        const supplierResponse = await axios.post('http://localhost:5000/supplier/mobile', {
-                            mobile: mobileNumber,
-                        }, {
+                        const consumerResponse = await axios.post('http://localhost:5000/consumer/email', { email }, {
                             headers: {
-                                Authorization: storedToken ? `Bearer ${storedToken}` : "",
+                                Authorization: `Bearer ${sessionStorage.getItem('token')}`,
                             },
                         });
 
-                        if (supplierResponse.data.status === 'success') {
-                            const supplierId = supplierResponse.data.data.supplier_id;
-                            sessionStorage.setItem('supplierId', supplierId);
-                            navigate('/supplier/dashboard');
+                        if (consumerResponse.data.status === 'success') {
+                            const consumerId = consumerResponse.data.data.id;
+                            sessionStorage.setItem('consumerId', consumerId);
+                            navigate('/consumer/dashboard');
                         } else {
-                            alert(supplierResponse.data.message || 'Error fetching supplier details.');
+                            alert(consumerResponse.data.message || 'Error fetching consumer details.');
                         }
                     } catch (error) {
-                        console.error('Error fetching supplier details:', error);
+                        console.error('Error fetching consumer details:', error);
                         alert('An error occurred. Please try again later.');
                     }
-
                 } else {
-                    alert(signInResponse.data.message || 'Invalid mobile number or password.');
+                    alert(signInResponse.data.message || 'Invalid email or password.');
                 }
             } catch (error) {
                 console.error('Error signing in:', error);
@@ -65,10 +59,10 @@ const SupplierLogin = () => {
 
     const validateForm = () => {
         let errors = {};
-        if (!mobileNumber) {
-            errors.mobileNumber = 'Mobile number is required';
-        } else if (!isValidMobileNumber(mobileNumber)) {
-            errors.mobileNumber = 'Invalid mobile number format';
+        if (!email) {
+            errors.email = 'Email is required';
+        } else if (!isValidEmail(email)) {
+            errors.email = 'Invalid email format';
         }
         if (!password) {
             errors.password = 'Password is required';
@@ -76,9 +70,10 @@ const SupplierLogin = () => {
         return errors;
     };
 
-    const isValidMobileNumber = (mobileNumber) => {
-        return /^[0-9]{10}$/.test(mobileNumber);
+    const isValidEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
+
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(true);
@@ -93,21 +88,21 @@ const SupplierLogin = () => {
                 <img src={wavingCharacter} alt="Waving Character" className={styles.wavingImage} />
             </div>
             <div className={styles.formSide}>
-                <h2>Supplier Login</h2>
+                <h2 className='consumer-title'>Consumer Login</h2>
                 <form onSubmit={handleSubmit} className={styles.loginForm}>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="mobileNumber">Mobile Number</label>
+                        <label htmlFor="email">Email</label>
                         <div className={styles.inputWithIcon}>
-                            <FontAwesomeIcon icon={faMobileAlt} className={styles.inputIcon} />
+                            <FontAwesomeIcon icon={faEnvelope} className={styles.inputIcon} />
                             <input
-                                type="text"
-                                id="mobileNumber"
-                                value={mobileNumber}
-                                onChange={(e) => setMobileNumber(e.target.value)}
-                                className={`${styles.input} ${errors.mobileNumber ? styles.error : ''}`}
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className={`${styles.input} ${errors.email ? styles.error : ''}`}
                             />
                         </div>
-                        {errors.mobileNumber && <span className={styles.errorMessage}>{errors.mobileNumber}</span>}
+                        {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
                     </div>
                     <div className={styles.inputGroup}>
                         <label htmlFor="password">Password</label>
@@ -138,4 +133,4 @@ const SupplierLogin = () => {
     );
 };
 
-export default SupplierLogin;
+export default ConsumerLogin;

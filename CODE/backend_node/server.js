@@ -9,55 +9,56 @@ const commonRoutes = require("./routes/commanRoutes");
 const consumerRoutes = require("./routes/consumerRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 
-// cors
-app.use(cors({
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-// Middleware
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(appendFileLogs);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use((request, response, next) => {
-  if (request.url.includes("/signin") || request.url.includes("/signup") || request.url.includes("/verifyEmail")) {
+app.use((req, res, next) => {
+  const excludedPaths = ["/supplier/signin", "/supplier/signup", "/supplier/verifyEmail", "/consumer/signin", "/consumer/signup", "/consumer/verifyEmail", "/common/signin", "/common/signup", "/common/verifyEmail"]; // Add other excluded paths
+
+  if (excludedPaths.includes(req.path)) {
     next();
   } else {
-    if (
-      request.headers.authorization != null ||
-      request.headers.authorization != undefined
-    ) {
-      const authHeader = request.headers.authorization;
-      if (authHeader.startsWith("Bearer ")) {
-        const token = authHeader.split(" ")[1];
-        const payload = jwt.verify(token, config.SECRET_KEY);
-        if (payload != null && payload.status == "Active") {
-          next();
-        } else {
-          response
-            .status(403)
-            .json(reply.onError(403, null, "Invalid or expired token"));
-        }
-      } else {
-        response
-          .status(403)
-          .json(reply.onError(403, null, "Bearer token required"));
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(403).json(reply.onError(403, null, "Bearer token required"));
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    try {
+      const payload = jwt.verify(token, config.SECRET_KEY);
+      if (!payload || payload.status !== "Active") {
+        return res.status(403).json(reply.onError(403, null, "Invalid or expired token"));
       }
-    } else {
-      response
-        .status(403)
-        .json(reply.onError(403, null, "Token required to access the APIs"));
+      req.user = payload;
+      next();
+    } catch (err) {
+      return res.status(403).json(reply.onError(403, null, "Invalid or expired token"));
     }
   }
 });
-
 
 // Routing
 app.use("/supplier", supplierRoutes);
 app.use("/consumer", consumerRoutes);
 app.use("/common", commonRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json(reply.onError(500, null, "Something went wrong!"));
+});
 
 app.listen(5000, () => {
   console.log("Server started on PORT 5000");
