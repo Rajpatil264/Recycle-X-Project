@@ -89,15 +89,15 @@ const loginSupplier = (request, response) => {
 };
 
 const getSupplierByMobile = (request, response) => {
-  const { mobile_number } = request.query;
+  const mobile = request.body.mobile;
 
-  if (!mobile_number) {
+  if (!mobile) {
     return response
       .status(400)
       .json(reply.onError(400, null, "Mobile number is required."));
   }
 
-  const supplierQuery = `SELECT supplier_id AS id, first_name, last_name, email, mobile_number, state, city, pincode, imageName, supplier_type AS type, supplier_status AS status FROM ${supplier.SUPPLIER} WHERE mobile_number = '${mobile_number}'`;
+  const supplierQuery = `SELECT supplier_id , first_name, last_name, mobile_number, state, city, pincode, imageName, supplier_type AS type, supplier_status AS status FROM ${supplier.SUPPLIER} WHERE mobile_number = '${mobile}'`;
 
   db.execute(supplierQuery, (error, results) => {
     if (error) {

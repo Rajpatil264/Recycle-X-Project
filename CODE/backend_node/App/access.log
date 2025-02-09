@@ -201,3 +201,8 @@
 {"method":"POST","url":"/supplier/orderdetail","status":"200","responseTime":"5.836"}
 {"method":"POST","url":"/supplier/orderdetail","status":"200","responseTime":"3.610"}
 {"method":"POST","url":"/supplier/orderdetail","status":"200","responseTime":"4.088"}
+{"method":"GET","url":"/supplier/mobile","status":"500","responseTime":"34.677"}
+{"method":"GET","url":"/supplier/mobile","status":"500","responseTime":"1.696"}
+{"method":"GET","url":"/supplier/mobile","status":"500","responseTime":"3.698"}
+{"method":"GET","url":"/supplier/mobile","status":"500","responseTime":"72.856"}
+{"method":"GET","url":"/supplier/mobile","status":"200","responseTime":"54.949"}
