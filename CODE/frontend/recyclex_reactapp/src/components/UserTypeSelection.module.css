@@ -42,12 +42,17 @@
 
 .signInButton {
     /* Styles for the Sign In button */
+    display: inline-block;
     background-color: green;
     color: white;
     border: none;
+    margin: 5px;
     padding: 8px 16px;
     /* Adjust padding as needed */
     border-radius: 5px;
+    text-decoration: none;
+    /* Remove underline from link */
+    text-align: center;
     /* Adjust border radius as needed */
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -61,15 +66,20 @@
 
 .signUpButton {
     /* Styles for the Sign Up button */
+    display: inline-block;
     background-color: white;
     color: black;
     border: 1px solid black;
     padding: 8px 16px;
     /* Adjust padding as needed */
     border-radius: 5px;
+    margin: 5px;
     /* Adjust border radius as needed */
     cursor: pointer;
     margin-top: 10px;
+    text-decoration: none;
+    /* Remove underline from link */
+    text-align: center;
     /* Space above button */
     transition: background-color 0.2s ease, color 0.2s ease;
     /* Smooth transition */
