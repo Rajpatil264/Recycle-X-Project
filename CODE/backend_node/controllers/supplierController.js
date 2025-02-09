@@ -33,13 +33,6 @@ const registerSupplier = (request, response) => {
           )
         );
     }
-
-    if (result.affectedRows === 0) {
-      return response
-        .status(500)
-        .json(reply.onError(500, null, "Supplier registration failed. Please try again."));
-    }
-
     return response
       .status(201)
       .json(reply.onSuccess(201, result, "Supplier registered successfully."));
@@ -95,6 +88,35 @@ const loginSupplier = (request, response) => {
   });
 };
 
+const getSupplierByMobile = (request, response) => {
+  const { mobile_number } = request.query;
+
+  if (!mobile_number) {
+    return response
+      .status(400)
+      .json(reply.onError(400, null, "Mobile number is required."));
+  }
+
+  const supplierQuery = `SELECT supplier_id AS id, first_name, last_name, email, mobile_number, state, city, pincode, imageName, supplier_type AS type, supplier_status AS status FROM ${supplier.SUPPLIER} WHERE mobile_number = '${mobile_number}'`;
+
+  db.execute(supplierQuery, (error, results) => {
+    if (error) {
+      return response
+        .status(500)
+        .json(reply.onError(500, error, "Database error while fetching supplier details."));
+    }
+
+    if (results.length > 0) {
+      return response
+        .status(200)
+        .json(reply.onSuccess(200, results[0], "Supplier details retrieved successfully."));
+    }
+
+    return response
+      .status(404)
+      .json(reply.onError(404, null, "Supplier not found."));
+  });
+};
 
 const updateSupplier = (request, response) => {
   const supplierId = request.params.id;
@@ -143,7 +165,8 @@ const updateSupplier = (request, response) => {
 
 const addToCart = (request, response) => {
   const subCategoryId = request.params.id;
-  const { quantity } = request.body;
+  const quantity = request.body.quantity;
+  const supplierId = request.body.supplier_id;
 
   // Check if the required fields are provided
   if (!subCategoryId || !quantity) {
@@ -152,8 +175,8 @@ const addToCart = (request, response) => {
     );
   }
 
-  const values = [subCategoryId, quantity];
-  const statement = `INSERT INTO ${supplier.SUPPLIER_CART} (subcategory_id, quantity_kg) VALUES (?, ?)`;
+  const values = [subCategoryId, quantity, supplierId];
+  const statement = `INSERT INTO ${supplier.SUPPLIER_CART} (subcategory_id, quantity_kg, supplier_id) VALUES (?, ?, ?)`;
 
   db.execute(statement, values, (error, result) => {
     if (error) {
@@ -199,7 +222,15 @@ const removeFromCart = (request, response) => {
 };
 
 const showCart = (request, response) => {
-  const statement = `SELECT * FROM ${supplier.SUPPLIER_CART}`;
+  const supplierId = request.params.id;
+
+  if (!supplierId) {
+    return response
+      .status(400)
+      .json(reply.onError(400, null, "Supplier ID is required."));
+  }
+
+  const statement = `SELECT s.item_id, t.subcategory_name, t.price_per_kg, t.subcategory_image, t.category_description, s.quantity_kg FROM ${supplier.SUPPLIER_CART} s JOIN ${supplier.TRASH_SUBCATEGORIES} t ON s.subcategory_id = t.subcategory_id WHERE s.supplier_id = ${supplierId}`;
 
   db.execute(statement, (error, results) => {
     if (error) {
@@ -483,6 +514,7 @@ const uploadProfileImg = (request, response) => {
 module.exports = {
   registerSupplier,
   loginSupplier,
+  getSupplierByMobile,
   updateSupplier,
   addToCart,
   removeFromCart,

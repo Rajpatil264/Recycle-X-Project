@@ -17,6 +17,7 @@ const {
   getAllOrders,
   getOrderItemDetails,
   uploadProfileImg,
+  getSupplierByMobile,
 } = require("../controllers/supplierController");
 
 const storage = multer.diskStorage({
@@ -33,10 +34,11 @@ const upload = multer({ storage: storage });
 // Request to controller
 router.post("/signup", registerSupplier);
 router.post("/signin", loginSupplier);
+router.get("/mobile", getSupplierByMobile);
 router.put("/update/:id", updateSupplier);
 router.post("/addcart/:id", addToCart);
 router.delete("/removecart/:id", removeFromCart);
-router.get("/showcart", showCart);
+router.get("/showcart/:id", showCart);
 router.post("/pickup", addPickupAddress);
 router.put("/pickup/:id", updatePickupAddress);
 router.delete("/pickup/:id", deletePickupAddress);

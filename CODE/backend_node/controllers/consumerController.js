@@ -4,54 +4,182 @@ const config = require("../App/appConfig");
 const reply = require("../models/responseStructure");
 const crypto = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const otpGenerator = require("otp-generator");
+const otpStore = new Map();
 
 // Consumer Controller
 const registerConsumer = (request, response) => {
   const encryptPass = String(crypto.SHA256(request.body.password));
+
+  const userData = {
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    email: request.body.email,
+    mobileNumber: request.body.mobileNumber,
+    encryptPass: encryptPass,
+    state: request.body.state,
+    city: request.body.city,
+    pincode: request.body.pincode,
+    consumerType: request.body.consumerType,
+  };
+
+  const otp = generateOTP();
+  otpStore.set(userData.email, { ...userData, otp });
+
+  sendOTPEmail(userData.email, otp)
+    .then(() => {
+      response.status(200).json(reply.onSuccess(200, null, "OTP sent to your email. Please verify."));
+    })
+    .catch((error) => {
+      response.status(500).json(reply.onError(500, error, "Failed to send OTP. Please try again."));
+    });
+};
+
+const verifyEmailThenRegister = (request, response) => {
+  const otp = request.body.otp;
+
+  if (!otp) {
+    return response.status(400).json(reply.onError(400, null, "OTP is required to verify your email."));
+  }
+
+  let matchedEmail = null;
+  for (const [email, data] of otpStore.entries()) {
+    if (data.otp === otp) {
+      matchedEmail = email;
+      break;
+    }
+  }
+
+  if (!matchedEmail) {
+    return response.status(400).json(reply.onError(400, matchedEmail, "Invalid OTP. Please try again."));
+  }
+
+  const userData = otpStore.get(matchedEmail);
+
+  // Insert into database
   const values = [
-    request.body.firstName,
-    request.body.lastName,
-    request.body.email,
-    request.body.mobileNumber,
-    encryptPass,
-    request.body.state,
-    request.body.city,
-    request.body.pincode,
-    request.body.consumerType,
+    userData.firstName,
+    userData.lastName,
+    userData.email,
+    userData.mobileNumber,
+    userData.encryptPass,
+    userData.state,
+    userData.city,
+    userData.pincode,
+    userData.consumerType,
   ];
 
   const statement = `CALL register_consumer(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   db.execute(statement, values, (error, result) => {
     if (error) {
-      response
-        .status(400)
-        .json(
-          reply.onError(
-            400,
-            error,
-            "Invalid request. Required fields are missing or incorrect."
-          )
-        );
-    } else {
-      if (result.affectedRows === 0) {
-        response
-          .status(500)
-          .json(
-            reply.onError(
-              500,
-              null,
-              "Failed to register the consumer. Please try again."
-            )
-          );
-      } else {
-        response
-          .status(201)
-          .json(
-            reply.onSuccess(201, result, "Consumer registered successfully.")
-          );
-      }
+      return response.status(400).json(reply.onError(400, error, "Failed to register consumer. Please try again."));
     }
+
+    otpStore.delete(matchedEmail);
+    return response.status(201).json(reply.onSuccess(201, result, "Consumer registered successfully."));
   });
+};
+
+const generateOTP = () => {
+  return otpGenerator.generate(6, {
+    digits: true,
+    upperCaseAlphabets: false,
+    lowerCaseAlphabets: false,
+    specialChars: false
+  });
+};
+
+const sendOTPEmail = (userEmail, otp) => {
+
+  let configurationDetails = {
+    service: "gmail",
+    auth: {
+      user: config.RECYCLE_X_EMAIL,
+      pass: config.RECYCLE_X_PASSWD,
+    },
+  };
+
+  let transporter = nodemailer.createTransport(configurationDetails);
+
+  let message = {
+    from: config.RECYCLE_X_EMAIL,
+    to: userEmail,
+    subject: "OTP Verification : Recycle_X",
+    html: `
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recycle X Verification</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f6fb;">
+    <div style="max-width: 480px; margin: 40px auto; background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%); border-radius: 16px; box-shadow: 0 4px 24px rgba(46, 125, 50, 0.1); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
+        <!-- Top Banner -->
+        <div style="background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); padding: 2px; border-radius: 16px;">
+            <div style="background: #ffffff; border-radius: 15px;">
+                <!-- Content Container -->
+                <div style="padding: 32px 24px; text-align: center;">
+                    <!-- Logo Container -->
+                    <div style="background: #e8f5e9; width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center;">
+                        <img src="https://i.imghippo.com/files/Dk9642QMA.png" alt="Recycle X Logo" style="width: 55px; height: 55px; align : "center" />
+                    </div>
+
+                    <!-- Title -->
+                    <h1 style="color: #2e7d32; font-size: 24px; font-weight: 600; margin: 0 0 24px 0; line-height: 1.3;">
+                        Welcome to Recycle X
+                    </h1>
+
+                    <!-- Message -->
+                    <div style="background: #f8f9ff; border-radius: 12px; padding: 20px; margin-bottom: 24px; text-align: left;">
+                        <p style="color: #4a5568; font-size: 15px; line-height: 1.6; margin: 0;">
+                            Thank you for registering with Recycle X. To complete your registration and verify your email address, please use the verification code below.
+                        </p>
+                    </div>
+
+                    <!-- Timer Warning -->
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                        <div style="background: #fff4f4; border-radius: 8px; padding: 8px 16px;">
+                            <p style="color: #ff4d4d; font-size: 14px; margin: 0; display: flex; align-items: center;">
+                                ⏱️ Code expires in <span style="font-weight: 600; margin-left: 4px;">10 minutes</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- OTP Container -->
+                    <div style="background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); padding: 2px; border-radius: 12px; margin-bottom: 24px;">
+                        <div style="background: #ffffff; padding: 20px; border-radius: 10px;">
+                            <h2 style="font-family: 'Courier New', monospace; font-size: 36px; font-weight: 700; letter-spacing: 8px; margin: 0; color: #1a202c;">
+                                ${otp}
+                            </h2>
+                        </div>
+                    </div>
+
+                    <!-- Security Notice -->
+                    <div style="background: #e8f5e9; border-radius: 12px; padding: 16px; text-align: left;">
+                        <p style="color: #4a5568; font-size: 13px; line-height: 1.5; margin: 0;">
+                            <span style="color: #2e7d32; font-weight: 600;">🔒 Security Notice:</span><br>
+                            For your security, this verification code will expire in 10 minutes. Never share this code with anyone. The Recycle X team will never ask for your verification code.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div style="border-top: 1px solid #edf2f7; padding: 20px; text-align: center; border-radius: 0 0 16px 16px;">
+                    <p style="color: #718096; font-size: 13px; margin: 0;">
+                        Questions? Contact us at <a href="mailto:support@recyclex.com" style="color: #2e7d32; text-decoration: none; font-weight: 500;">support@recyclex.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    `,
+  };
+
+  return transporter.sendMail(message);
 };
 
 const loginConsumer = (request, response) => {
@@ -107,6 +235,33 @@ const loginConsumer = (request, response) => {
   });
 };
 
+const getConsumerByEmail = (request, response) => {
+  const { email } = request.body;
+
+  if (!email) {
+    return response.status(400).json(reply.onError(400, null, "Email is required."));
+  }
+
+  const consumerQuery = `SELECT consumer_id AS id, first_name, last_name, email, mobile_number, state, city, pincode, imageName, consumer_type AS type, consumer_status AS status FROM consumer_v WHERE email = '${email}'`;
+
+  db.execute(consumerQuery, (error, results) => {
+    if (error) {
+      return response
+        .status(500)
+        .json(reply.onError(500, error, "Database error while fetching consumer details."));
+    }
+
+    if (results.length > 0) {
+      return response
+        .status(200)
+        .json(reply.onSuccess(200, results[0], "Consumer details retrieved successfully."));
+    }
+
+    return response
+      .status(404)
+      .json(reply.onError(404, null, "Consumer not found."));
+  });
+};
 
 const updateConsumer = (request, response) => {
   const consumerId = request.params.id;
@@ -167,9 +322,12 @@ const updateConsumer = (request, response) => {
 
 const addToCart = (request, response) => {
   const subCategoryId = request.params.id;
-  const { quantity } = request.body;
-  const values = [subCategoryId, quantity];
-  const statement = `INSERT INTO ${consumer.CONSUMER_CART} (subcategory_id, quantity_kg) VALUES (?, ?)`;
+  const quantity = request.body.quantity;
+  const consumerId = request.body.consumer_id;
+
+  const values = [subCategoryId, consumerId, quantity];
+
+  const statement = `INSERT INTO ${consumer.CONSUMER_CART} (subcategory_id, consumer_id, quantity_kg) VALUES (?, ?, ?)`;
 
   db.execute(statement, values, (error, result) => {
     if (error) {
@@ -235,11 +393,13 @@ const removeFromCart = (request, response) => {
 };
 
 const showCart = (request, response) => {
-  const statement = `SELECT * FROM ${consumer.CONSUMER_CART}`;
+  const consumerId = request.params.id;
+
+  const statement = `SELECT c.item_id, r.subcategory_name, r.price_per_kg, r.subcategory_image, r.category_description, c.quantity_kg FROM ${consumer.CONSUMER_CART} c JOIN recyclingsubcategories_v r ON c.subcategory_id = r.subcategory_id WHERE c.consumer_id = ${consumerId}`;
 
   db.execute(statement, (error, results) => {
     if (error) {
-      response
+      return response
         .status(400)
         .json(
           reply.onError(
@@ -248,18 +408,18 @@ const showCart = (request, response) => {
             "There was an error fetching the cart items. Please try again later."
           )
         );
+    }
+
+    if (results.length > 0) {
+      return response
+        .status(200)
+        .json(
+          reply.onSuccess(200, results, "Cart items fetched successfully.")
+        );
     } else {
-      if (results.length > 0) {
-        response
-          .status(200)
-          .json(
-            reply.onSuccess(200, results, "Cart items fetched successfully.")
-          );
-      } else {
-        response
-          .status(404)
-          .json(reply.onError(404, null, "Your cart is currently empty."));
-      }
+      return response
+        .status(404)
+        .json(reply.onError(404, null, "Your cart is currently empty."));
     }
   });
 };
@@ -417,7 +577,7 @@ const placeOrder = (request, response) => {
   const consumer_id = request.body.consumerId;
   const delivery_id = request.body.deliveryId;
 
-  const statement = `CALL create_order_from_cart(?,?)`;
+  const statement = `CALL create_consumer_order_from_cart(?,?)`;
 
   db.execute(statement, [consumer_id, delivery_id], (error, result) => {
     if (error) {
@@ -431,23 +591,13 @@ const placeOrder = (request, response) => {
           )
         );
     } else {
-      if (result.affectedRows > 0) {
-        response
-          .status(200)
-          .json(reply.onSuccess(200, result, "Order placed successfully. We are processing your order."));
-      } else {
-        response
-          .status(400)
-          .json(
-            reply.onError(
-              400,
-              null,
-              "Unable to place the order. Please ensure your cart is not empty and try again."
-            )
-          );
-      }
+
+      response
+        .status(200)
+        .json(reply.onSuccess(200, result, "Order placed successfully. We are processing your order."));
     }
-  });
+  }
+  );
 };
 
 
@@ -602,6 +752,7 @@ const uploadProfileImg = (request, response) => {
 module.exports = {
   registerConsumer,
   loginConsumer,
+  getConsumerByEmail,
   updateConsumer,
   addToCart,
   removeFromCart,
@@ -614,4 +765,5 @@ module.exports = {
   getAllOrders,
   getOrderItemDetails,
   uploadProfileImg,
+  verifyEmailThenRegister,
 };

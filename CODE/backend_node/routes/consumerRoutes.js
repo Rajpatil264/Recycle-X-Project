@@ -16,6 +16,8 @@ const {
   getAllOrders,
   getOrderItemDetails,
   uploadProfileImg,
+  verifyEmailThenRegister,
+  getConsumerByEmail,
 } = require("../controllers/consumerController");
 
 const storage = multer.diskStorage({
@@ -32,10 +34,11 @@ const upload = multer({ storage: storage });
 // Request to Controller
 router.post("/signup", registerConsumer);
 router.post("/signin", loginConsumer);
+router.get("/email", getConsumerByEmail);
 router.put("/update/:id", updateConsumer);
 router.post("/addcart/:id", addToCart);
 router.delete("/removecart/:id", removeFromCart);
-router.get("/showcart", showCart);
+router.get("/showcart/:id", showCart);
 router.post("/delivery", addDeliveryAddress);
 router.put("/delivery/:id", updateDeliveryAddress);
 router.delete("/delivery/:id", deleteDeliveryAddress);
@@ -44,5 +47,6 @@ router.post("/placeorder", placeOrder);
 router.get("/orders/:id", getAllOrders);
 router.post("/orderdetail", getOrderItemDetails);
 router.patch("/uploadimg/:id", upload.single("image"), uploadProfileImg);
+router.post("/verifyEmail", verifyEmailThenRegister);
 
 module.exports = router;

@@ -199,7 +199,6 @@ const getAllRecyclingCategories = (request, response) => {
   });
 };
 
-
 const getAllRecyclingSubCategories = (request, response) => {
   const statement = `SELECT * FROM ${consumer.RECYCLING_SUBCATEGORIES}`;
   db.execute(statement, (error, result) => {
@@ -239,6 +238,51 @@ const getAllRecyclingSubCategories = (request, response) => {
   });
 };
 
+const getAllSubCatByCatId = (request, response) => {
+  const categoryId = request.params.categoryId;
+
+  const sql = `SELECT * FROM ${supplier.TRASH_SUBCATEGORIES} WHERE category_id = ${categoryId}`;
+
+  db.execute(sql, (error, results) => {
+    if (error) {
+      return response
+        .status(500)
+        .json(reply.onError(500, error, "Database error while fetching subcategories."));
+    }
+
+    if (results.length === 0) {
+      return response
+        .status(404)
+        .json(reply.onError(404, null, "No subcategories found for the given category."));
+    }
+
+    return response
+      .status(200)
+      .json(reply.onSuccess(200, results, "Subcategories retrieved successfully."));
+  });
+};
+
+const getAllRecySubCatByCatId = (request, response) => {
+  const categoryId = request.params.categoryId;
+  const sql = `SELECT * FROM ${consumer.RECYCLING_SUBCATEGORIES}  WHERE rp_category_id = ${categoryId}`;
+  db.execute(sql, (error, results) => {
+    if (error) {
+      return response
+        .status(500)
+        .json(reply.onError(500, error, "Database error while fetching subcategories."));
+    }
+
+    if (results.length === 0) {
+      return response
+        .status(404)
+        .json(reply.onError(404, null, "No subcategories found for the given category."));
+    }
+
+    return response
+      .status(200)
+      .json(reply.onSuccess(200, results, "Subcategories retrieved successfully."));
+  });
+};
 
 module.exports = {
   getAllServiceZones,
@@ -247,4 +291,6 @@ module.exports = {
   getAllTrashSubCategories,
   getAllRecyclingCategories,
   getAllRecyclingSubCategories,
+  getAllSubCatByCatId,
+  getAllRecySubCatByCatId
 };
