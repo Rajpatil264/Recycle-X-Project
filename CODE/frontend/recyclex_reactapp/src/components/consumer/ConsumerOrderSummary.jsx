@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from './ConsumerOrderSummary.module.css';
+import styles from '../../styles/consumerStyles/ConsumerOrderSummary.module.css';
 
 const AddressForm = React.memo(({ isEditing, data, setData, onSubmit, onCancel, loading }) => {
     const [formData, setFormData] = useState(data);

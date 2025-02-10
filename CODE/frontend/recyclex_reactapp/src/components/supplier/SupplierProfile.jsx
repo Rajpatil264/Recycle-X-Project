@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './SupplierProfile.module.css';
+import styles from '../../styles/supplierStyles/SupplierProfile.module.css';
 
 const SupplierProfile = () => {
     const [supplierData, setSupplierData] = useState({});
@@ -30,7 +30,7 @@ const SupplierProfile = () => {
                 });
 
                 if (data.imageName) {
-                    setPreviewImage(`http://localhost:3000/${data.imageName}`);
+                    setPreviewImage(`http://localhost:3002/images/${data.imageName}`);
                 }
             } catch (error) {
                 console.error("Error fetching supplier data:", error);
@@ -58,7 +58,7 @@ const SupplierProfile = () => {
                 }
             });
             console.log("Image uploaded:", response.data);
-            setPreviewImage(`http://localhost:5000/${response.data.data.image}`);
+            setPreviewImage(`http://localhost:5000/images/${response.data.data.image}`);
             setSupplierData({ ...supplierData, imageName: response.data.data.image });
         } catch (error) {
             console.error("Error uploading image:", error);

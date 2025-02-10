@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./AboutUsPage.module.css";
+import styles from "../styles/AboutUsPage.module.css";
 import aboutImage from "../assets/images/SupplierRegisterPage.jpg";
 
 const AboutUsPage = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./SupplierFooter.module.css"; // Import CSS module
+import styles from "../../styles/supplierStyles/SupplierFooter.module.css"; // Import CSS module
 import {
     FaFacebook,
     FaInstagram,

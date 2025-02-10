@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from './ConsumerCart.module.css';
+import styles from '../../styles/consumerStyles/ConsumerCart.module.css';
 
 const ConsumerCart = () => {
     const navigate = useNavigate();

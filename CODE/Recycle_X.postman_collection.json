@@ -33,14 +33,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{urlnode}}/common/getTrashSubCategoriesByCatId/1",
+							"raw": "{{urlnode}}/common/getTrashSubCategoriesByCatId/2",
 							"host": [
 								"{{urlnode}}"
 							],
 							"path": [
 								"common",
 								"getTrashSubCategoriesByCatId",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -124,14 +124,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{urlnode}}/common/getRecySubCategoriesByCatId/1",
+							"raw": "{{urlnode}}/common/getRecySubCategoriesByCatId/3",
 							"host": [
 								"{{urlnode}}"
 							],
 							"path": [
 								"common",
 								"getRecySubCategoriesByCatId",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -316,11 +316,8 @@
 				},
 				{
 					"name": "getConsumerByEmail",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -616,7 +613,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"otp\" : \"593687\"\r\n}   ",
+							"raw": "{\r\n    \"otp\" : \"759297\"\r\n}   ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -680,7 +677,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"mobileNumber\": \"8858623471\",\r\n  \"password\":\"rakeshh@456\"\r\n}\r\n",
+							"raw": "{\r\n  \"mobileNumber\": \"9075857927\",\r\n  \"password\":\"pass\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -793,7 +790,7 @@
 					"response": []
 				},
 				{
-					"name": "getSupplierByMobile",
+					"name": "getSupplierById",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -809,6 +806,40 @@
 						"body": {
 							"mode": "raw",
 							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlnode}}/supplier/getSupplierById/1",
+							"host": [
+								"{{urlnode}}"
+							],
+							"path": [
+								"supplier",
+								"getSupplierById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSupplierByMobile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJSYWtlc2giLCJsYXN0TmFtZSI6Ikd1cHRhIiwibW9iaWxlTnVtYmVyIjoiODg1OTAyMzQ3MSIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTczNzg3NDE1Nn0.OLPkqvpCLNaiTKW1eZKvsAL1uYkQH4WOB-iEZm6zTrA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile\":\"7758067094\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

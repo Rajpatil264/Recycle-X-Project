@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './ConsumerLogin.module.css'; // Import your CSS module
+import styles from '../../styles/consumerStyles/ConsumerLogin.module.css'; // Import your CSS module
 import wavingCharacter from '../../assets/gifs/ConsumerLoginPage.gif'; // Import consumer GIF
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';

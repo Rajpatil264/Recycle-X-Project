@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import ConsumerNavbar from './ConsumerNavBar';
 import ConsumerFooter from './ConsumerFooter';
-import { Search } from 'lucide-react';
-import styles from './ConsumerHomePage.module.css';
+import styles from '../../styles/consumerStyles/ConsumerHomePage.module.css';
 
 const ConsumerHomePage = () => {
     const [serviceAvailable, setServiceAvailable] = useState(null);

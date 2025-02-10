@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './ConsumerProfile.module.css';
+import styles from '../../styles/consumerStyles/ConsumerProfile.module.css';
 
 const ConsumerProfile = () => {
     const [consumerData, setConsumerData] = useState({});

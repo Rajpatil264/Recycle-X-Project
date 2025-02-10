@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './UserTypeSelection.module.css';
+import styles from '../styles/UserTypeSelection.module.css';
 import { FaInfoCircle } from 'react-icons/fa';
 import SupplierIcon from '../assets/icons/supplier.png';
 import ConsumerIcon from '../assets/icons/consumer.png';

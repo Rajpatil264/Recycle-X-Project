@@ -17,7 +17,7 @@ import ConsumerHomePage from "./components/consumer/ConsumerHomePage";
 import ConsumerProfile from "./components/consumer/ConsumerProfile";
 import ConsumerCart from "./components/consumer/ConsumerCart";
 import ConsumerOrderSummary from "./components/consumer/ConsumerOrderSummary";
-import Dashboard from "./components/MainDashboard";
+
 const App = () => {
   return (
     <Router>

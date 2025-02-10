@@ -1,0 +1,144 @@
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.imageContainer {
+    position: relative;
+    text-align: center;
+}
+
+.profileImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid #007bff;
+    transition: transform 0.3s ease-in-out;
+}
+
+.profileImage:hover {
+    transform: scale(1.1);
+}
+
+.uploadButton {
+    margin-top: 10px;
+    padding: 8px 15px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.uploadButton:hover {
+    background: #0056b3;
+}
+
+.formContainer {
+    width: 100%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.twoColumns {
+    display: flex;
+    gap: 15px;
+}
+
+.oneColumn {
+    margin-bottom: 15px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.inputGroup label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.inputGroup input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.inputGroup input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.editButton,
+.saveButton,
+.cancelButton {
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.editButton {
+    background: #28a745;
+    color: white;
+}
+
+.editButton:hover {
+    background: #218838;
+}
+
+.saveButton {
+    background: #007bff;
+    color: white;
+}
+
+.saveButton:hover {
+    background: #0056b3;
+}
+
+.cancelButton {
+    background: #dc3545;
+    color: white;
+}
+
+.cancelButton:hover {
+    background: #c82333;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .twoColumns {
+        flex-direction: column;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

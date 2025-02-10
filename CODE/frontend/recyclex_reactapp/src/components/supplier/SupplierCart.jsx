@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from './SupplierCart.module.css';
+import styles from '../../styles/supplierStyles/SupplierCart.module.css';
 
 const SupplierCart = () => {
     const navigate = useNavigate();
@@ -135,7 +135,7 @@ const SupplierCart = () => {
     };
 
     const handleProceedToSummary = () => {
-        navigate('/supplier/summary'); // Adjust the route as per your routing setup
+        navigate('/supplier/summary');
     };
 
     useEffect(() => {

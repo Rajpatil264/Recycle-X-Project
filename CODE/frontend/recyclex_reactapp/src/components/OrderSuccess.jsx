@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./OrderSuccess.module.css"; // Importing CSS module
+import styles from "../styles/OrderSuccess.module.css"; // Importing CSS module
 import OrderSuccessGif from "../assets/gifs/OrderSuccess.gif"; // Renamed for clarity
 
 const OrderSuccess = () => {

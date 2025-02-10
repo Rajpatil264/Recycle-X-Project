@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styles from './OtpVerification.module.css';
+import styles from '../../styles/consumerStyles/OtpVerification.module.css';
 import axios from 'axios';
 
 const OtpVerification = () => {
@@ -9,7 +9,7 @@ const OtpVerification = () => {
     const email = location.state?.email;
     const [otp, setOtp] = useState(['', '', '', '', '', '']); // Array for OTP digits
     const [errors, setErrors] = useState({});
-    const [timer, setTimer] = useState(120); // 2-minute timer
+    const [timer, setTimer] = useState(120);
     const inputRefs = useRef([]);
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './SupplierLogin.module.css';
+import styles from '../../styles/supplierStyles/SupplierLogin.module.css';
 import wavingCharacter from '../../assets/gifs/SupplierLoginPage.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMobileAlt, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
