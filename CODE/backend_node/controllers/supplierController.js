@@ -421,6 +421,31 @@ const getAllOrders = (request, response) => {
   });
 };
 
+const getSupplierById = (request, response) => {
+  const supplierId = request.params.id;
+
+  const statement = `SELECT supplier_id, first_name, last_name, mobile_number, state, city, pincode, imageName, supplier_type AS type, supplier_status AS status FROM supplier_v WHERE supplier_id = ?`;
+
+  db.execute(statement, [supplierId], (error, results) => {
+    if (error) {
+      return response
+        .status(500)
+        .json(reply.onError(500, error, "Error fetching supplier details."));
+    }
+
+    if (results.length > 0) {
+      return response
+        .status(200)
+        .json(reply.onSuccess(200, results[0], "Supplier details fetched successfully."));
+    }
+
+    return response
+      .status(404)
+      .json(reply.onError(404, null, "Supplier not found."));
+  });
+};
+
+
 const getOrderItemDetails = (request, response) => {
   const { orderId, itemId } = request.body;
 
@@ -527,4 +552,5 @@ module.exports = {
   getAllOrders,
   getOrderItemDetails,
   uploadProfileImg,
+  getSupplierById
 };

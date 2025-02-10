@@ -34,10 +34,10 @@ const SupplierNavbar = () => {
                 </ul>
             </div>
             <div className={styles.navbarRight}>
-                <Link to="/cart" className={styles.navIcon} title="Sell Scrap">
+                <Link to="/supplier/cart" className={styles.navIcon} title="Sell Scrap">
                     <img src={cartIcon} alt="Sell Scrap" className={styles.icon} />
                 </Link>
-                <Link to="/profile" className={styles.navIcon} title="Profile">
+                <Link to="/supplier/profile" className={styles.navIcon} title="Profile">
                     <img src={profileIcon} alt="Profile" className={styles.icon} />
                 </Link>
                 <div className={styles.hamburger} onClick={toggleNav}>

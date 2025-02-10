@@ -5,12 +5,13 @@ const config = require("./App/appConfig");
 const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
+const path = require("path");
 const commonRoutes = require("./routes/commanRoutes");
 const consumerRoutes = require("./routes/consumerRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "http://localhost:3001",
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
   credentials: true,
@@ -21,6 +22,8 @@ app.options("*", cors(corsOptions));
 app.use(appendFileLogs);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// Serve static files from Uploads folder
+app.use("/uploads", express.static(path.join(__dirname, "Uploads")));
 
 app.use((req, res, next) => {
   const excludedPaths = ["/supplier/signin", "/supplier/signup", "/supplier/verifyEmail", "/consumer/signin", "/consumer/signup", "/consumer/verifyEmail", "/common/signin", "/common/signup", "/common/verifyEmail"]; // Add other excluded paths
