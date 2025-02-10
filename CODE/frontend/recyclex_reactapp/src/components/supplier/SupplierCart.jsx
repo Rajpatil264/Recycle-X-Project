@@ -135,7 +135,7 @@ const SupplierCart = () => {
     };
 
     const handleProceedToSummary = () => {
-        navigate('/order-summary'); // Adjust the route as per your routing setup
+        navigate('/supplier/summary'); // Adjust the route as per your routing setup
     };
 
     useEffect(() => {

@@ -11,7 +11,13 @@ import AboutUsPage from "./components/AboutUsPage";
 import SupplierProfile from "./components/supplier/SupplierProfile";
 import ContactPage from "./components/ContactPage";
 import SupplierCart from "./components/supplier/SupplierCart";
-
+import SupplierOrderSummary from "./components/supplier/SupplierOrderSummary";
+import OrderSuccess from "./components/OrderSuccess";
+import ConsumerHomePage from "./components/consumer/ConsumerHomePage";
+import ConsumerProfile from "./components/consumer/ConsumerProfile";
+import ConsumerCart from "./components/consumer/ConsumerCart";
+import ConsumerOrderSummary from "./components/consumer/ConsumerOrderSummary";
+import Dashboard from "./components/MainDashboard";
 const App = () => {
   return (
     <Router>
@@ -22,11 +28,18 @@ const App = () => {
         <Route path="/supplier/dashboard" element={<SupplierHomePage />} />
         <Route path="/supplier/profile" element={<SupplierProfile />} />
         <Route path="/supplier/cart" element={<SupplierCart />} />
+        <Route path="/supplier/summary" element={<SupplierOrderSummary />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/consumer/login" element={<ConsumerLogin />} />
         <Route path="/consumer/register" element={<ConsumerRegister />} />
+        <Route path="/consumer/dashboard" element={<ConsumerHomePage />} />
+        <Route path="/consumer/profile" element={<ConsumerProfile />} />
+        <Route path="/consumer/cart" element={<ConsumerCart />} />
+        <Route path="/consumer/summary" element={<ConsumerOrderSummary />} />
         <Route path="/consumer/otp-verification" element={<OtpVerification />} />
+        <Route path="/success" element={<OrderSuccess />} />
+
       </Routes>
     </Router>
   );

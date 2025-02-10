@@ -748,6 +748,29 @@ const uploadProfileImg = (request, response) => {
   });
 };
 
+const getCosumerById = (request, response) => {
+  const consumerId = request.params.id;
+
+  const statement = `SELECT consumer_id, first_name, last_name,email, mobile_number, state, city, pincode, imageName, consumer_type AS type, consumer_status AS status FROM consumer_v WHERE consumer_id = ?`;
+
+  db.execute(statement, [consumerId], (error, results) => {
+    if (error) {
+      return response
+        .status(500)
+        .json(reply.onError(500, error, "Error fetching consumer details."));
+    }
+
+    if (results.length > 0) {
+      return response
+        .status(200)
+        .json(reply.onSuccess(200, results[0], "consumer details fetched successfully."));
+    }
+
+    return response
+      .status(404)
+      .json(reply.onError(404, null, "consumer not found."));
+  });
+};
 
 module.exports = {
   registerConsumer,
@@ -766,4 +789,5 @@ module.exports = {
   getOrderItemDetails,
   uploadProfileImg,
   verifyEmailThenRegister,
+  getCosumerById
 };

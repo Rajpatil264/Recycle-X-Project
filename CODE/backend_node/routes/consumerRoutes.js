@@ -18,6 +18,7 @@ const {
   uploadProfileImg,
   verifyEmailThenRegister,
   getConsumerByEmail,
+  getCosumerById,
 } = require("../controllers/consumerController");
 
 const storage = multer.diskStorage({
@@ -48,5 +49,7 @@ router.get("/orders/:id", getAllOrders);
 router.post("/orderdetail", getOrderItemDetails);
 router.patch("/uploadimg/:id", upload.single("image"), uploadProfileImg);
 router.post("/verifyEmail", verifyEmailThenRegister);
+router.get("/getConsumerById/:id", getCosumerById);
+
 
 module.exports = router;
