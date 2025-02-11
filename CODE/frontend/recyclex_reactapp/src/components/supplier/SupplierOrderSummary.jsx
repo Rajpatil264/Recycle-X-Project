@@ -240,7 +240,6 @@ const SupplierOrderSummary = () => {
 
         try {
             setLoading(true);
-            // Add your order placement logic here
             navigate('/success');
         } catch (err) {
             console.error("Error placing order:", err);

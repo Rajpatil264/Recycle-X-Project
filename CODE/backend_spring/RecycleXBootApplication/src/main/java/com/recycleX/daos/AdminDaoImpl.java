@@ -68,27 +68,27 @@ public class AdminDaoImpl implements AdminDaoable {
 
 	@Override
 	public int saveServiceZone(ServiceZone zone) {
-		String sql = "INSERT INTO servicezones_v (pincode, state, city, district, service_type) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO servicezones (pincode, state, city, district, service_type) VALUES (?, ?, ?, ?, ?)";
 		return jdbcTemplate.update(sql, zone.getPincode(), zone.getState(), zone.getCity(), zone.getDistrict(),
 				zone.getServiceType());
 	}
 
 	@Override
 	public int removeServiceZone(int pincode) {
-		String sql = "DELETE FROM servicezones_v WHERE pincode = ?";
+		String sql = "DELETE FROM servicezones WHERE pincode = ?";
 		return jdbcTemplate.update(sql, pincode);
 	}
 
 	@Override
 	public int modifyService(int pincode, ServiceZone zone) {
-		String sql = "UPDATE servicezones_v SET state = ?, city = ?, district = ?, service_type = ? WHERE pincode = ?";
+		String sql = "UPDATE servicezones SET state = ?, city = ?, district = ?, service_type = ? WHERE pincode = ?";
 		return jdbcTemplate.update(sql, zone.getState(), zone.getCity(), zone.getDistrict(), zone.getServiceType(),
 				pincode);
 	}
 
 	@Override
 	public List<ServiceZone> findAllServiceZone() {
-		String sql = "SELECT pincode, state, city, district, service_type FROM servicezones_v";
+		String sql = "SELECT pincode, state, city, district, service_type FROM servicezones";
 		return jdbcTemplate.query(sql, zoneMapper);
 	}
 }

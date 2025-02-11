@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../../styles/supplierStyles/SupplierCart.module.css';
+import cartImage from '../../assets/images/SideCart.jpg';
 
 const SupplierCart = () => {
     const navigate = useNavigate();
@@ -168,7 +169,7 @@ const SupplierCart = () => {
             <div className={styles.mainContent}>
                 <div className={styles.imageSection}>
                     <img
-                        src="http://localhost:3001/images/SideCart.jpg"
+                        src={cartImage}
                         alt="Cart Selection"
                         className={styles.mainImage}
                     />

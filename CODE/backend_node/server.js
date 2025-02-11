@@ -11,7 +11,7 @@ const consumerRoutes = require("./routes/consumerRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 
 const corsOptions = {
-  origin: "http://localhost:3002",
+  origin: "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
   credentials: true,

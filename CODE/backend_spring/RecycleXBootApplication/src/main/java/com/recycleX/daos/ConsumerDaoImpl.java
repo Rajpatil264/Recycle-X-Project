@@ -51,28 +51,28 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
 
 	@Override
 	public List<ConsumerOrder> findAllOrders(int consumerId) {
-		String sql = "SELECT * FROM consumerorders_v WHERE consumer_id = ?";
+		String sql = "SELECT * FROM consumerorders WHERE consumer_id = ?";
 		return jdbcTemplate.query(sql, orderRowMapper, consumerId);
 	}
 
 	@Override
 	public List<ConsumerOrderItem> findOrderItemsByOrderId(int orderId) {
 	    String sql = "SELECT coi.subcategory_id, rc.rp_category_name, coi.quantity_kg, rc.rp_category_image " +
-                "FROM consumerorderitems_v coi " +
-                "JOIN recyclingcategories_v rc ON coi.subcategory_id = rc.rp_category_id " +
+                "FROM consumerorderitems coi " +
+                "JOIN recyclingcategories rc ON coi.subcategory_id = rc.rp_category_id " +
                 "WHERE coi.order_id = ?";
 		return jdbcTemplate.query(sql, itemRowMapper, orderId);
 	}
 
 	@Override
 	public int modifyOrderStatus(int orderId, String status) {
-		String sql = "UPDATE consumerorders_v SET order_status = ? WHERE order_id = ? AND order_status = 'pending'";
+		String sql = "UPDATE consumerorders SET order_status = ? WHERE order_id = ? AND order_status = 'pending'";
 		return jdbcTemplate.update(sql, status, orderId);
 	}
 
 	@Override
 	public int modifyPriceBySubcategoryId(int subcategoryId, double price) {
-		String sql = "UPDATE recyclingsubcategories_v SET price_per_kg = ? WHERE subcategory_id = ?";
+		String sql = "UPDATE recyclingsubcategories SET price_per_kg = ? WHERE subcategory_id = ?";
 		return jdbcTemplate.update(sql, price, subcategoryId);
 	}
 
@@ -82,7 +82,7 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
 			String imageName = FileUploadUtils.saveImage(recyclingCategory.getCategoryImage(),
 					"consumerImages/categories/");
 			
-			String sql = "INSERT INTO recyclingcategories_v (rp_category_name, category_description, rp_category_image) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO recyclingcategories (rp_category_name, category_description, rp_category_image) VALUES (?, ?, ?)";
 
 			return jdbcTemplate.update(sql, recyclingCategory.getCategoryName(),
 					recyclingCategory.getCategoryDescription(), imageName);
@@ -101,7 +101,7 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
                     "consumerImages/subcategories/"
             );
 
-            String sql = "INSERT INTO recyclingsubcategories_v (rp_category_id, subcategory_name, price_per_kg, subcategory_image) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO recyclingsubcategories (rp_category_id, subcategory_name, price_per_kg, subcategory_image) VALUES (?, ?, ?, ?)";
 
             return jdbcTemplate.update(sql, 
                     recyclingSubcategory.getCategoryId(), 
@@ -118,10 +118,10 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
     public List<ConsumerRecyclingSummary> findMonthlyRecyclingSummary(int consumerId) {
         String sql = "SELECT rc.category_id, rc.category_name, SUM(coi.quantity_kg) AS total_quantity_kg, "
                 + "DATE_FORMAT(co.order_date, '%Y-%m') AS period "
-                + "FROM consumerorderitems_v coi "
-                + "JOIN consumerorders_v co ON coi.order_id = co.order_id "
-                + "JOIN recyclingsubcategories_v rs ON coi.subcategory_id = rs.subcategory_id "
-                + "JOIN recyclingcategories_v rc ON rs.category_id = rc.category_id "
+                + "FROM consumerorderitems coi "
+                + "JOIN consumerorders co ON coi.order_id = co.order_id "
+                + "JOIN recyclingsubcategories rs ON coi.subcategory_id = rs.subcategory_id "
+                + "JOIN recyclingcategories rc ON rs.category_id = rc.category_id "
                 + "WHERE co.consumer_id = ? AND co.order_status = 'completed' "
                 + "GROUP BY rc.category_id, rc.category_name, period "
                 + "ORDER BY period DESC";
@@ -133,10 +133,10 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
     public List<ConsumerRecyclingSummary> findYearlyRecyclingSummary(int consumerId) {
         String sql = "SELECT rc.category_id, rc.category_name, SUM(coi.quantity_kg) AS total_quantity_kg, "
                 + "YEAR(co.order_date) AS period "
-                + "FROM consumerorderitems_v coi "
-                + "JOIN consumerorders_v co ON coi.order_id = co.order_id "
-                + "JOIN recyclingsubcategories_v rs ON coi.subcategory_id = rs.subcategory_id "
-                + "JOIN recyclingcategories_v rc ON rs.category_id = rc.category_id "
+                + "FROM consumerorderitems coi "
+                + "JOIN consumerorders co ON coi.order_id = co.order_id "
+                + "JOIN recyclingsubcategories rs ON coi.subcategory_id = rs.subcategory_id "
+                + "JOIN recyclingcategories rc ON rs.category_id = rc.category_id "
                 + "WHERE co.consumer_id = ? AND co.order_status = 'completed' "
                 + "GROUP BY rc.category_id, rc.category_name, period "
                 + "ORDER BY period DESC";
@@ -148,10 +148,10 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
     public List<ConsumerRecyclingSummary> findMonthlyRecyclingSummaryForAll() {
         String sql = "SELECT rc.category_id, rc.category_name, SUM(coi.quantity_kg) AS total_quantity_kg, "
                 + "DATE_FORMAT(co.order_date, '%Y-%m') AS period "
-                + "FROM consumerorderitems_v coi "
-                + "JOIN consumerorders_v co ON coi.order_id = co.order_id "
-                + "JOIN recyclingsubcategories_v rs ON coi.subcategory_id = rs.subcategory_id "
-                + "JOIN recyclingcategories_v rc ON rs.category_id = rc.category_id "
+                + "FROM consumerorderitems coi "
+                + "JOIN consumerorders co ON coi.order_id = co.order_id "
+                + "JOIN recyclingsubcategories rs ON coi.subcategory_id = rs.subcategory_id "
+                + "JOIN recyclingcategories rc ON rs.category_id = rc.category_id "
                 + "WHERE co.order_status = 'completed' "
                 + "GROUP BY rc.category_id, rc.category_name, period "
                 + "ORDER BY period DESC";
@@ -163,10 +163,10 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
     public List<ConsumerRecyclingSummary> findYearlyRecyclingSummaryForAll() {
         String sql = "SELECT rc.category_id, rc.category_name, SUM(coi.quantity_kg) AS total_quantity_kg, "
                 + "YEAR(co.order_date) AS period "
-                + "FROM consumerorderitems_v coi "
-                + "JOIN consumerorders_v co ON coi.order_id = co.order_id "
-                + "JOIN recyclingsubcategories_v rs ON coi.subcategory_id = rs.subcategory_id "
-                + "JOIN recyclingcategories_v rc ON rs.category_id = rc.category_id "
+                + "FROM consumerorderitems coi "
+                + "JOIN consumerorders co ON coi.order_id = co.order_id "
+                + "JOIN recyclingsubcategories rs ON coi.subcategory_id = rs.subcategory_id "
+                + "JOIN recyclingcategories rc ON rs.category_id = rc.category_id "
                 + "WHERE co.order_status = 'completed' "
                 + "GROUP BY rc.category_id, rc.category_name, period "
                 + "ORDER BY period DESC";

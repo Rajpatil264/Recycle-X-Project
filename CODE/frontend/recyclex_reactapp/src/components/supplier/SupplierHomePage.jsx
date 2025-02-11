@@ -210,11 +210,11 @@ const SupplierHomePage = () => {
                         >
                             <div className={styles['subcategory-image-container']}>
                                 <img
-                                    src={`http://localhost:3002/images/${subcategory.subcategory_image}`}
+                                    src={`http://localhost:3000/images/${subcategory.subcategory_image}`}
                                     alt={subcategory.subcategory_image}
                                     className={styles['subcategory-image']}
                                     onError={(e) => {
-                                        e.target.src = 'http://localhost:3002/images/dashboard.jpg';
+                                        e.target.src = 'http://localhost:3000/images/dashboard.jpg';
                                     }}
                                 />
                             </div>

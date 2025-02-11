@@ -4,17 +4,15 @@
     padding: 2rem;
 }
 
-/* Error Message Styling */
 .error {
     background-color: #fee2e2;
     border: 1px solid #ef4444;
     color: #991b1b;
     padding: 1rem;
     margin-bottom: 1rem;
-    border-radius: 6px;
+    border-radius: 0.375rem;
 }
 
-/* Grid Layout for Main Content */
 .mainContent {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -22,60 +20,51 @@
     margin-bottom: 2rem;
 }
 
-/* Image Section */
 .imageSection {
     background-color: #f3f4f6;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 400px;
 }
 
 .mainImage {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
-    max-height: 400px;
-    border-radius: 8px;
 }
 
-/* Form Section */
 .formSection {
     display: flex;
     flex-direction: column;
 }
 
-/* Form Card */
+
 .formCard {
     background-color: white;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     padding: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Form Group */
 .formGroup {
     margin-bottom: 1.5rem;
 }
 
-/* Labels */
 .label {
     display: block;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 500;
     color: #374151;
     margin-bottom: 0.5rem;
 }
 
-/* Dropdown Styling */
 .select {
     width: 100%;
-    padding: 0.6rem;
+    padding: 0.625rem;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border-radius: 0.375rem;
     background-color: white;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: #1f2937;
     transition: border-color 0.15s ease;
 }
@@ -91,13 +80,12 @@
     cursor: not-allowed;
 }
 
-/* Quantity Controls */
 .quantityControl {
     display: flex;
     align-items: center;
     gap: 1rem;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border-radius: 0.375rem;
     padding: 0.25rem;
     width: fit-content;
 }
@@ -105,7 +93,7 @@
 .quantityButton {
     background-color: #f3f4f6;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     width: 2rem;
     height: 2rem;
     font-size: 1rem;
@@ -133,14 +121,13 @@
     text-align: center;
 }
 
-/* Add to Cart Button */
 .addButton {
     width: 100%;
     padding: 0.75rem;
     background-color: #2563eb;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 0.375rem;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.15s ease;
@@ -155,16 +142,17 @@
     cursor: not-allowed;
 }
 
-/* Cart Section */
+
 .cartSection {
+    grid-column: 1 / -1;
+    /* Makes the cart section span full width */
     margin-top: 2rem;
     background-color: white;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
-/* Table Styling */
 .cartTable {
     width: 100%;
     border-collapse: collapse;
@@ -185,21 +173,19 @@
     color: #1f2937;
 }
 
-/* Item Image */
 .itemImage {
     width: 3rem;
     height: 3rem;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 0.25rem;
 }
 
-/* Delete Button */
 .deleteButton {
     padding: 0.5rem 1rem;
     background-color: #ef4444;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     font-size: 0.875rem;
     cursor: pointer;
     transition: background-color 0.15s ease;
@@ -214,7 +200,6 @@
     cursor: not-allowed;
 }
 
-/* Total Row Styling */
 .totalRow {
     font-weight: 500;
 }
@@ -283,7 +268,6 @@
     animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* Empty Cart Message */
 .emptyCartMessage {
     text-align: center;
     padding: 2rem;
@@ -291,7 +275,6 @@
     color: #666;
 }
 
-/* Proceed Button */
 .proceedButtonContainer {
     margin-top: 2rem;
     text-align: right;
@@ -303,7 +286,7 @@
     color: white;
     padding: 0.8rem 1.5rem;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s;

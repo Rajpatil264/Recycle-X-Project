@@ -7,31 +7,31 @@ const db = {
 
 // Supplier-related views
 const supplier = {
-  SUPPLIER: "supplier_v",
-  TRASH_CATEGORIES: "trashCategories_v",
-  TRASH_SUBCATEGORIES: "trashSubCategories_v",
-  SUPPLIER_SELECTIONS: "supplierSelections_v",
-  SUPPLIER_ORDERS: "supplierOrders_v",
-  SUPPLIER_ORDER_ITEMS: "supplierOrderItems_v",
-  SUPPLIER_CART :"supplierCart_v",
-  PICKUP_ADDRESS: "pickupAddress_v",
+  SUPPLIER: "supplier",
+  TRASH_CATEGORIES: "trashCategories",
+  TRASH_SUBCATEGORIES: "trashSubCategories",
+  SUPPLIER_SELECTIONS: "supplierSelections",
+  SUPPLIER_ORDERS: "supplierOrders",
+  SUPPLIER_ORDER_ITEMS: "supplierOrderItems",
+  SUPPLIER_CART: "supplierCart",
+  PICKUP_ADDRESS: "pickupAddress",
 };
 
 // Consumer-related views
 const consumer = {
-  CONSUMER: "consumer_v",
-  RECYCLING_CATEGORIES: "recyclingCategories_v",
-  RECYCLING_SUBCATEGORIES: "recyclingSubcategories_v",
-  CONSUMER_SELECTIONS: "consumerSelections_v",
-  CONSUMER_ORDERS: "consumerOrders_v",
-  CONSUMER_ORDER_ITEMS: "consumerOrderitems_v",
-  CONSUMER_CART: "consumerCart_v",
-  DELIVERY_ADDRESS: "deliveryAddress_v",
+  CONSUMER: "consumer",
+  RECYCLING_CATEGORIES: "recyclingCategories",
+  RECYCLING_SUBCATEGORIES: "recyclingSubcategories",
+  CONSUMER_SELECTIONS: "consumerSelections",
+  CONSUMER_ORDERS: "consumerOrders",
+  CONSUMER_ORDER_ITEMS: "consumerOrderitems",
+  CONSUMER_CART: "consumerCart",
+  DELIVERY_ADDRESS: "deliveryAddress",
 };
 
 // Common views
 const common = {
-  SERVICE_ZONES: "servicezones_v",
+  SERVICE_ZONES: "servicezones",
 };
 
 module.exports = { db, supplier, consumer, common };

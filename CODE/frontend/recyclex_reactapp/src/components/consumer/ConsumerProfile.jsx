@@ -16,20 +16,23 @@ const ConsumerProfile = () => {
                 const response = await axios.get(`http://localhost:5000/consumer/getConsumerById/${id}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
+                debugger;
                 const data = response.data.data;
                 setConsumerData({
-                    firstName: data.first_name,
-                    lastName: data.last_name,
-                    mobileNumber: data.mobile_number,
-                    state: data.state,
-                    city: data.city,
-                    pincode: data.pincode,
-                    password: data.password,
-                    imageName: data.imageName
+                    firstName: data.first_name || "",   // Corrected
+                    lastName: data.last_name || "",     // Corrected
+                    email: data.email || "",
+                    mobileNumber: data.mobile_number || "", // Corrected
+                    state: data.state || "",
+                    city: data.city || "",
+                    pincode: data.pincode || "",
+                    consumerType: data.type || "",  // Corrected
+                    password: "", // Password should be empty for security reasons
+                    imageName: data.imageName || "default.jpg"
                 });
 
                 if (data.imageName) {
-                    setPreviewImage(`http://localhost:5000/uploads/Consumer_Images/${data.imageName}`);
+                    setPreviewImage(`http://localhost:3000/images/${data.imageName}`);
                 }
             } catch (error) {
                 console.error("Error fetching consumer data:", error);
@@ -39,30 +42,26 @@ const ConsumerProfile = () => {
     }, [id, token]);
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImage(file);
-            setPreviewImage(URL.createObjectURL(file));
-        }
+        setImage(e.target.files[0]);
+        setPreviewImage(URL.createObjectURL(e.target.files[0]));
     };
 
     const handleImageUpload = async () => {
-        if (!image) return alert("Please select an image first!");
+        if (!image) return;
 
         const formData = new FormData();
         formData.append('image', image);
 
         try {
-            const response = await axios.post(`http://localhost:5000/consumer/uploadimg/${id}`, formData, {
+            const response = await axios.patch(`http://localhost:5000/consumer/uploadimg/${id}`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
-            const uploadedImageName = response.data.data.image;
-            setPreviewImage(`http://localhost:5000/uploads/Consumer_Images/${uploadedImageName}`);
-            setConsumerData({ ...consumerData, imageName: uploadedImageName });
+            console.log("Image uploaded:", response.data);
+            setPreviewImage(`http://localhost:5000/images/${response.data.data.image}`);
+            setConsumerData({ ...consumerData, imageName: response.data.data.image });
         } catch (error) {
             console.error("Error uploading image:", error);
         }
@@ -74,9 +73,10 @@ const ConsumerProfile = () => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`http://localhost:5000/consumer/update/${id}`, consumerData, {
+            const response = await axios.post(`http://localhost:5000/consumer/update/${id}`, consumerData, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
+            console.log("Profile updated:", response.data);
             setEditing(false);
         } catch (error) {
             console.error("Error updating profile:", error);
@@ -86,21 +86,8 @@ const ConsumerProfile = () => {
     return (
         <div className={styles.profileContainer}>
             <div className={styles.imageContainer}>
-                <img
-                    src={previewImage}
-                    alt="Profile"
-                    className={styles.profileImage}
-                    onClick={() => document.getElementById('imageInput').click()}
-                />
-                <input
-                    type="file"
-                    id="imageInput"
-                    style={{ display: 'none' }}
-                    onChange={handleImageChange}
-                />
-                <button onClick={handleImageUpload} className={styles.uploadButton}>
-                    Upload Image
-                </button>
+                <img src={previewImage} alt="Profile" className={styles.profileImage} onClick={() => document.getElementById('imageInput').click()} />
+                <input type="file" id="imageInput" style={{ display: 'none' }} onChange={handleImageChange} />
             </div>
 
             <div className={styles.formContainer}>
@@ -125,26 +112,12 @@ const ConsumerProfile = () => {
                             <input type="password" id="password" name="password" value={consumerData.password || ''} onChange={handleInputChange} disabled={!editing} />
                         </div>
                     </div>
-
                     <div className={styles.oneColumn}>
                         <div className={styles.inputGroup}>
                             <label htmlFor="state">State:</label>
                             <input type="text" id="state" name="state" value={consumerData.state || ''} onChange={handleInputChange} disabled={!editing} />
                         </div>
                     </div>
-                    <div className={styles.oneColumn}>
-                        <div className={styles.inputGroup}>
-                            <label htmlFor="city">City:</label>
-                            <input type="text" id="city" name="city" value={consumerData.city || ''} onChange={handleInputChange} disabled={!editing} />
-                        </div>
-                    </div>
-                    <div className={styles.oneColumn}>
-                        <div className={styles.inputGroup}>
-                            <label htmlFor="pincode">Pincode:</label>
-                            <input type="text" id="pincode" name="pincode" value={consumerData.pincode || ''} onChange={handleInputChange} disabled={!editing} />
-                        </div>
-                    </div>
-
                     <div className={styles.buttonGroup}>
                         {editing ? (
                             <>

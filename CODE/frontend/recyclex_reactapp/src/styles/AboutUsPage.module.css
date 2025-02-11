@@ -7,7 +7,7 @@
 
 .hero {
     position: relative;
-    background: url("../assets/images/SupplierRegisterPage.jpg") center/cover no-repeat;
+    background: url("../assets/images/about.jpg") center/cover no-repeat;
     height: 60vh;
     display: flex;
     align-items: center;

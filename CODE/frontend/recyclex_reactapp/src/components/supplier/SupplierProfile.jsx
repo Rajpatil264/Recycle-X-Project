@@ -30,7 +30,7 @@ const SupplierProfile = () => {
                 });
 
                 if (data.imageName) {
-                    setPreviewImage(`http://localhost:3002/images/${data.imageName}`);
+                    setPreviewImage(`http://localhost:3000/images/${data.imageName}`);
                 }
             } catch (error) {
                 console.error("Error fetching supplier data:", error);
