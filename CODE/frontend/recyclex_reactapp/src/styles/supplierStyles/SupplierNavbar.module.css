@@ -7,7 +7,6 @@
     background-color: #f8f9fa;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 0;
-    /* Remove default margins from the nav */
 }
 
 .navbarLeft {
@@ -30,7 +29,6 @@
 .navbarTitle {
     font-weight: bold;
     font-size: 1.4rem;
-    /* Increased font size */
 }
 
 .navbarNav {
@@ -51,7 +49,6 @@
     border-radius: 5px;
     transition: background-color 0.3s ease;
     font-size: 1.2rem;
-    /* Increased font size */
 }
 
 .navLink:hover {
@@ -84,12 +81,9 @@
 }
 
 .hamburger {
-    /* Styles for the hamburger menu */
     display: none;
-    /* Hidden by default on larger screens */
     cursor: pointer;
     margin-left: 20px;
-    /* Space from other icons */
 }
 
 .bar {
@@ -100,35 +94,25 @@
 }
 
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     .supplierNavbar {
         flex-direction: row;
-        /* Ensure row direction */
         flex-wrap: wrap;
-        /* Allow wrapping */
         align-items: center;
         justify-content: space-between;
-        /* Space between logo and icons */
         padding: 0.5rem;
     }
 
     .navbarLeft {
         flex-basis: auto;
-        /* Adjust as needed */
     }
 
     .navbarCenter {
         display: none;
-        /* Hide navigation links on smaller screens */
         flex-basis: 100%;
-        /* Take full width for navigation when visible */
         margin-top: 10px;
-        /* Space from logo */
         transition: transform 0.3s ease-in-out;
-        /* Add transition for smooth animation */
         transform: translateY(-100%);
-        /* Initially hidden */
     }
 
     .navbarNav {
@@ -141,11 +125,8 @@
 
     .navbarRight {
         flex-basis: auto;
-        /* Adjust as needed */
         justify-content: flex-end;
-        /* Align icons to the right */
         margin-top: 0;
-        /* Remove top margin */
     }
 
     .navIcon {
@@ -154,9 +135,8 @@
 
     .hamburger {
         display: block;
-        /* Show hamburger on smaller screens */
     }
-    .open { /* Class to be toggled */
-        transform: translateY(0); /* Shown when open */
+    .open { 
+        transform: translateY(0); 
     }
 }

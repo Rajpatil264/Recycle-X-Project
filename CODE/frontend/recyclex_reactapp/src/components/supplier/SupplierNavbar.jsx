@@ -20,7 +20,7 @@ const SupplierNavbar = () => {
                     <span className={styles.navbarTitle}>RecycleX</span>
                 </Link>
             </div>
-            <div className={`${styles.navbarCenter} ${isNavOpen ? styles.open : ''}`}> {/* Use classnames */}
+            <div className={`${styles.navbarCenter} ${isNavOpen ? styles.open : ''}`}> 
                 <ul className={styles.navbarNav}>
                     <li className={styles.navItem}>
                         <Link to="/supplier/dashboard" className={styles.navLink}>Home</Link>

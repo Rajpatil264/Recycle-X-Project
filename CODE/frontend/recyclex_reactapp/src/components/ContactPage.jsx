@@ -16,11 +16,9 @@ const ContactPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Display an alert with the form data
         alert(`Thank you for your message!\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || "Not provided"}\nSubject: ${formData.subject || "Not provided"}\nMessage: ${formData.message}`);
 
-        // Reset the form after submission (optional)
+
         setFormData({
             name: '',
             phone: '',

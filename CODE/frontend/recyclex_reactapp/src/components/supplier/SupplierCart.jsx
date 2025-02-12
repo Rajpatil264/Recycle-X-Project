@@ -7,7 +7,7 @@ import cartImage from '../../assets/images/SideCart.jpg';
 const SupplierCart = () => {
     const navigate = useNavigate();
     const [trashCategories, setTrashCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('1'); // Default to Plastic category
+    const [selectedCategory, setSelectedCategory] = useState('1'); 
     const [subcategories, setSubcategories] = useState([]);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const [quantity, setQuantity] = useState(0.0);
@@ -123,7 +123,6 @@ const SupplierCart = () => {
                 `http://localhost:5000/supplier/removecart/${itemId}`,
                 axiosConfig
             );
-            // Immediately update the cart items state after deletion
             const updatedCartItems = cartItems.filter(item => item.item_id !== itemId);
             setCartItems(updatedCartItems);
             setError(null);

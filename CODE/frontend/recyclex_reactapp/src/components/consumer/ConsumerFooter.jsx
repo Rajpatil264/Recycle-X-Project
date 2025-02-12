@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/consumerStyles/ConsumerFooter.module.css"; // Import CSS module
+import styles from "../../styles/consumerStyles/ConsumerFooter.module.css"; 
 import {
     FaFacebook,
     FaInstagram,
@@ -16,7 +16,6 @@ const ConsumerFooter = () => {
         <footer className={styles.footer}>
             <div className={styles.container}>
                 <div className={styles.footerContent}>
-                    {/* Business Section */}
                     <div className={styles.footerSection}>
                         <h5>Businesses</h5>
                         <ul>
@@ -26,7 +25,6 @@ const ConsumerFooter = () => {
                         </ul>
                     </div>
 
-                    {/* Individuals Section */}
                     <div className={styles.footerSection}>
                         <h5>Individuals</h5>
                         <ul>
@@ -36,7 +34,6 @@ const ConsumerFooter = () => {
                         </ul>
                     </div>
 
-                    {/* Company Section */}
                     <div className={styles.footerSection}>
                         <h5>Company</h5>
                         <ul>
@@ -46,7 +43,6 @@ const ConsumerFooter = () => {
                         </ul>
                     </div>
 
-                    {/* Help Section */}
                     <div className={styles.footerSection}>
                         <h5>Help</h5>
                         <ul>
@@ -56,7 +52,6 @@ const ConsumerFooter = () => {
                         </ul>
                     </div>
 
-                    {/* Contact Details */}
                     <div className={styles.footerSection}>
                         <h4>RecycleX</h4>
                         <p>
@@ -71,7 +66,6 @@ const ConsumerFooter = () => {
                         <p>&copy; {currentYear} RecycleX. All rights reserved.</p>
                     </div>
 
-                    {/* Social Media Icons */}
                     <div className={styles.socialIcons}>
                         <a href="#" aria-label="Facebook"><FaFacebook /></a>
                         <a href="#" aria-label="Instagram"><FaInstagram /></a>

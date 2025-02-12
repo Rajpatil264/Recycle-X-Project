@@ -1,27 +1,24 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../styles/OrderSuccess.module.css"; // Importing CSS module
-import OrderSuccessGif from "../assets/gifs/OrderSuccess.gif"; // Renamed for clarity
+import styles from "../styles/OrderSuccess.module.css"; 
+import OrderSuccessGif from "../assets/gifs/OrderSuccess.gif"; 
 
 const OrderSuccess = () => {
     const [orderId, setOrderId] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Simulate generating a unique order ID
         setOrderId(Math.floor(Math.random() * 1000000));
     }, []);
 
     return (
         <div className={styles.container}>
-            {/* Confirmation GIF */}
             <img
                 src={OrderSuccessGif}
                 alt="Order Confirmed"
                 className={styles.successGif}
             />
 
-            {/* Order Tracking Information */}
             <h3 className={styles.title}>Your Order has been placed successfully!</h3>
             <p className={styles.orderText}>
                 Your order ID is: <strong>{orderId}</strong>
@@ -33,7 +30,6 @@ const OrderSuccess = () => {
                 Expected Delivery: <strong>2-5 business days</strong>
             </p>
 
-            {/* Recycled Nature Information */}
             <div className={styles.infoBox}>
                 <h5>🌍 Thank you for supporting sustainability!</h5>
                 <p>
@@ -43,7 +39,6 @@ const OrderSuccess = () => {
                 </p>
             </div>
 
-            {/* Button to Go Back */}
             <button className={styles.backButton} onClick={() => navigate("/")}>
                 Back to Home
             </button>

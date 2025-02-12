@@ -76,13 +76,9 @@ button {
 .buttonGroup {
     display: flex;
     justify-content: center;
-    /* Center buttons */
     gap: 10px;
-    /* Space between buttons */
     width: fit-content;
-    /* Key: Make the button group shrink-wrap its content */
     margin: 20px auto;
-    /* Center the button group on the page */
 }
 
 .saveButton {
@@ -93,13 +89,11 @@ button {
 
 .cancelButton {
     background-color: #dc3545;
-    /* Red */
     color: white;
 }
 
 .editButton {
     background-color: #007bff;
-    /* Blue */
     color: white;
 }
 
@@ -107,7 +101,6 @@ button:hover {
     opacity: 0.8;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .profileContainer {
         width: 95%;

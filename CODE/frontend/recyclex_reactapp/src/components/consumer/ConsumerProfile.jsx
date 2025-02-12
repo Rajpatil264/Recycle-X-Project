@@ -19,15 +19,15 @@ const ConsumerProfile = () => {
                 debugger;
                 const data = response.data.data;
                 setConsumerData({
-                    firstName: data.first_name || "",   // Corrected
-                    lastName: data.last_name || "",     // Corrected
+                    firstName: data.first_name || "",   
+                    lastName: data.last_name || "",     
                     email: data.email || "",
-                    mobileNumber: data.mobile_number || "", // Corrected
+                    mobileNumber: data.mobile_number || "", 
                     state: data.state || "",
                     city: data.city || "",
                     pincode: data.pincode || "",
-                    consumerType: data.type || "",  // Corrected
-                    password: "", // Password should be empty for security reasons
+                    consumerType: data.type || "",  
+                    password: "",
                     imageName: data.imageName || "default.jpg"
                 });
 

@@ -11,13 +11,11 @@
 }
 
 .otpCard {
-    /* Style for the card */
     background-color: white;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 90%;
-    /* Adjust width as needed */
     max-width: 500px;
 }
 
@@ -40,31 +38,22 @@
 }
 
 .otpInputGroup {
-    /* Style for OTP input boxes */
     display: flex;
     gap: 10px;
-    /* Space between boxes */
     justify-content: center;
-    /* Center the boxes */
     margin-bottom: 15px;
 }
 
 .otpInput {
-    /* Style for individual OTP input boxes */
     width: 40px;
-    /* Adjust width as needed */
     height: 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
     font-size: 1.2rem;
-    /* Make the numbers a bit larger */
     appearance: textfield;
-    /* Remove spin buttons on number inputs */
     -webkit-appearance: textfield;
-    /* For Safari */
     -moz-appearance: textfield;
-    /* For Firefox */
 }
 
 .otpInput:focus {
@@ -99,5 +88,4 @@
     font-size: 12px;
     margin-top: 5px;
     text-align: center;
-    /* Center error message */
 }

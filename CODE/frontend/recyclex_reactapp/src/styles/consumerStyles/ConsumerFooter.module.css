@@ -1,9 +1,7 @@
 /* ConsumerFooter.module.css */
 .footer {
     background-color: #000;
-    /* Black background */
     color: #fff;
-    /* White text */
     padding: 2rem 0;
     text-align: center;
 }
@@ -29,7 +27,6 @@
 
 .footerSection h5 {
     color: #10b981;
-    /* Green accent color */
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
@@ -82,7 +79,6 @@
     transform: scale(1.1);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .footerContent {
         flex-direction: column;

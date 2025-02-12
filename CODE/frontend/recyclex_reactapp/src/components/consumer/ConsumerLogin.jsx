@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from '../../styles/consumerStyles/ConsumerLogin.module.css'; // Import your CSS module
-import wavingCharacter from '../../assets/gifs/ConsumerLoginPage.gif'; // Import consumer GIF
+import styles from '../../styles/consumerStyles/ConsumerLogin.module.css'; 
+import wavingCharacter from '../../assets/gifs/ConsumerLoginPage.gif'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
 const ConsumerLogin = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState(''); // Use email for consumer
+    const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [passwordVisible, setPasswordVisible] = useState(false);

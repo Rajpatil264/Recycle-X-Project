@@ -7,19 +7,18 @@ const OtpVerification = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const email = location.state?.email;
-    const [otp, setOtp] = useState(['', '', '', '', '', '']); // Array for OTP digits
+    const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [errors, setErrors] = useState({});
     const [timer, setTimer] = useState(120);
     const inputRefs = useRef([]);
 
     useEffect(() => {
-        inputRefs.current = inputRefs.current.slice(0, 6); // Ensure correct number of refs
-
+        inputRefs.current = inputRefs.current.slice(0, 6);
         let interval = setInterval(() => {
             setTimer((prevTimer) => {
                 if (prevTimer <= 1) {
                     clearInterval(interval);
-                    navigate('/'); // Redirect if timer expires
+                    navigate('/');
                     return 0;
                 }
                 return prevTimer - 1;
@@ -34,7 +33,6 @@ const OtpVerification = () => {
         newOtp[index] = value;
         setOtp(newOtp);
 
-        // Move focus to the next input or blur if at the end
         if (value && index < 5 && inputRefs.current[index + 1]) {
             inputRefs.current[index + 1].focus();
         }
@@ -45,7 +43,6 @@ const OtpVerification = () => {
         newOtp[index] = '';
         setOtp(newOtp);
 
-        // Move focus to the previous input if not the first
         if (index > 0 && inputRefs.current[index - 1]) {
             inputRefs.current[index - 1].focus();
         }
@@ -53,7 +50,7 @@ const OtpVerification = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const enteredOtp = otp.join(''); // Join OTP digits into a string
+        const enteredOtp = otp.join('');
         const validationErrors = validateForm(enteredOtp);
         setErrors(validationErrors);
 
@@ -83,11 +80,11 @@ const OtpVerification = () => {
 
     return (
         <div className={styles.otpContainer}>
-            <div className={styles.otpCard}> {/* Added card for better visual */}
+            <div className={styles.otpCard}>
                 <h2>OTP Verification</h2>
                 <p>An OTP has been sent to your email: <span className={styles.email}>{email}</span></p>
                 <form onSubmit={handleSubmit} className={styles.otpForm}>
-                    <div className={styles.otpInputGroup}> {/* OTP input boxes */}
+                    <div className={styles.otpInputGroup}>
                         {otp.map((digit, index) => (
                             <input
                                 key={index}
@@ -101,7 +98,7 @@ const OtpVerification = () => {
                                     }
                                 }}
                                 className={styles.otpInput}
-                                ref={(el) => (inputRefs.current[index] = el)} // Ref for each input
+                                ref={(el) => (inputRefs.current[index] = el)}
                             />
                         ))}
                     </div>

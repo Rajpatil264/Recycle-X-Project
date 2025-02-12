@@ -15,10 +15,8 @@ const SupplierHomePage = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Get token once and memoize it
     const token = useMemo(() => sessionStorage.getItem('token'), []);
 
-    // Memoize axios instance with headers
     const axiosInstance = useMemo(() => {
         return axios.create({
             baseURL: 'http://localhost:5000',
@@ -26,7 +24,6 @@ const SupplierHomePage = () => {
         });
     }, [token]);
 
-    // Memoize service availability check
     const checkServiceAvailability = useCallback(async () => {
         if (!pincode) return;
 
@@ -44,7 +41,6 @@ const SupplierHomePage = () => {
         }
     }, [pincode, axiosInstance]);
 
-    // Memoize subcategories fetch
     const fetchSubcategories = useCallback(async (categoryId) => {
         try {
             const response = await axiosInstance.get(`/common/getTrashSubCategoriesByCatId/${categoryId}`);
@@ -57,7 +53,6 @@ const SupplierHomePage = () => {
         }
     }, [axiosInstance]);
 
-    // Memoize categories fetch
     const fetchCategories = useCallback(async () => {
         try {
             setIsLoading(true);
@@ -65,7 +60,6 @@ const SupplierHomePage = () => {
             const categoryData = response.data.data;
             setCategories(categoryData);
 
-            // Fetch subcategories only if we don't have them already
             const promises = categoryData.map(category => {
                 if (!subcategories[category.category_id]) {
                     return fetchSubcategories(category.category_id);
@@ -82,24 +76,20 @@ const SupplierHomePage = () => {
         }
     }, [axiosInstance, fetchSubcategories, subcategories]);
 
-    // Effect for initial data fetch
     useEffect(() => {
         fetchCategories();
-    }, [fetchCategories]); // Ensures it only runs when fetchCategories changes
+    }, [fetchCategories]);
 
 
-    // Effect for pincode changes
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (pincode) {
                 checkServiceAvailability();
             }
-        }, 500); // Debounce pincode check
-
+        }, 500);
         return () => clearTimeout(timeoutId);
     }, [pincode, checkServiceAvailability]);
 
-    // Memoize filtered subcategories
     const filteredSubcategories = useMemo(() => {
         let filtered = selectedCategory === 'all'
             ? Object.values(subcategories).flat()
@@ -113,7 +103,6 @@ const SupplierHomePage = () => {
         return filtered;
     }, [selectedCategory, subcategories, searchQuery]);
 
-    // Memoize event handlers
     const handleSearchChange = useCallback((e) => {
         setSearchQuery(e.target.value);
     }, []);
@@ -132,7 +121,6 @@ const SupplierHomePage = () => {
 
     return (
         <div className={styles.container}>
-            {/* Navbar with Hamburger */}
             <nav className={styles['nav-container']}>
                 <SupplierNavbar />
                 <button
@@ -146,14 +134,11 @@ const SupplierHomePage = () => {
                 </button>
             </nav>
 
-            {/* Mobile Menu */}
             <div className={`${styles['mobile-menu']} ${isMobileMenuOpen ? styles.active : ''}`}>
-                {/* Add your mobile menu items here */}
             </div>
             <main className={styles.main}>
                 <h1 className={styles['page-title']}>Scrap Prices</h1>
 
-                {/* Search and Location Section */}
                 <div className={styles['search-section']}>
                     <div className={styles['search-container']}>
                         <div className={styles['search-input-wrapper']}>
@@ -178,7 +163,6 @@ const SupplierHomePage = () => {
                     </div>
                 </div>
 
-                {/* Categories Section */}
                 <div className={styles['categories-section']}>
                     <div className={styles['categories-container']}>
                         <button
@@ -201,7 +185,6 @@ const SupplierHomePage = () => {
                     </div>
                 </div>
 
-                {/* Subcategories Grid */}
                 <div className={styles['subcategories-grid']}>
                     {filteredSubcategories.map((subcategory) => (
                         <div
@@ -228,7 +211,6 @@ const SupplierHomePage = () => {
                     ))}
                 </div>
 
-                {/* Service Availability Message */}
                 {error && (
                     <div className={styles['error-message']}>
                         {error}

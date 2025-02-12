@@ -23,17 +23,14 @@
     background-color: rgb(255, 255, 255);
 }
 
-/* SupplierLogin.module.css */
 .wavingImage {
     max-width: 80%;
     height: auto;
     transition: transform 0.3s ease-in-out;
-    /* Add transition for smooth animation */
 }
 
 .wavingImage:hover {
     transform: scale(1.25);
-    /* Slightly scale up on hover */
 }
 
 
@@ -101,7 +98,6 @@
     margin-top: 10px;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     .loginContainer {
         flex-direction: column;

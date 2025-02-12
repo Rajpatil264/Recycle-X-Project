@@ -14,7 +14,7 @@ const ConsumerCart = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const [quantity, setQuantity] = useState(1);
-    const [displayedItems, setDisplayedItems] = useState(10); // For "Show More"
+    const [displayedItems, setDisplayedItems] = useState(10); 
     const consumerId = sessionStorage.getItem('consumerId');
     const token = sessionStorage.getItem('token');
 
@@ -25,7 +25,7 @@ const ConsumerCart = () => {
     const fetchCategories = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:5000/common/getAllRecyclingCategories', axiosConfig); // CORRECT ENDPOINT
+            const response = await axios.get('http://localhost:5000/common/getAllRecyclingCategories', axiosConfig); 
             console.log("Categories API Response:", response.data);
             if (response.data && response.data.data) {
                 setCategories(response.data.data);

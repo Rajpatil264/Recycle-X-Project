@@ -18,7 +18,7 @@ const AboutUsPage = () => {
                 <p>
                     RecycleX was born from a simple yet powerful idea: to make recycling accessible, convenient, and rewarding for everyone.  We believe that a sustainable future is within reach, and we're committed to playing a pivotal role in making that happen. Founded in [Year], we started as a small team of passionate environmentalists and have since grown into a leading force in the recycling industry.
                 </p>
-                <img src={aboutImage} alt="Recycling process" className={styles.aboutImage} /> {/* Add an image */}
+                <img src={aboutImage} alt="Recycling process" className={styles.aboutImage} />
 
             </section>
 

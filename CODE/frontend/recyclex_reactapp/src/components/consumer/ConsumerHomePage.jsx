@@ -55,7 +55,6 @@ const ConsumerBuyScrap = () => {
             <div className={styles.main}>
                 <h1 className={styles.pageTitle}>Buy Scrap</h1>
 
-                {/* Service Check Section */}
                 <div className={styles.searchSection}>
                     <div className={styles.searchContainer}>
                         <input
@@ -77,7 +76,6 @@ const ConsumerBuyScrap = () => {
                     )}
                 </div>
 
-                {/* Main Categories */}
                 <div className={styles.categoriesSection}>
                     <div className={styles.categoriesContainer}>
                         {mainCategories.map(category => (
@@ -92,7 +90,6 @@ const ConsumerBuyScrap = () => {
                     </div>
                 </div>
 
-                {/* Subcategories Grid */}
                 <div className={styles.subcategoriesGrid}>
                     {subcategories.map(sub => (
                         <div key={sub.subcategory_id} className={styles.subcategoryCard}>
