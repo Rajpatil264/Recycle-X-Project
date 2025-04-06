@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "../styles/GetAllYearlyRecyclingCategories.module.css";
+import styles from "../../styles/adminStyles/GetAllYearlyRecyclingCategories.module.css";
 
 const GetAllYearlyRecyclingCategories = () => {
   const [yearlyRecycling, setYearlyRecycling] = useState([]);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "../styles/AddTrashCategories.module.css";
+import styles from "../../styles/adminStyles/AddTrashCategories.module.css";
 
 const AddTrashCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -172,8 +172,7 @@ const AddTrashCategories = () => {
         if (fileInput) fileInput.value = "";
       } else {
         alert(
-          `Failed to add subcategory: ${
-            responseData.message || "Unknown error"
+          `Failed to add subcategory: ${responseData.message || "Unknown error"
           }`
         );
       }

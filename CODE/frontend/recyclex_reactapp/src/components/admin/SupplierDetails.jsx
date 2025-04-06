@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import styles from "../styles/SupplierDetails.module.css";
+import styles from "../../styles/adminStyles/SupplierDetails.module.css";
 
 const SupplierDetails = () => {
   const { supplierId } = useParams();

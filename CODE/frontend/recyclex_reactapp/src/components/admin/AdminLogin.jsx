@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../styles/AdminLogin.module.css";
+import axios from "axios";
+
+import styles from "../../styles/adminStyles/AdminLogin.module.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -8,10 +11,10 @@ import {
   faEye,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -19,6 +22,7 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const validationErrors = validateForm();
     setErrors(validationErrors);
 
@@ -26,28 +30,25 @@ const AdminLogin = () => {
       try {
         const response = await axios.post(
           "http://localhost:8080/admin/signin",
+          { email, password },
           {
-            email,
-            password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             withCredentials: true,
           }
         );
 
-        if (response.data && response.data.status === "success") {
-          sessionStorage.setItem("adminId", response.data.data.adminId);
+        const resData = response.data;
+        if (resData?.status === "success") {
+          sessionStorage.setItem("adminId", resData.data.adminId);
           navigate("/admin/dashboard");
         } else {
-          alert(response.data?.message || "Invalid email or password.");
+          alert(resData?.message ?? "Invalid email or password.");
         }
       } catch (error) {
         console.error("Error signing in:", error);
+
         if (error.response) {
-          alert(error.response.data?.message || "Authentication failed.");
+          alert(error.response.data?.message ?? "Authentication failed.");
         } else if (error.request) {
           alert("Server is not responding. Please try again later.");
         } else {
@@ -58,25 +59,23 @@ const AdminLogin = () => {
   };
 
   const validateForm = () => {
-    let errors = {};
-    if (!email) {
-      errors.email = "Email is required";
-    }
-    if (!password) {
-      errors.password = "Password is required";
-    }
+    const errors = {};
+    if (!email) errors.email = "Email is required";
+    if (!password) errors.password = "Password is required";
     return errors;
   };
 
   const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
+    setPasswordVisible((prev) => !prev);
   };
 
   return (
     <div className={styles.loginContainer}>
       <div className={styles.formSide}>
         <h2>Admin Login</h2>
+
         <form onSubmit={handleSubmit} className={styles.loginForm}>
+          {/* Email Input */}
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
             <div className={styles.inputWithIcon}>
@@ -86,15 +85,15 @@ const AdminLogin = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`${styles.input} ${
-                  errors.email ? styles.error : ""
-                }`}
+                className={`${styles.input} ${errors.email ? styles.error : ""}`}
               />
             </div>
             {errors.email && (
               <span className={styles.errorMessage}>{errors.email}</span>
             )}
           </div>
+
+          {/* Password Input */}
           <div className={styles.inputGroup}>
             <label htmlFor="password">Password</label>
             <div className={styles.inputWithIcon}>
@@ -104,9 +103,7 @@ const AdminLogin = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`${styles.input} ${
-                  errors.password ? styles.error : ""
-                }`}
+                className={`${styles.input} ${errors.password ? styles.error : ""}`}
               />
               <FontAwesomeIcon
                 icon={passwordVisible ? faEyeSlash : faEye}
@@ -118,11 +115,21 @@ const AdminLogin = () => {
               <span className={styles.errorMessage}>{errors.password}</span>
             )}
           </div>
+
+          {/* Submit Button */}
           <button type="submit" className={styles.loginButton}>
             Login
           </button>
+
+          {/* Forgot Password */}
           <p className={styles.forgotPassword}>
             <Link to="/forgot-password">Forgot Password?</Link>
+          </p>
+
+          {/* Register Link */}
+          <p className={styles.registerLink}>
+            Don’t have an account?{" "}
+            <Link to="/admin/register">Click here to register</Link>
           </p>
         </form>
       </div>

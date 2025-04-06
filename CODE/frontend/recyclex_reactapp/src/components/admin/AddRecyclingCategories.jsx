@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "../styles/AddTrashCategories.module.css";
+import styles from "../../styles/adminStyles/AddRecyclingCategories.module.css";
 
 const AddRecyclingCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -25,9 +25,13 @@ const AddRecyclingCategories = () => {
         "http://localhost:5000/common/getAllRecyclingCategories"
       );
       const data = await response.json();
-      setCategories(data);
+
+      // Ensure data is always an array
+      const normalized = Array.isArray(data) ? data : [];
+      setCategories(normalized);
     } catch (error) {
       console.error("Error fetching categories:", error);
+      setCategories([]); // fallback
     }
   };
 
@@ -64,26 +68,20 @@ const AddRecyclingCategories = () => {
           body: formData,
         }
       );
-
-      const responseData = await response.json();
-      console.log("Category Add Response:", responseData);
-
+      const result = await response.json();
       if (response.ok) {
-        alert("Category added successfully!");
-        fetchCategories();
+        alert("Category added!");
         setCategoryForm({
           categoryName: "",
           categoryDescription: "",
           categoryImage: null,
         });
+        fetchCategories();
       } else {
-        alert(
-          `Failed to add category: ${responseData.message || "Unknown error"}`
-        );
+        alert(result.message || "Failed to add category.");
       }
     } catch (error) {
-      console.error("Error adding category:", error);
-      alert("Error adding category. Check console for details.");
+      console.error("Error:", error);
     }
   };
 
@@ -104,61 +102,47 @@ const AddRecyclingCategories = () => {
           body: formData,
         }
       );
-
-      const responseData = await response.json();
-      console.log("Subcategory Add Response:", responseData);
-
+      const result = await response.json();
       if (response.ok) {
-        alert("Subcategory added successfully!");
+        alert("Subcategory added!");
         setSubcategoryForm({
           categoryId: "",
           pricePerKg: "",
           subcategoryImage: null,
         });
       } else {
-        alert(
-          `Failed to add subcategory: ${
-            responseData.message || "Unknown error"
-          }`
-        );
+        alert(result.message || "Failed to add subcategory.");
       }
     } catch (error) {
-      console.error("Error adding subcategory:", error);
-      alert("Error adding subcategory. Check console for details.");
+      console.error("Error:", error);
     }
   };
 
   return (
-    <div className={styles["trash-categories-container"]}>
-      <section className={styles["category-section"]}>
-        <div className={styles["section-header"]}>
-          <h2>Add Recycling Category</h2>
-        </div>
-        <form
-          onSubmit={handleCategorySubmit}
-          className={styles["category-form"]}
-        >
-          <div className={styles["form-group"]}>
+    <div className={styles.trashCategoriesContainer}>
+      {/* CATEGORY FORM */}
+      <section className={styles.categorySection}>
+        <h2>Add Recycling Category</h2>
+        <form onSubmit={handleCategorySubmit} className={styles.form}>
+          <div className={styles.formGroup}>
             <label>Category Name</label>
             <input
-              className={styles["form-input"]}
               name="categoryName"
               value={categoryForm.categoryName}
               onChange={handleCategoryChange}
               required
             />
           </div>
-          <div className={styles["form-group"]}>
+          <div className={styles.formGroup}>
             <label>Category Description</label>
             <input
-              className={styles["form-input"]}
               name="categoryDescription"
               value={categoryForm.categoryDescription}
               onChange={handleCategoryChange}
               required
             />
           </div>
-          <div className={`${styles["form-group"]} ${styles["file-input"]}`}>
+          <div className={styles.formGroup}>
             <label>Category Image</label>
             <input
               type="file"
@@ -167,52 +151,43 @@ const AddRecyclingCategories = () => {
               accept="image/*"
             />
           </div>
-          <button
-            type="submit"
-            className={`${styles.btn} ${styles["btn-primary"]}`}
-          >
+          <button type="submit" className={styles.btn}>
             Add Category
           </button>
         </form>
       </section>
 
-      <section className={styles["subcategory-section"]}>
-        <div className={styles["section-header"]}>
-          <h2>Add Recycling Subcategory</h2>
-        </div>
-        <form
-          onSubmit={handleSubcategorySubmit}
-          className={styles["subcategory-form"]}
-        >
-          <div className={styles["form-group"]}>
-            <label>Category</label>
+      {/* SUBCATEGORY FORM */}
+      <section className={styles.subcategorySection}>
+        <h2>Add Recycling Subcategory</h2>
+        <form onSubmit={handleSubcategorySubmit} className={styles.form}>
+          <div className={styles.formGroup}>
+            <label>Select Category</label>
             <select
               name="categoryId"
               value={subcategoryForm.categoryId}
               onChange={handleSubcategoryChange}
-              className={styles["form-input"]}
               required
             >
-              <option value="">Select Category</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.categoryName}
+              <option value="">-- Select --</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.categoryName}
                 </option>
               ))}
             </select>
           </div>
-          <div className={styles["form-group"]}>
-            <label>Price Per Kg</label>
+          <div className={styles.formGroup}>
+            <label>Price per Kg</label>
             <input
               type="number"
-              className={styles["form-input"]}
               name="pricePerKg"
               value={subcategoryForm.pricePerKg}
               onChange={handleSubcategoryChange}
               required
             />
           </div>
-          <div className={`${styles["form-group"]} ${styles["file-input"]}`}>
+          <div className={styles.formGroup}>
             <label>Subcategory Image</label>
             <input
               type="file"
@@ -221,10 +196,7 @@ const AddRecyclingCategories = () => {
               accept="image/*"
             />
           </div>
-          <button
-            type="submit"
-            className={`${styles.btn} ${styles["btn-primary"]}`}
-          >
+          <button type="submit" className={styles.btn}>
             Add Subcategory
           </button>
         </form>

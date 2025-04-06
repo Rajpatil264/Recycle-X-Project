@@ -2,7 +2,7 @@ const db = require("../DBUtils/connection");
 const { common, consumer, supplier } = require("../DBUtils/constants");
 const reply = require("../models/responseStructure");
 
-// Common Contoller
+// Common Controller
 const getAllServiceZones = (request, response) => {
   const statement = `SELECT * FROM ${common.SERVICE_ZONES}`;
   db.execute(statement, (error, result) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../styles/AdminHomePage.module.css";
+import styles from "../../styles/adminStyles/AdminHomePage.module.css";
 
 const AdminHomePage = () => {
   const [suppliers, setSuppliers] = useState([]);

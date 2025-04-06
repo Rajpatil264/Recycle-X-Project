@@ -18,6 +18,15 @@ import ConsumerProfile from "./components/consumer/ConsumerProfile";
 import ConsumerCart from "./components/consumer/ConsumerCart";
 import ConsumerOrderSummary from "./components/consumer/ConsumerOrderSummary";
 import AddTrashCategories from "./components/admin/AddTrashCategories";
+import AdminLogin from "./components/admin/AdminLogin";
+import AdminRegister from "./components/admin/AdminRegister";
+import AdminHomePage from "./components/admin/AdminHomePage";
+import AddRecyclingCategories from "./components/admin/AddRecyclingCategories";
+import GetAllYearlyTrashCategories from "./components/admin/GetAllYearlyTrashCategories";
+import GetAllYearlyRecyclingCategories from "./components/admin/GetAllYearlyRecyclingCategories";
+import SupplierDetails from "./components/admin/SupplierDetails";
+import ConsumerDetails from "./components/admin/ConsumerDetails";
+
 
 const App = () => {
   return (
@@ -25,7 +34,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<UserTypeSelection />} />
         <Route path="/supplier/login" element={<SupplierLogin />} />
-        <Route path="/supplier/register" element={<SupplierRegistration />} /> 
+        <Route path="/supplier/register" element={<SupplierRegistration />} />
         <Route path="/supplier/dashboard" element={<SupplierHomePage />} />
         <Route path="/supplier/profile" element={<SupplierProfile />} />
         <Route path="/supplier/cart" element={<SupplierCart />} />
@@ -40,8 +49,9 @@ const App = () => {
         <Route path="/consumer/summary" element={<ConsumerOrderSummary />} />
         <Route path="/consumer/otp-verification" element={<OtpVerification />} />
         <Route path="/success" element={<OrderSuccess />} />
-        <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin/dashboard" element={<AdminHomePage />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/register" element={<AdminRegister />} />
         <Route
           path="/admin/addTrashCategory"
           element={<AddTrashCategories />}
