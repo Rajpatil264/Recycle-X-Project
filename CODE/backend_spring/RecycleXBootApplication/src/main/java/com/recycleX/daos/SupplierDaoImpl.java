@@ -144,34 +144,51 @@ public class SupplierDaoImpl implements SupplierDaoable {
 	@Override
 	public int saveTrashCategory(TrashCategory trashCategory) {
 		try {
-			String imageName = FileUploadUtils.saveImage(trashCategory.getCategoryImage(),
-					"supplierImages/categories/");
+			// Updated to correct folder: supplierUploads/categories
+			String imageName = FileUploadUtils.saveImage(trashCategory.getCategoryImage(), "categories");
+
 			// SQL to insert trash category data into the database
 			String sql = "INSERT INTO trashcategories (category_name, category_description, category_image) "
-					+ "VALUES (?, ?, ?)";
+					   + "VALUES (?, ?, ?)";
 
 			// Use JDBC template to insert the data into the database
-			return jdbcTemplate.update(sql, trashCategory.getCategoryName(), trashCategory.getCategoryDescription(),
-					imageName);
+			return jdbcTemplate.update(sql,
+				trashCategory.getCategoryName(),
+				trashCategory.getCategoryDescription(),
+				imageName
+			);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return -1;
 		}
 	}
+
 
 	@Override
 	public int saveTrashSubCategory(TrashSubCategory trashSubcategory) {
 		try {
-			String imageName = FileUploadUtils.saveImage(trashSubcategory.getSubcategoryImage(),
-					"supplierImages/subcategories/");
-			String sql = "INSERT INTO trashsubcategories (category_id, subcategory_name, price_per_kg, subcategory_image) "
-					+ "VALUES (?, ?, ?, ?)";
-			return jdbcTemplate.update(sql, trashSubcategory.getCategoryId(), trashSubcategory.getSubcategoryName(),
-					trashSubcategory.getPricePerKg(), imageName);
+			// Save image with new path
+			String imageName = FileUploadUtils.saveImage(
+				trashSubcategory.getSubcategoryImage(), "supplierUploads/subcategories");
+
+			// Updated SQL to include category_description
+			String sql = "INSERT INTO trashsubcategories (category_id, subcategory_name, price_per_kg, subcategory_image, category_description) "
+					   + "VALUES (?, ?, ?, ?, ?)";
+
+			// Updated JDBC template call with categoryDescription
+			return jdbcTemplate.update(sql,
+				trashSubcategory.getCategoryId(),
+				trashSubcategory.getSubcategoryName(),
+				trashSubcategory.getPricePerKg(),
+				imageName,
+				trashSubcategory.getCategoryDescription()
+			);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return -1;
 		}
 	}
+
+
 
 }

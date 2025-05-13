@@ -73,14 +73,21 @@ public class ConsumerAdminController {
 	}
 
 	@PostMapping(value = "/addRecyclingSubcategory", produces = "application/json")
-	public ResponseStructure addRecyclingSubCategory(@RequestParam("categoryId") int categoryId,
-			@RequestParam("subcategoryName") String subcategoryName, @RequestParam("pricePerKg") float pricePerKg,
-			@RequestParam("subcategoryImage") MultipartFile subcategoryImage) {
-		RecyclingSubCategory recyclingSubcategory = new RecyclingSubCategory(0, categoryId, subcategoryName, pricePerKg,
-				subcategoryImage);
-		int status = serviceable.addRecyclingSubCategory(recyclingSubcategory);
-		return ResponseStructure.onSuccess(201, status, "Recycling Subcategory added successfully.");
+	public ResponseStructure addRecyclingSubCategory(
+	        @RequestParam("categoryId") int categoryId,
+	        @RequestParam("subcategoryName") String subcategoryName,
+	        @RequestParam("pricePerKg") float pricePerKg,
+	        @RequestParam("categoryDescription") String categoryDescription,
+	        @RequestParam("subcategoryImage") MultipartFile subcategoryImage) {
+	    
+	    RecyclingSubCategory recyclingSubcategory = new RecyclingSubCategory(
+	            0, categoryId, subcategoryName, pricePerKg, categoryDescription, subcategoryImage);
+
+	    int status = serviceable.addRecyclingSubCategory(recyclingSubcategory);
+
+	    return ResponseStructure.onSuccess(201, status, "Recycling Subcategory added successfully.");
 	}
+
 
 	@GetMapping("/monthlyRecycling/{consumerId}")
 	public ResponseStructure getMonthlyRecycling(@PathVariable int consumerId) {

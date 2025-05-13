@@ -71,14 +71,20 @@ public class SupplierAdminController {
 	}
 
 	@PostMapping(value = "/addTrashSubcategory", produces = "application/json")
-	public ResponseStructure addTrashSubcategory(@RequestParam("categoryId") int categoryId,
-			@RequestParam("subcategoryName") String subcategoryName, @RequestParam("pricePerKg") float pricePerKg,
-			@RequestParam("subcategoryImage") MultipartFile subcategoryImage) {
-		TrashSubCategory trashSubCategory = new TrashSubCategory(0, categoryId, subcategoryName, pricePerKg,
-				subcategoryImage);
-		int status = serviceable.addTrashSubCategory(trashSubCategory);
-		return ResponseStructure.onSuccess(200, status, "Trash Subcategory added successfully.");
+	public ResponseStructure addTrashSubcategory(
+	    @RequestParam("categoryId") int categoryId,
+	    @RequestParam("subcategoryName") String subcategoryName,
+	    @RequestParam("pricePerKg") float pricePerKg,
+	    @RequestParam("subcategoryImage") MultipartFile subcategoryImage,
+	    @RequestParam("categoryDescription") String categoryDescription  // Add this parameter
+	) {
+	    // Pass categoryDescription to the constructor
+	    TrashSubCategory trashSubCategory = new TrashSubCategory(0, categoryId, subcategoryName, pricePerKg, subcategoryImage, categoryDescription);
+	    
+	    int status = serviceable.addTrashSubCategory(trashSubCategory);
+	    return ResponseStructure.onSuccess(200, status, "Trash Subcategory added successfully.");
 	}
+
 
 	@GetMapping("/monthlyTrash/{supplierId}")
 	public ResponseStructure getMonthlyTrash(@PathVariable int supplierId) {

@@ -8,16 +8,20 @@ public class TrashSubCategory {
 	private String subcategoryName;
 	private float pricePerKg;
 	private MultipartFile subcategoryImage;
+	private String categoryDescription; // ✅ Newly added field
 
+	// ✅ Updated constructor including categoryDescription
 	public TrashSubCategory(int subcategoryId, int categoryId, String subcategoryName, float pricePerKg,
-			MultipartFile subcategoryImage) {
+			MultipartFile subcategoryImage, String categoryDescription) {
 		this.subcategoryId = subcategoryId;
 		this.categoryId = categoryId;
 		this.subcategoryName = subcategoryName;
 		this.pricePerKg = pricePerKg;
 		this.subcategoryImage = subcategoryImage;
+		this.categoryDescription = categoryDescription;
 	}
 
+	// Getters
 	public int getSubcategoryId() {
 		return subcategoryId;
 	}
@@ -38,6 +42,11 @@ public class TrashSubCategory {
 		return subcategoryImage;
 	}
 
+	public String getCategoryDescription() {
+		return categoryDescription;
+	}
+
+	// Setters
 	public void setSubcategoryId(int subcategoryId) {
 		this.subcategoryId = subcategoryId;
 	}
@@ -58,10 +67,14 @@ public class TrashSubCategory {
 		this.subcategoryImage = subcategoryImage;
 	}
 
-	@Override
-	public String toString() {
-		return "TrashSubCategory [subcategoryId=" + subcategoryId + ", categoryId=" + categoryId + ", subcategoryName="
-				+ subcategoryName + ", pricePerKg=" + pricePerKg + ", subcategoryImage=" + subcategoryImage + "]";
+	public void setCategoryDescription(String categoryDescription) {
+		this.categoryDescription = categoryDescription;
 	}
 
+	@Override
+	public String toString() {
+		return "TrashSubCategory [subcategoryId=" + subcategoryId + ", categoryId=" + categoryId
+				+ ", subcategoryName=" + subcategoryName + ", pricePerKg=" + pricePerKg + ", subcategoryImage="
+				+ subcategoryImage + ", categoryDescription=" + categoryDescription + "]";
+	}
 }

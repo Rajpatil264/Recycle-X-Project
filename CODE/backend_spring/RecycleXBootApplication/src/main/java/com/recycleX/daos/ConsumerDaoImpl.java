@@ -76,43 +76,48 @@ public class ConsumerDaoImpl implements ConsumerDaoable {
 		return jdbcTemplate.update(sql, price, subcategoryId);
 	}
 
-	@Override
-	public int saveRecyclingCategory(RecyclingCategory recyclingCategory) {
-		try {
-			String imageName = FileUploadUtils.saveImage(recyclingCategory.getCategoryImage(),
-					"consumerImages/categories/");
-			
-			String sql = "INSERT INTO recyclingcategories (rp_category_name, category_description, rp_category_image) VALUES (?, ?, ?)";
+@Override
+public int saveRecyclingCategory(RecyclingCategory recyclingCategory) {
+	try {
+		String imageName = FileUploadUtils.saveImage(
+			recyclingCategory.getCategoryImage(),
+			"consumerUploads/categories/" // ✅ Updated path
+		);
 
-			return jdbcTemplate.update(sql, recyclingCategory.getCategoryName(),
-					recyclingCategory.getCategoryDescription(), imageName);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return -1;
-		}
+		String sql = "INSERT INTO recyclingcategories (rp_category_name, category_description, rp_category_image) VALUES (?, ?, ?)";
 
+		return jdbcTemplate.update(sql,
+			recyclingCategory.getCategoryName(),
+			recyclingCategory.getCategoryDescription(),
+			imageName
+		);
+	} catch (IOException e) {
+		e.printStackTrace();
+		return -1;
 	}
+}
 
-	@Override
-	public int saveRecyclingSubCategory(RecyclingSubCategory recyclingSubcategory) {
-        try {
-            String imageName = FileUploadUtils.saveImage(
-                    recyclingSubcategory.getSubcategoryImage(), 
-                    "consumerImages/subcategories/"
-            );
+@Override
+public int saveRecyclingSubCategory(RecyclingSubCategory recyclingSubcategory) {
+	try {
+		String imageName = FileUploadUtils.saveImage(
+			recyclingSubcategory.getSubcategoryImage(),
+			"consumerUploads/subcategories/" 
+		);
 
-            String sql = "INSERT INTO recyclingsubcategories (rp_category_id, subcategory_name, price_per_kg, subcategory_image) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO recyclingsubcategories (rp_category_id, subcategory_name, price_per_kg, subcategory_image) VALUES (?, ?, ?, ?)";
 
-            return jdbcTemplate.update(sql, 
-                    recyclingSubcategory.getCategoryId(), 
-                    recyclingSubcategory.getSubcategoryName(), 
-                    recyclingSubcategory.getPricePerKg(), 
-                    imageName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1;
-        }
+		return jdbcTemplate.update(sql,
+			recyclingSubcategory.getCategoryId(),
+			recyclingSubcategory.getSubcategoryName(),
+			recyclingSubcategory.getPricePerKg(),
+			imageName
+		);
+	} catch (IOException e) {
+		e.printStackTrace();
+		return -1;
 	}
+}
 
 	@Override
     public List<ConsumerRecyclingSummary> findMonthlyRecyclingSummary(int consumerId) {

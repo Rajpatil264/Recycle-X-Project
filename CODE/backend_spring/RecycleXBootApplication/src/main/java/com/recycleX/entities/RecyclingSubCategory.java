@@ -7,13 +7,16 @@ public class RecyclingSubCategory {
     private int categoryId;
     private String subcategoryName;
     private float pricePerKg;
+    private String categoryDescription; // ✅ Added
     private MultipartFile subcategoryImage;
 
-    public RecyclingSubCategory(int subcategoryId, int categoryId, String subcategoryName, float pricePerKg, MultipartFile subcategoryImage) {
+    public RecyclingSubCategory(int subcategoryId, int categoryId, String subcategoryName, float pricePerKg,
+                                String categoryDescription, MultipartFile subcategoryImage) {
         this.subcategoryId = subcategoryId;
         this.categoryId = categoryId;
         this.subcategoryName = subcategoryName;
         this.pricePerKg = pricePerKg;
+        this.categoryDescription = categoryDescription;
         this.subcategoryImage = subcategoryImage;
     }
 
@@ -31,6 +34,10 @@ public class RecyclingSubCategory {
 
     public float getPricePerKg() {
         return pricePerKg;
+    }
+
+    public String getCategoryDescription() { // ✅ Getter
+        return categoryDescription;
     }
 
     public MultipartFile getSubcategoryImage() {
@@ -53,13 +60,18 @@ public class RecyclingSubCategory {
         this.pricePerKg = pricePerKg;
     }
 
+    public void setCategoryDescription(String categoryDescription) { // ✅ Setter
+        this.categoryDescription = categoryDescription;
+    }
+
     public void setSubcategoryImage(MultipartFile subcategoryImage) {
         this.subcategoryImage = subcategoryImage;
     }
 
     @Override
     public String toString() {
-        return "RecyclingSubCategory [subcategoryId=" + subcategoryId + ", categoryId=" + categoryId + ", subcategoryName="
-                + subcategoryName + ", pricePerKg=" + pricePerKg + ", subcategoryImage=" + subcategoryImage + "]";
+        return "RecyclingSubCategory [subcategoryId=" + subcategoryId + ", categoryId=" + categoryId
+                + ", subcategoryName=" + subcategoryName + ", pricePerKg=" + pricePerKg
+                + ", categoryDescription=" + categoryDescription + ", subcategoryImage=" + subcategoryImage + "]";
     }
 }
